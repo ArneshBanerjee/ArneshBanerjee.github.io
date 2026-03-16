@@ -62,14 +62,14 @@
             padding-bottom: 6px;
             margin-top: 36px;
         }
-        .pub, .project {
-            margin-bottom: 16px;
+        .pub, .project, .research-item {
+            margin-bottom: 20px;
         }
-        .pub ul {
+        .pub ul, .research-item ul {
             margin: 4px 0 0 0;
             padding-left: 20px;
         }
-        .pub ul li {
+        .pub ul li, .research-item ul li {
             font-size: 0.93em;
             margin-bottom: 2px;
         }
@@ -78,6 +78,10 @@
         }
         .pub-venue {
             color: #555;
+        }
+        .research-role {
+            color: #555;
+            font-size: 0.95em;
         }
         footer {
             margin-top: 50px;
@@ -112,54 +116,75 @@
         </div>
     </div>
 
-    <h2>Publications</h2>
+    <h2>Research Experience</h2>
 
-    <div class="pub">
-        <strong>[1]</strong> <span class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis.</span><br>
-        Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar.<br>
-        <span class="pub-venue">4th Analytics Global Conference (AGC 2026), March 2026. <strong>Oral.</strong></span>
+    <div class="research-item">
+        <strong>Jadavpur University</strong> &mdash; Advisor: Prof. Debotosh Bhattacharjee<br>
+        <span class="research-role">November 2025 &ndash; Present &middot; Remote</span>
         <ul>
-            <li>Co-developed a dual-stage ML framework for breast cancer diagnosis and recurrence prediction using WDBC and WPBC datasets.</li>
-            <li>Implemented RFE and SFS feature selection with SMOTE and GridSearchCV tuning, improving WPBC accuracy to 93.67% and WDBC to 97.77%.</li>
+            <li>Achieved 98.10% Dice and 96.39% IoU on breast thermography tumor segmentation using a ResNet34 + ASPP + ViT decoder with SE attention, evaluated via 5-fold cross-validation.</li>
+            <li>Conducted a rigorous ablation study (20 training runs) across U-Net, ResNet-only, and hybrid architectures, demonstrating generalization trade-offs in medical imaging.</li>
+            <li>Built a fully automated cross-validation pipeline with checkpointing, experiment logging, and reproducible training.</li>
         </ul>
     </div>
 
-    <div class="pub">
-        <strong>[2]</strong> <span class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation.</span><br>
-        <strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee.<br>
-        <span class="pub-venue">Pre-print.</span>
-        <ul>
-            <li>Achieved 98.10% Dice and 96.39% IoU on breast thermography tumor segmentation using a ResNet34 + ASPP + ViT decoder with SE attention.</li>
-            <li>Conducted a rigorous ablation study (20 training runs) across U-Net, ResNet-only, and hybrid architectures.</li>
-        </ul>
-    </div>
-
-    <div class="pub">
-        <strong>[3]</strong> <span class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models.</span><br>
-        Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh.<br>
-        <span class="pub-venue"><a href="https://arxiv.org/abs/2510.03520">arXiv: 2510.03520</a></span>
+    <div class="research-item">
+        <strong>New Jersey Institute of Technology</strong> &mdash; Advisor: Prof. Arnob Ghosh<br>
+        <span class="research-role">June 2025 &ndash; November 2025 &middot; On-site / Virtual</span>
         <ul>
             <li>Constructed a cost-model training dataset for a modified Safe RLHF pipeline with improved cost-model results.</li>
-            <li>Designed an 800-datapoint safety benchmark against state-of-the-art LLMs (GPT, DeepSeek, Gemini, Qwen, Mistral).</li>
+            <li>Designed and tested a comparative 800-datapoint safety benchmark against state-of-the-art LLMs (GPT, DeepSeek, Gemini, Qwen, Mistral).</li>
             <li>Demonstrated 50% higher safety compliance than ChatGPT 5 across benchmark scenarios.</li>
         </ul>
+    </div>
+
+    <div class="research-item">
+        <strong>Heritage Institute of Technology</strong> &mdash; Advisor: Prof. Arpita Talukdar<br>
+        <span class="research-role">October 2024 &ndash; March 2025 &middot; On-site</span>
+        <ul>
+            <li>Developed a dual-stage ML framework for breast cancer diagnosis and recurrence prediction using WDBC and WPBC datasets, evaluating RF, SVM, Logistic Regression, MLP, and XGBoost with stratified 10-fold cross-validation.</li>
+            <li>Implemented RFE and SFS feature selection with SMOTE and GridSearchCV tuning, improving WPBC accuracy to 93.67% and WDBC to 97.77%.</li>
+            <li>Conducted comparative performance analysis and interpreted clinically relevant nuclear features with confidence intervals.</li>
+        </ul>
+    </div>
+
+    <h2>Published</h2>
+
+    <div class="pub">
+        <span class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis.</span><br>
+        Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar.<br>
+        <span class="pub-venue">4th Analytics Global Conference (AGC 2026), March 2026. <strong>Oral.</strong></span>
+    </div>
+
+    <h2>Pre-prints</h2>
+
+    <div class="pub">
+        <span class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation.</span><br>
+        <strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee.<br>
+        <span class="pub-venue">Pre-print, 2026.</span>
+    </div>
+
+    <div class="pub">
+        <span class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models.</span><br>
+        Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh.<br>
+        <span class="pub-venue"><a href="https://arxiv.org/abs/2510.03520">arXiv: 2510.03520</a>, 2025.</span>
     </div>
 
     <h2>Projects</h2>
 
     <div class="project">
-        <strong>Autonomous Drone Warfare Simulator</strong>
-        &mdash; Co-evolutionary multi-agent simulation using PPO reinforcement learning and behavior trees to model strategic interactions in asymmetric conflict, with self-play Elo tracking, curriculum learning, and cost asymmetry analysis. (2026)
+        <strong>Autonomous Drone Warfare Simulator</strong> (2026)<br>
+        Co-evolutionary multi-agent simulation using PPO reinforcement learning and behavior trees to model strategic interactions in asymmetric conflict, with self-play Elo tracking, curriculum learning, and cost asymmetry analysis.
     </div>
 
     <div class="project">
-        <strong><a href="https://github.com/ArneshBanerjee/Smart-Competency-Diagnostic-and-Candidate-Profile-Score-Calculator">Candidate Smart Profile Competency Score Calculator</a></strong>
-        &mdash; ML system to predict job categories from resumes and recommend personalized courses via competency scoring. (SIH 2024)
+        <strong><a href="https://github.com/ArneshBanerjee/Smart-Competency-Diagnostic-and-Candidate-Profile-Score-Calculator">Candidate Smart Profile Competency Score Calculator</a></strong> (SIH 2024)<br>
+        ML system to predict job categories from resumes and recommend personalized courses via competency scoring.
     </div>
 
     <div class="project">
-        <strong><a href="https://github.com/ArneshBanerjee/Moonquake-Classification">Moonquake Classification Dashboard</a></strong>
-        &mdash; Shiny dashboard classifying Apollo moonquake data with 93.33% accuracy using Random Forest. (NASA Space Apps 2024)
+        <strong><a href="https://github.com/ArneshBanerjee/Moonquake-Classification">Moonquake Classification Dashboard</a></strong> (NASA Space Apps 2024)<br>
+        Shiny dashboard classifying Apollo moonquake data with 93.33% accuracy using Random Forest.
     </div>
 
 
