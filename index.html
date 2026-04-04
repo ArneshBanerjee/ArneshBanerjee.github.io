@@ -3,413 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arnesh Banerjee</title>
+    <title>Arnesh Banerjee — AI Researcher</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { box-sizing: border-box; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #030712;
+            --surface: rgba(15, 23, 42, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --accent-1: #6366f1;
+            --accent-2: #22d3ee;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
 
         html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', system-ui, sans-serif;
             font-size: 15px;
-            color: #111827;
-            background: #f7f8fc;
-            margin: 0;
-            padding: 0;
+            color: var(--text);
+            background: var(--bg);
             line-height: 1.75;
         }
 
-        a {
-            color: #2563eb;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+        a { color: var(--accent-2); text-decoration: none; }
+        a:hover { color: #67e8f9; }
 
-        .container {
-            max-width: 860px;
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 32px;
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .nav-inner {
+            max-width: 960px;
             margin: 0 auto;
-            padding: 56px 32px 80px;
-        }
-
-        /* ── HEADER ── */
-        .header {
+            height: 56px;
             display: flex;
-            align-items: flex-start;
-            gap: 40px;
-            margin-bottom: 48px;
+            align-items: center;
+            justify-content: space-between;
         }
-
-        .header img {
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-            box-shadow: 0 0 0 3px #fff, 0 0 0 5px #2563eb;
-        }
-
-        .header-info {
-            flex: 1;
-            padding-top: 4px;
-        }
-
-        .header-info h1 {
-            font-family: 'Sora', sans-serif;
-            font-size: 2.2em;
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            margin: 0 0 8px 0;
-            color: #0f172a;
-            letter-spacing: -0.5px;
+            font-size: 1.05em;
+            background: linear-gradient(135deg, #a5b4fc, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .affiliation-badge {
-            display: inline-block;
-            font-size: 0.78em;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: #2563eb;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-radius: 20px;
-            padding: 3px 12px;
-            margin-bottom: 14px;
-        }
-
-        .bio {
-            font-size: 0.93em;
-            color: #374151;
-            margin: 0 0 16px 0;
-            line-height: 1.8;
-        }
-
-        .contact-line {
+        .nav-links { display: flex; gap: 28px; }
+        .nav-links a {
+            color: var(--text-muted);
             font-size: 0.875em;
-            color: #6b7280;
-            margin: 0 0 16px 0;
-        }
-        .contact-line a {
-            color: #2563eb;
-        }
-
-        .header-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 4px;
-        }
-
-        .header-links a {
-            display: inline-block;
-            font-size: 0.83em;
             font-weight: 500;
-            color: #374151;
-            background: #fff;
-            border: 1px solid #d1d5db;
-            border-radius: 20px;
-            padding: 4px 14px;
-            transition: background 0.15s, border-color 0.15s, color 0.15s;
-            text-decoration: none;
+            transition: color 0.2s;
         }
-        .header-links a:hover {
-            background: #2563eb;
-            border-color: #2563eb;
-            color: #fff;
-            text-decoration: none;
-        }
+        .nav-links a:hover { color: var(--text); }
 
-        /* ── SECTION HEADINGS ── */
-        h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.72em;
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 96px 32px 72px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 10% 50%, rgba(99,102,241,0.13), transparent),
+                radial-gradient(ellipse 55% 50% at 90% 45%, rgba(34,211,238,0.08), transparent);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+        .hero-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 72px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.77em;
             font-weight: 600;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #6b7280;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 8px;
-            margin-top: 48px;
+            color: var(--accent-1);
+            margin-bottom: 18px;
+        }
+        .hero-label::before {
+            content: '';
+            width: 28px; height: 2px;
+            background: var(--accent-1);
+            border-radius: 2px;
+        }
+        .hero-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.8em, 6vw, 4.6em);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #a5b4fc 45%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 20px;
         }
-
-        /* ── INTEREST TAGS ── */
-        .tags {
+        .hero-affil {
+            font-size: 0.875em;
+            color: var(--text-muted);
+            margin-bottom: 24px;
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 8px;
-            margin-top: 0;
+            flex-wrap: wrap;
+        }
+        .dot { color: rgba(99,102,241,0.7); }
+        .hero-bio {
+            font-size: 0.935em;
+            color: #cbd5e1;
+            line-height: 1.9;
+            max-width: 560px;
+            margin-bottom: 28px;
+        }
+        .hero-email {
+            font-size: 0.85em;
+            color: var(--text-dim);
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .hero-email a { color: var(--text-muted); transition: color 0.2s; }
+        .hero-email a:hover { color: var(--accent-2); }
+        .hero-email .sep { color: var(--text-dim); }
+
+        .hero-links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            padding: 9px 22px;
+            border-radius: 100px;
+            transition: all 0.2s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #22d3ee);
+            color: #fff;
+            box-shadow: 0 0 24px rgba(99,102,241,0.35);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 36px rgba(99,102,241,0.55);
+            color: #fff;
+        }
+        .btn-ghost {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--surface-border);
+        }
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border-color: rgba(255,255,255,0.15);
         }
 
+        /* Photo */
+        .hero-photo-wrap { position: relative; }
+        .hero-photo-glow {
+            position: absolute;
+            inset: -24px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99,102,241,0.28) 0%, transparent 70%);
+            animation: glow-pulse 4s ease-in-out infinite;
+        }
+        @keyframes glow-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50%       { transform: scale(1.12); opacity: 1; }
+        }
+        .hero-photo {
+            width: 210px; height: 210px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(99,102,241,0.45);
+            box-shadow: 0 0 0 8px rgba(99,102,241,0.07), 0 0 60px rgba(99,102,241,0.2);
+        }
+
+        /* ── SECTIONS ── */
+        .section {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 80px 32px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.71em;
+            font-weight: 600;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: var(--accent-1);
+            margin-bottom: 10px;
+        }
+        .section-label::after {
+            content: '';
+            width: 36px; height: 1px;
+            background: var(--accent-1);
+            opacity: 0.45;
+        }
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.85em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            margin-bottom: 36px;
+        }
+
+        /* ── TAGS ── */
+        .tags { display: flex; flex-wrap: wrap; gap: 10px; }
         .tag {
             font-size: 0.82em;
             font-weight: 500;
-            color: #1d4ed8;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-radius: 20px;
-            padding: 3px 12px;
+            padding: 6px 16px;
+            border-radius: 100px;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.22);
+            color: #a5b4fc;
+            transition: all 0.2s;
+        }
+        .tag:hover {
+            background: rgba(99,102,241,0.2);
+            border-color: rgba(99,102,241,0.45);
+            color: #c7d2fe;
         }
 
-        /* ── RESEARCH EXPERIENCE CARDS ── */
-        .research-item {
-            background: #fff;
-            border-left: 3px solid #2563eb;
-            border-radius: 0 10px 10px 0;
-            padding: 16px 20px;
-            margin-bottom: 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        /* ── TIMELINE ── */
+        .timeline { position: relative; padding-left: 32px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 10px; bottom: 10px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-1), var(--accent-2));
+            border-radius: 2px;
+            opacity: 0.35;
         }
-
-        .research-header {
+        .timeline-item { position: relative; margin-bottom: 20px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px; top: 22px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--accent-1);
+            box-shadow: 0 0 14px rgba(99,102,241,0.7);
+        }
+        .timeline-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: border-color 0.2s;
+        }
+        .timeline-card:hover { border-color: rgba(99,102,241,0.3); }
+        .timeline-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 4px;
             flex-wrap: wrap;
-            gap: 4px;
         }
-
-        .research-institution {
+        .timeline-inst {
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
-            font-size: 0.97em;
-            color: #0f172a;
+            font-size: 1em;
+            color: var(--text);
         }
-
-        .research-date {
-            font-size: 0.78em;
+        .timeline-date {
+            font-size: 0.77em;
             font-weight: 500;
-            color: #6b7280;
-            background: #f3f4f6;
-            border-radius: 20px;
-            padding: 2px 10px;
-            white-space: nowrap;
-        }
-
-        .research-advisor {
-            font-size: 0.85em;
-            color: #6b7280;
-            margin: 2px 0 10px 0;
-        }
-
-        .research-item ul {
-            margin: 0;
-            padding-left: 18px;
-        }
-
-        .research-item ul li {
-            font-size: 0.88em;
-            color: #374151;
-            margin-bottom: 5px;
-            line-height: 1.65;
-        }
-
-        /* ── PUBLICATION CARDS ── */
-        .pub-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 12px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-        }
-
-        .pub-title-row {
-            display: flex;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 5px;
-        }
-
-        .pub-title {
-            font-weight: 600;
-            font-size: 0.97em;
-            color: #0f172a;
-            line-height: 1.4;
-        }
-
-        .pub-status {
-            display: inline-block;
-            font-size: 0.73em;
-            font-weight: 600;
-            letter-spacing: 0.03em;
-            padding: 2px 9px;
-            border-radius: 20px;
+            color: var(--accent-2);
+            background: rgba(34,211,238,0.07);
+            border: 1px solid rgba(34,211,238,0.18);
+            padding: 3px 11px;
+            border-radius: 100px;
             white-space: nowrap;
             flex-shrink: 0;
         }
-
-        .status-preprint {
-            background: #fff7ed;
-            color: #c2410c;
-            border: 1px solid #fed7aa;
+        .timeline-advisor {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+        .timeline-card ul { padding-left: 18px; margin: 0; }
+        .timeline-card ul li {
+            font-size: 0.875em;
+            color: #94a3b8;
+            margin-bottom: 6px;
+            line-height: 1.65;
         }
 
-        .status-oral {
-            background: #f0fdf4;
-            color: #15803d;
-            border: 1px solid #bbf7d0;
+        /* ── PUB CARDS ── */
+        .pub-list { display: flex; flex-direction: column; gap: 14px; }
+        .pub-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
         }
-
-        .status-ongoing {
-            background: #f0fdf4;
-            color: #15803d;
-            border: 1px solid #bbf7d0;
+        .pub-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #6366f1, #22d3ee);
+            opacity: 0;
+            transition: opacity 0.25s;
         }
+        .pub-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); }
+        .pub-card:hover::before { opacity: 1; }
 
+        .pub-title-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .pub-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.975em;
+            color: var(--text);
+            line-height: 1.45;
+            flex: 1;
+            min-width: 200px;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.72em;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 3px 11px;
+            border-radius: 100px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .badge-preprint {
+            background: rgba(251,146,60,0.1);
+            border: 1px solid rgba(251,146,60,0.28);
+            color: #fb923c;
+        }
+        .badge-oral {
+            background: rgba(34,197,94,0.09);
+            border: 1px solid rgba(34,197,94,0.28);
+            color: #4ade80;
+        }
+        .badge-ongoing {
+            background: rgba(34,211,238,0.07);
+            border: 1px solid rgba(34,211,238,0.22);
+            color: var(--accent-2);
+        }
         .pub-authors {
             font-size: 0.875em;
-            color: #6b7280;
-            margin-bottom: 4px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
         }
+        .pub-authors strong { color: #e2e8f0; font-weight: 600; }
+        .pub-venue { font-size: 0.82em; color: var(--text-dim); font-style: italic; }
+        .pub-venue a { color: var(--accent-2); font-style: normal; }
 
-        .pub-authors strong {
-            color: #374151;
-            font-weight: 600;
-        }
-
-        .pub-venue {
-            font-size: 0.83em;
-            color: #9ca3af;
-            font-style: italic;
-        }
-
-        .pub-venue a {
-            color: #2563eb;
-            font-style: normal;
-        }
-
-        /* ── ONGOING RESEARCH (lighter cards) ── */
+        /* ── ONGOING ── */
+        .ongoing-list { display: flex; flex-direction: column; gap: 10px; }
         .ongoing-card {
-            background: #fff;
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
-            padding: 14px 18px;
-            margin-bottom: 10px;
+            background: rgba(15,23,42,0.4);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 16px 20px;
+            transition: border-color 0.2s;
         }
+        .ongoing-card:hover { border-color: rgba(34,211,238,0.2); }
 
-        /* ── PROJECT GRID ── */
+        /* ── PROJECTS ── */
         .projects-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
-
         .project-card {
-            background: #fff;
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
-            padding: 16px 18px;
-            transition: transform 0.15s, box-shadow 0.15s;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 22px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
-
         .project-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.09);
+            transform: translateY(-3px);
+            border-color: rgba(99,102,241,0.3);
+            box-shadow: 0 10px 40px rgba(99,102,241,0.1);
         }
-
-        .project-header {
+        .project-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 8px;
-            margin-bottom: 8px;
         }
-
         .project-title {
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
-            font-size: 0.92em;
-            color: #0f172a;
+            font-size: 0.95em;
+            color: var(--text);
             line-height: 1.4;
         }
-
-        .project-title a {
-            color: #0f172a;
-        }
-        .project-title a:hover {
-            color: #2563eb;
-            text-decoration: none;
-        }
-
+        .project-title a { color: var(--text); }
+        .project-title a:hover { color: var(--accent-2); }
         .project-year {
-            font-size: 0.75em;
-            font-weight: 500;
-            color: #6b7280;
-            background: #f3f4f6;
-            border-radius: 20px;
-            padding: 2px 9px;
-            white-space: nowrap;
+            font-size: 0.73em;
+            font-weight: 600;
+            color: var(--accent-1);
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            padding: 2px 10px;
+            border-radius: 100px;
             flex-shrink: 0;
         }
-
-        .project-desc {
-            font-size: 0.85em;
-            color: #6b7280;
-            line-height: 1.6;
-        }
+        .project-desc { font-size: 0.855em; color: var(--text-muted); line-height: 1.65; }
 
         /* ── FOOTER ── */
         footer {
-            margin-top: 64px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
-            color: #9ca3af;
-            font-size: 0.82em;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 64px 32px 48px;
+        }
+        .footer-inner {
+            max-width: 960px;
+            margin: 0 auto;
             text-align: center;
         }
+        .footer-cta {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5em, 3vw, 2.1em);
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            background: linear-gradient(135deg, #e0e7ff, #a5b4fc 50%, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .footer-sub {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+        .footer-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .footer-meta { font-size: 0.78em; color: var(--text-dim); margin-top: 40px; }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 640px) {
-            .container { padding: 36px 20px 60px; }
-
-            .header {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                gap: 24px;
-            }
-
-            .header img { width: 140px; height: 140px; }
-
-            .header-links { justify-content: center; }
-
+        @media (max-width: 720px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
+            .hero-photo-wrap { order: -1; display: flex; justify-content: center; }
+            .hero-label::before { display: none; }
+            .hero-bio { text-align: left; }
+            .hero-links { justify-content: center; }
+            .nav-links { display: none; }
             .projects-grid { grid-template-columns: 1fr; }
-
-            .research-header { flex-direction: column; gap: 4px; }
+            .timeline { padding-left: 20px; }
+            .timeline-item::before { left: -24px; }
+            .section { padding: 56px 20px; }
         }
     </style>
 </head>
 <body>
-<div class="container">
 
-    <!-- HEADER -->
-    <div class="header">
-        <img src="me.jpeg" alt="Arnesh Banerjee">
-        <div class="header-info">
-            <h1>Arnesh Banerjee</h1>
-            <div class="affiliation-badge">B.Tech CSE (Data Science) &middot; Heritage Institute of Technology, Kolkata</div>
-            <p class="bio">
-                I am an undergraduate researcher broadly interested in the safety, alignment, and reasoning capabilities of large language models. My current work spans understanding the limitations of LLMs in mathematical reasoning, analyzing historical revisionism in LLM outputs, curriculum-augmented reinforcement learning for improving reasoning in smaller models, and medical image segmentation using hybrid CNN-Transformer architectures. I also work on multi-agent reinforcement learning, including co-evolutionary simulations for autonomous systems with a focus on AI governance. Previously, I have worked with Prof. Debotosh Bhattacharjee (Jadavpur University) on breast thermography segmentation and with Dr. Arnob Ghosh (NJIT) on safe RLHF and LLM safety benchmarking. My work has been published at AGC 2026 and is available as pre-prints on arXiv.
-            </p>
-            <p class="contact-line">
-                <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
-                &middot;
-                <a href="mailto:ab3237@njit.edu">ab3237@njit.edu</a>
-            </p>
-            <div class="header-links">
-                <a href="https://github.com/ArneshBanerjee">GitHub</a>
-                <a href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
-                <a href="Arnesh-Banerjee-CV.pdf">CV [PDF]</a>
-                <a href="LOR Combined.pdf">Recommendation Letters</a>
-            </div>
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <span class="nav-logo">Arnesh Banerjee</span>
+        <div class="nav-links">
+            <a href="#interests">Interests</a>
+            <a href="#experience">Experience</a>
+            <a href="#publications">Publications</a>
+            <a href="#projects">Projects</a>
         </div>
     </div>
+</nav>
 
-    <!-- RESEARCH INTERESTS -->
-    <h2>Research Interests</h2>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-text">
+            <div class="hero-label">Undergraduate Researcher</div>
+            <h1 class="hero-name">Arnesh<br>Banerjee</h1>
+            <p class="hero-affil">
+                B.Tech CSE (Data Science)
+                <span class="dot">·</span>
+                Heritage Institute of Technology, Kolkata
+            </p>
+            <p class="hero-bio">
+                I work at the intersection of AI safety, LLM alignment, and reasoning — building systems that are smarter, safer, and more trustworthy. My research spans mathematical reasoning in language models, historical bias in LLMs, curriculum-augmented RL for smaller models, and medical image segmentation.
+            </p>
+            <p class="hero-email">
+                <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
+                <span class="sep">/</span>
+                <a href="mailto:ab3237@njit.edu">ab3237@njit.edu</a>
+            </p>
+            <div class="hero-links">
+                <a class="btn btn-primary" href="Arnesh-Banerjee-CV.pdf">CV [PDF]</a>
+                <a class="btn btn-ghost" href="https://github.com/ArneshBanerjee">GitHub</a>
+                <a class="btn btn-ghost" href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
+                <a class="btn btn-ghost" href="LOR Combined.pdf">Rec. Letters</a>
+            </div>
+        </div>
+        <div class="hero-photo-wrap">
+            <div class="hero-photo-glow"></div>
+            <img class="hero-photo" src="me.jpeg" alt="Arnesh Banerjee">
+        </div>
+    </div>
+</section>
+
+<!-- INTERESTS -->
+<section class="section" id="interests">
+    <div class="section-label">Focus Areas</div>
+    <h2 class="section-title">Research Interests</h2>
     <div class="tags">
         <span class="tag">Multi-Agent Reinforcement Learning</span>
         <span class="tag">AI Governance</span>
@@ -419,142 +598,188 @@
         <span class="tag">Reinforcement Learning from Human Feedback</span>
         <span class="tag">Medical Imaging</span>
     </div>
+</section>
 
-    <!-- RESEARCH EXPERIENCE -->
-    <h2>Research Experience</h2>
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">Research Experience</h2>
+    <div class="timeline">
 
-    <div class="research-item">
-        <div class="research-header">
-            <span class="research-institution">Jadavpur University</span>
-            <span class="research-date">Nov 2025 – Present &middot; Remote</span>
+        <div class="timeline-item fade-up">
+            <div class="timeline-card">
+                <div class="timeline-header">
+                    <span class="timeline-inst">Jadavpur University</span>
+                    <span class="timeline-date">Nov 2025 – Present · Remote</span>
+                </div>
+                <div class="timeline-advisor">Advisor: Prof. Debotosh Bhattacharjee</div>
+                <ul>
+                    <li>Achieved 98.10% Dice and 96.39% IoU on breast thermography tumor segmentation using a ResNet34 + ASPP + ViT decoder with SE attention, evaluated via 5-fold cross-validation.</li>
+                    <li>Conducted a rigorous ablation study (20 training runs) across U-Net, ResNet-only, and hybrid architectures, demonstrating generalization trade-offs in medical imaging.</li>
+                    <li>Built a fully automated cross-validation pipeline with checkpointing, experiment logging, and reproducible training.</li>
+                </ul>
+            </div>
         </div>
-        <div class="research-advisor">Advisor: Prof. Debotosh Bhattacharjee</div>
-        <ul>
-            <li>Achieved 98.10% Dice and 96.39% IoU on breast thermography tumor segmentation using a ResNet34 + ASPP + ViT decoder with SE attention, evaluated via 5-fold cross-validation.</li>
-            <li>Conducted a rigorous ablation study (20 training runs) across U-Net, ResNet-only, and hybrid architectures, demonstrating generalization trade-offs in medical imaging.</li>
-            <li>Built a fully automated cross-validation pipeline with checkpointing, experiment logging, and reproducible training.</li>
-        </ul>
+
+        <div class="timeline-item fade-up">
+            <div class="timeline-card">
+                <div class="timeline-header">
+                    <span class="timeline-inst">New Jersey Institute of Technology</span>
+                    <span class="timeline-date">Jun – Nov 2025 · On-site / Virtual</span>
+                </div>
+                <div class="timeline-advisor">Advisor: Dr. Arnob Ghosh</div>
+                <ul>
+                    <li>Constructed a cost-model training dataset for a modified Safe RLHF pipeline with improved cost-model results.</li>
+                    <li>Designed and tested a comparative 800-datapoint safety benchmark against state-of-the-art LLMs (GPT, DeepSeek, Gemini, Qwen, Mistral).</li>
+                    <li>Demonstrated 50% higher safety compliance than ChatGPT 5 across benchmark scenarios.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timeline-item fade-up">
+            <div class="timeline-card">
+                <div class="timeline-header">
+                    <span class="timeline-inst">Heritage Institute of Technology</span>
+                    <span class="timeline-date">Oct 2024 – Mar 2025 · On-site</span>
+                </div>
+                <div class="timeline-advisor">Advisor: Ms. Arpita Talukdar</div>
+                <ul>
+                    <li>Developed a dual-stage ML framework for breast cancer diagnosis and recurrence prediction using WDBC and WPBC datasets, evaluating RF, SVM, Logistic Regression, MLP, and XGBoost with stratified 10-fold cross-validation.</li>
+                    <li>Implemented RFE and SFS feature selection with SMOTE and GridSearchCV tuning, improving WPBC accuracy to 93.67% and WDBC to 97.77%.</li>
+                    <li>Conducted comparative performance analysis and interpreted clinically relevant nuclear features with confidence intervals.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="section" id="publications">
+    <div class="section-label">Work</div>
+    <h2 class="section-title">Publications</h2>
+    <div class="pub-list">
+
+        <div class="pub-card fade-up">
+            <div class="pub-title-row">
+                <span class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models</span>
+                <span class="badge badge-preprint">Pre-print</span>
+            </div>
+            <div class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh</div>
+            <div class="pub-venue"><a href="https://arxiv.org/abs/2510.03520">arXiv: 2510.03520</a>, 2025</div>
+        </div>
+
+        <div class="pub-card fade-up">
+            <div class="pub-title-row">
+                <span class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis</span>
+                <span class="badge badge-oral">Oral · AGC 2026</span>
+            </div>
+            <div class="pub-authors">Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar</div>
+            <div class="pub-venue">4th Analytics Global Conference, March 2026 &mdash; <a href="Agc_2026_certificate.pdf">Certificate</a></div>
+        </div>
+
     </div>
 
-    <div class="research-item">
-        <div class="research-header">
-            <span class="research-institution">New Jersey Institute of Technology</span>
-            <span class="research-date">Jun – Nov 2025 &middot; On-site / Virtual</span>
+    <!-- ONGOING -->
+    <div style="margin-top: 52px;">
+        <div class="section-label">In Progress</div>
+        <h2 class="section-title" style="margin-top: 8px;">Ongoing Research</h2>
+        <div class="ongoing-list">
+
+            <div class="ongoing-card fade-up">
+                <div class="pub-title-row">
+                    <span class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation</span>
+                    <span class="badge badge-ongoing">In Progress</span>
+                </div>
+                <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee</div>
+                <div class="pub-venue">Manuscript in preparation</div>
+            </div>
+
+            <div class="ongoing-card fade-up">
+                <div class="pub-title-row">
+                    <span class="pub-title">Analyzing Historical Revisionism in LLMs in the Context of Indian History</span>
+                    <span class="badge badge-ongoing">In Progress</span>
+                </div>
+                <div class="pub-authors">Kartik Pandit, Sourav Ganguly, Arnesh Banerjee, Avirup Chakraborty, Arnob Ghosh</div>
+                <div class="pub-venue">Advisor: Prof. Arnob Ghosh</div>
+            </div>
+
+            <div class="ongoing-card fade-up">
+                <div class="pub-title-row">
+                    <span class="pub-title">Curriculum Augmented RLVR for Reasoning in Small Language Models</span>
+                    <span class="badge badge-ongoing">In Progress</span>
+                </div>
+                <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee, Anubrata Monday</div>
+                <div class="pub-venue">Advisor: Jhalak Dutta</div>
+            </div>
+
+            <div class="ongoing-card fade-up">
+                <div class="pub-title-row">
+                    <span class="pub-title">Understanding the Limitations of LLMs in Mathematical Reasoning</span>
+                    <span class="badge badge-ongoing">In Progress</span>
+                </div>
+                <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee</div>
+                <div class="pub-venue">Advisor: Prof. Subhajit Dutta</div>
+            </div>
+
         </div>
-        <div class="research-advisor">Advisor: Dr. Arnob Ghosh</div>
-        <ul>
-            <li>Constructed a cost-model training dataset for a modified Safe RLHF pipeline with improved cost-model results.</li>
-            <li>Designed and tested a comparative 800-datapoint safety benchmark against state-of-the-art LLMs (GPT, DeepSeek, Gemini, Qwen, Mistral).</li>
-            <li>Demonstrated 50% higher safety compliance than ChatGPT 5 across benchmark scenarios.</li>
-        </ul>
     </div>
+</section>
 
-    <div class="research-item">
-        <div class="research-header">
-            <span class="research-institution">Heritage Institute of Technology</span>
-            <span class="research-date">Oct 2024 – Mar 2025 &middot; On-site</span>
-        </div>
-        <div class="research-advisor">Advisor: Ms. Arpita Talukdar</div>
-        <ul>
-            <li>Developed a dual-stage ML framework for breast cancer diagnosis and recurrence prediction using WDBC and WPBC datasets, evaluating RF, SVM, Logistic Regression, MLP, and XGBoost with stratified 10-fold cross-validation.</li>
-            <li>Implemented RFE and SFS feature selection with SMOTE and GridSearchCV tuning, improving WPBC accuracy to 93.67% and WDBC to 97.77%.</li>
-            <li>Conducted comparative performance analysis and interpreted clinically relevant nuclear features with confidence intervals.</li>
-        </ul>
-    </div>
-
-    <!-- PUBLICATIONS -->
-    <h2>Publications</h2>
-
-    <div class="pub-card">
-        <div class="pub-title-row">
-            <span class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models.</span>
-            <span class="pub-status status-preprint">Pre-print</span>
-        </div>
-        <div class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh.</div>
-        <div class="pub-venue"><a href="https://arxiv.org/abs/2510.03520">arXiv: 2510.03520</a>, 2025.</div>
-    </div>
-
-    <div class="pub-card">
-        <div class="pub-title-row">
-            <span class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis.</span>
-            <span class="pub-status status-oral">Oral</span>
-        </div>
-        <div class="pub-authors">Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar.</div>
-        <div class="pub-venue">4th Analytics Global Conference (AGC 2026), March 2026. <a href="Agc_2026_certificate.pdf">[Certificate]</a></div>
-    </div>
-
-    <!-- ONGOING RESEARCH -->
-    <h2>Ongoing Research</h2>
-
-    <div class="ongoing-card">
-        <div class="pub-title-row">
-            <span class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation</span>
-            <span class="pub-status status-ongoing">In Progress</span>
-        </div>
-        <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee.</div>
-        <div class="pub-venue">Manuscript in preparation.</div>
-    </div>
-
-    <div class="ongoing-card">
-        <div class="pub-title-row">
-            <span class="pub-title">Analyzing Historical Revisionism in LLMs in the Context of Indian History</span>
-            <span class="pub-status status-ongoing">In Progress</span>
-        </div>
-        <div class="pub-authors">Kartik Pandit, Sourav Ganguly, Arnesh Banerjee, Avirup Chakraborty, Arnob Ghosh.</div>
-        <div class="pub-venue">Advisor: Prof. Arnob Ghosh</div>
-    </div>
-
-    <div class="ongoing-card">
-        <div class="pub-title-row">
-            <span class="pub-title">Curriculum Augmented RLVR for Reasoning in Small Language Models</span>
-            <span class="pub-status status-ongoing">In Progress</span>
-        </div>
-        <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee, Anubrata Monday.</div>
-        <div class="pub-venue">Advisor: Jhalak Dutta</div>
-    </div>
-
-    <div class="ongoing-card">
-        <div class="pub-title-row">
-            <span class="pub-title">Understanding the Limitations of LLMs in Mathematical Reasoning</span>
-            <span class="pub-status status-ongoing">In Progress</span>
-        </div>
-        <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee.</div>
-        <div class="pub-venue">Advisor: Prof. Subhajit Dutta</div>
-    </div>
-
-    <!-- PROJECTS -->
-    <h2>Important Projects</h2>
-
+<!-- PROJECTS -->
+<section class="section" id="projects">
+    <div class="section-label">Engineering</div>
+    <h2 class="section-title">Projects</h2>
     <div class="projects-grid">
-        <div class="project-card">
-            <div class="project-header">
+
+        <div class="project-card fade-up">
+            <div class="project-top">
                 <div class="project-title">Co-evolutionary RL for Autonomous Drone Warfare Simulation</div>
                 <span class="project-year">2026</span>
             </div>
             <div class="project-desc">Co-evolutionary multi-agent simulation using PPO reinforcement learning and behavior trees to model strategic interactions in asymmetric conflict, with self-play Elo tracking, curriculum learning, and cost asymmetry analysis.</div>
         </div>
 
-        <div class="project-card">
-            <div class="project-header">
+        <div class="project-card fade-up">
+            <div class="project-top">
                 <div class="project-title"><a href="https://github.com/ArneshBanerjee/Smart-Competency-Diagnostic-and-Candidate-Profile-Score-Calculator">Candidate Smart Profile Competency Score Calculator</a></div>
                 <span class="project-year">SIH 2024</span>
             </div>
             <div class="project-desc">ML system to predict job categories from resumes and recommend personalized courses via competency scoring.</div>
         </div>
 
-        <div class="project-card">
-            <div class="project-header">
+        <div class="project-card fade-up">
+            <div class="project-top">
                 <div class="project-title"><a href="https://github.com/ArneshBanerjee/Moonquake-Classification">Moonquake Classification Dashboard</a></div>
                 <span class="project-year">NASA 2024</span>
             </div>
             <div class="project-desc">Shiny dashboard classifying Apollo moonquake data with 93.33% accuracy using Random Forest.</div>
         </div>
+
     </div>
+</section>
 
-    <footer>
-        Last updated March 2026.
-    </footer>
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-cta">Let's build something together.</div>
+        <div class="footer-sub">Open to research collaborations, internships, and interesting conversations.</div>
+        <div class="footer-links">
+            <a class="btn btn-primary" href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">Get in touch</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
+            <a class="btn btn-ghost" href="https://github.com/ArneshBanerjee">GitHub</a>
+        </div>
+        <div class="footer-meta">Last updated March 2026.</div>
+    </div>
+</footer>
 
-</div>
+<script>
+    const observer = new IntersectionObserver(
+        entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+        { threshold: 0.08 }
+    );
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
