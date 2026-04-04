@@ -4,192 +4,431 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arnesh Banerjee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: Georgia, 'Times New Roman', serif;
-            color: #222;
-            background: #fff;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 15px;
+            color: #111827;
+            background: #f7f8fc;
             margin: 0;
             padding: 0;
-            line-height: 1.7;
+            line-height: 1.75;
         }
+
         a {
-            color: #1772d0;
+            color: #2563eb;
             text-decoration: none;
         }
         a:hover {
             text-decoration: underline;
         }
+
         .container {
-            max-width: 1100px;
+            max-width: 860px;
             margin: 0 auto;
-            padding: 50px 40px;
+            padding: 56px 32px 80px;
         }
+
+        /* ── HEADER ── */
         .header {
             display: flex;
             align-items: flex-start;
-            gap: 36px;
-            margin-bottom: 12px;
+            gap: 40px;
+            margin-bottom: 48px;
         }
+
         .header img {
-            width: 200px;
-            height: 200px;
+            width: 170px;
+            height: 170px;
             border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
+            box-shadow: 0 0 0 3px #fff, 0 0 0 5px #2563eb;
         }
+
+        .header-info {
+            flex: 1;
+            padding-top: 4px;
+        }
+
         .header-info h1 {
-            margin: 0 0 4px 0;
-            font-size: 2.1em;
-            font-weight: normal;
+            font-family: 'Sora', sans-serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: #0f172a;
             letter-spacing: -0.5px;
         }
-        .header-info .affiliation {
-            color: #444;
-            margin: 0 0 10px 0;
-            font-size: 1.02em;
+
+        .affiliation-badge {
+            display: inline-block;
+            font-size: 0.78em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #2563eb;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 20px;
+            padding: 3px 12px;
+            margin-bottom: 14px;
         }
-        .header-info .bio {
-            margin: 0 0 14px 0;
-            font-size: 0.97em;
-            color: #333;
-        }
-        .contact-line {
+
+        .bio {
             font-size: 0.93em;
-            margin: 3px 0;
-            color: #444;
+            color: #374151;
+            margin: 0 0 16px 0;
+            line-height: 1.8;
+        }
+
+        .contact-line {
+            font-size: 0.875em;
+            color: #6b7280;
+            margin: 0 0 16px 0;
         }
         .contact-line a {
-            color: #1772d0;
+            color: #2563eb;
         }
+
         .header-links {
-            margin-top: 10px;
-            font-size: 0.95em;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
         }
+
         .header-links a {
-            margin-right: 6px;
+            display: inline-block;
+            font-size: 0.83em;
+            font-weight: 500;
+            color: #374151;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            padding: 4px 14px;
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+            text-decoration: none;
         }
-        .header-links a:not(:last-child)::after {
-            content: " /";
-            color: #999;
-            margin-left: 6px;
+        .header-links a:hover {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+            text-decoration: none;
         }
+
+        /* ── SECTION HEADINGS ── */
         h2 {
-            font-size: 1.35em;
-            font-weight: normal;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 6px;
-            margin-top: 40px;
-            margin-bottom: 18px;
-            color: #111;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72em;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #6b7280;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 8px;
+            margin-top: 48px;
+            margin-bottom: 20px;
         }
-        .section-note {
-            font-size: 0.92em;
-            color: #666;
-            font-style: italic;
-            margin-bottom: 18px;
+
+        /* ── INTEREST TAGS ── */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 0;
         }
-        .pub, .project, .research-item {
-            margin-bottom: 18px;
+
+        .tag {
+            font-size: 0.82em;
+            font-weight: 500;
+            color: #1d4ed8;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 20px;
+            padding: 3px 12px;
         }
-        .pub ul, .research-item ul {
-            margin: 4px 0 0 0;
-            padding-left: 20px;
+
+        /* ── RESEARCH EXPERIENCE CARDS ── */
+        .research-item {
+            background: #fff;
+            border-left: 3px solid #2563eb;
+            border-radius: 0 10px 10px 0;
+            padding: 16px 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
-        .pub ul li, .research-item ul li {
-            font-size: 0.93em;
-            margin-bottom: 3px;
-            color: #333;
+
+        .research-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px;
         }
+
+        .research-institution {
+            font-weight: 600;
+            font-size: 0.97em;
+            color: #0f172a;
+        }
+
+        .research-date {
+            font-size: 0.78em;
+            font-weight: 500;
+            color: #6b7280;
+            background: #f3f4f6;
+            border-radius: 20px;
+            padding: 2px 10px;
+            white-space: nowrap;
+        }
+
+        .research-advisor {
+            font-size: 0.85em;
+            color: #6b7280;
+            margin: 2px 0 10px 0;
+        }
+
+        .research-item ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .research-item ul li {
+            font-size: 0.88em;
+            color: #374151;
+            margin-bottom: 5px;
+            line-height: 1.65;
+        }
+
+        /* ── PUBLICATION CARDS ── */
+        .pub-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+        }
+
+        .pub-title-row {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
         .pub-title {
-            font-weight: bold;
-            font-style: normal;
-            color: #111;
+            font-weight: 600;
+            font-size: 0.97em;
+            color: #0f172a;
+            line-height: 1.4;
         }
-        .pub-authors {
-            font-size: 0.95em;
-            color: #333;
-        }
-        .pub-venue {
-            color: #555;
-            font-size: 0.93em;
-        }
+
         .pub-status {
             display: inline-block;
-            font-size: 0.82em;
-            padding: 1px 8px;
-            border-radius: 3px;
-            font-weight: bold;
-            vertical-align: middle;
+            font-size: 0.73em;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 2px 9px;
+            border-radius: 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
-        .status-ongoing {
-            background: #e8f4e8;
-            color: #2d6a2d;
-            border: 1px solid #b8dab8;
-        }
+
         .status-preprint {
-            background: #fff3e0;
-            color: #b36b00;
-            border: 1px solid #ffe0b2;
+            background: #fff7ed;
+            color: #c2410c;
+            border: 1px solid #fed7aa;
         }
-        .research-role {
-            color: #555;
-            font-size: 0.93em;
+
+        .status-oral {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
         }
-        .research-item strong a {
-            color: #111;
+
+        .status-ongoing {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
         }
+
+        .pub-authors {
+            font-size: 0.875em;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .pub-authors strong {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .pub-venue {
+            font-size: 0.83em;
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .pub-venue a {
+            color: #2563eb;
+            font-style: normal;
+        }
+
+        /* ── ONGOING RESEARCH (lighter cards) ── */
+        .ongoing-card {
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+        }
+
+        /* ── PROJECT GRID ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .project-card {
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            padding: 16px 18px;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.09);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .project-title {
+            font-weight: 600;
+            font-size: 0.92em;
+            color: #0f172a;
+            line-height: 1.4;
+        }
+
+        .project-title a {
+            color: #0f172a;
+        }
+        .project-title a:hover {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .project-year {
+            font-size: 0.75em;
+            font-weight: 500;
+            color: #6b7280;
+            background: #f3f4f6;
+            border-radius: 20px;
+            padding: 2px 9px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .project-desc {
+            font-size: 0.85em;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* ── FOOTER ── */
         footer {
-            margin-top: 56px;
-            padding-top: 16px;
-            border-top: 1px solid #eee;
-            color: #999;
-            font-size: 0.84em;
+            margin-top: 64px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #9ca3af;
+            font-size: 0.82em;
+            text-align: center;
         }
-        @media (max-width: 600px) {
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .container { padding: 36px 20px 60px; }
+
             .header {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+                gap: 24px;
             }
-            .header img {
-                width: 170px;
-                height: 170px;
-            }
+
+            .header img { width: 140px; height: 140px; }
+
+            .header-links { justify-content: center; }
+
+            .projects-grid { grid-template-columns: 1fr; }
+
+            .research-header { flex-direction: column; gap: 4px; }
         }
     </style>
 </head>
 <body>
 <div class="container">
 
+    <!-- HEADER -->
     <div class="header">
         <img src="me.jpeg" alt="Arnesh Banerjee">
         <div class="header-info">
             <h1>Arnesh Banerjee</h1>
-            <p class="affiliation">B.Tech in CSE (Data Science), Heritage Institute of Technology, Kolkata</p>
+            <div class="affiliation-badge">B.Tech CSE (Data Science) &middot; Heritage Institute of Technology, Kolkata</div>
             <p class="bio">
                 I am an undergraduate researcher broadly interested in the safety, alignment, and reasoning capabilities of large language models. My current work spans understanding the limitations of LLMs in mathematical reasoning, analyzing historical revisionism in LLM outputs, curriculum-augmented reinforcement learning for improving reasoning in smaller models, and medical image segmentation using hybrid CNN-Transformer architectures. I also work on multi-agent reinforcement learning, including co-evolutionary simulations for autonomous systems with a focus on AI governance. Previously, I have worked with Prof. Debotosh Bhattacharjee (Jadavpur University) on breast thermography segmentation and with Dr. Arnob Ghosh (NJIT) on safe RLHF and LLM safety benchmarking. My work has been published at AGC 2026 and is available as pre-prints on arXiv.
             </p>
-            <p class="contact-line">Email: <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a> &middot; <a href="mailto:ab3237@njit.edu">ab3237@njit.edu</a></p>
-            <p class="header-links">
+            <p class="contact-line">
+                <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
+                &middot;
+                <a href="mailto:ab3237@njit.edu">ab3237@njit.edu</a>
+            </p>
+            <div class="header-links">
                 <a href="https://github.com/ArneshBanerjee">GitHub</a>
                 <a href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
                 <a href="Arnesh-Banerjee-CV.pdf">CV [PDF]</a>
-                <a href="LOR Combined.pdf">Recommendation Letters [PDF]</a>
-            </p>
+                <a href="LOR Combined.pdf">Recommendation Letters</a>
+            </div>
         </div>
     </div>
 
+    <!-- RESEARCH INTERESTS -->
     <h2>Research Interests</h2>
-    <p style="font-size: 0.95em; color: #333; margin-top: 0;">
-        Multi-Agent Reinforcement Learning &middot; AI Governance &middot; Applied Machine Learning &middot; AI Safety &amp; Alignment &middot; Large Language Models &middot; Reinforcement Learning from Human Feedback &middot; Medical Imaging
-    </p>
+    <div class="tags">
+        <span class="tag">Multi-Agent Reinforcement Learning</span>
+        <span class="tag">AI Governance</span>
+        <span class="tag">Applied Machine Learning</span>
+        <span class="tag">AI Safety &amp; Alignment</span>
+        <span class="tag">Large Language Models</span>
+        <span class="tag">Reinforcement Learning from Human Feedback</span>
+        <span class="tag">Medical Imaging</span>
+    </div>
 
+    <!-- RESEARCH EXPERIENCE -->
     <h2>Research Experience</h2>
 
     <div class="research-item">
-        <strong>Jadavpur University</strong> &mdash; Advisor: Prof. Debotosh Bhattacharjee<br>
-        <span class="research-role">November 2025 &ndash; Present &middot; Remote</span>
+        <div class="research-header">
+            <span class="research-institution">Jadavpur University</span>
+            <span class="research-date">Nov 2025 – Present &middot; Remote</span>
+        </div>
+        <div class="research-advisor">Advisor: Prof. Debotosh Bhattacharjee</div>
         <ul>
             <li>Achieved 98.10% Dice and 96.39% IoU on breast thermography tumor segmentation using a ResNet34 + ASPP + ViT decoder with SE attention, evaluated via 5-fold cross-validation.</li>
             <li>Conducted a rigorous ablation study (20 training runs) across U-Net, ResNet-only, and hybrid architectures, demonstrating generalization trade-offs in medical imaging.</li>
@@ -198,8 +437,11 @@
     </div>
 
     <div class="research-item">
-        <strong>New Jersey Institute of Technology</strong> &mdash; Advisor: Dr. Arnob Ghosh<br>
-        <span class="research-role">June 2025 &ndash; November 2025 &middot; On-site / Virtual</span>
+        <div class="research-header">
+            <span class="research-institution">New Jersey Institute of Technology</span>
+            <span class="research-date">Jun – Nov 2025 &middot; On-site / Virtual</span>
+        </div>
+        <div class="research-advisor">Advisor: Dr. Arnob Ghosh</div>
         <ul>
             <li>Constructed a cost-model training dataset for a modified Safe RLHF pipeline with improved cost-model results.</li>
             <li>Designed and tested a comparative 800-datapoint safety benchmark against state-of-the-art LLMs (GPT, DeepSeek, Gemini, Qwen, Mistral).</li>
@@ -208,8 +450,11 @@
     </div>
 
     <div class="research-item">
-        <strong>Heritage Institute of Technology</strong> &mdash; Advisor: Ms. Arpita Talukdar<br>
-        <span class="research-role">October 2024 &ndash; March 2025 &middot; On-site</span>
+        <div class="research-header">
+            <span class="research-institution">Heritage Institute of Technology</span>
+            <span class="research-date">Oct 2024 – Mar 2025 &middot; On-site</span>
+        </div>
+        <div class="research-advisor">Advisor: Ms. Arpita Talukdar</div>
         <ul>
             <li>Developed a dual-stage ML framework for breast cancer diagnosis and recurrence prediction using WDBC and WPBC datasets, evaluating RF, SVM, Logistic Regression, MLP, and XGBoost with stratified 10-fold cross-validation.</li>
             <li>Implemented RFE and SFS feature selection with SMOTE and GridSearchCV tuning, improving WPBC accuracy to 93.67% and WDBC to 97.77%.</li>
@@ -217,66 +462,93 @@
         </ul>
     </div>
 
+    <!-- PUBLICATIONS -->
     <h2>Publications</h2>
 
-    <div class="pub">
-        <span class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models.</span>
-        <span class="pub-status status-preprint">Pre-print</span><br>
-        <span class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh.</span><br>
-        <span class="pub-venue"><a href="https://arxiv.org/abs/2510.03520">arXiv: 2510.03520</a>, 2025.</span>
+    <div class="pub-card">
+        <div class="pub-title-row">
+            <span class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models.</span>
+            <span class="pub-status status-preprint">Pre-print</span>
+        </div>
+        <div class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh.</div>
+        <div class="pub-venue"><a href="https://arxiv.org/abs/2510.03520">arXiv: 2510.03520</a>, 2025.</div>
     </div>
 
-    <div class="pub">
-        <span class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis.</span><br>
-        <span class="pub-authors">Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar.</span><br>
-        <span class="pub-venue">4th Analytics Global Conference (AGC 2026), March 2026. <strong>Oral.</strong> <a href="Agc_2026_certificate.pdf">[Certificate]</a></span>
+    <div class="pub-card">
+        <div class="pub-title-row">
+            <span class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis.</span>
+            <span class="pub-status status-oral">Oral</span>
+        </div>
+        <div class="pub-authors">Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar.</div>
+        <div class="pub-venue">4th Analytics Global Conference (AGC 2026), March 2026. <a href="Agc_2026_certificate.pdf">[Certificate]</a></div>
     </div>
 
+    <!-- ONGOING RESEARCH -->
     <h2>Ongoing Research</h2>
 
-    <div class="pub">
-        <span class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation</span>
-        <span class="pub-status status-ongoing">In Progress</span><br>
-        <span class="pub-authors"><strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee.</span><br>
-        <span class="pub-venue">Manuscript in preparation.</span>
+    <div class="ongoing-card">
+        <div class="pub-title-row">
+            <span class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation</span>
+            <span class="pub-status status-ongoing">In Progress</span>
+        </div>
+        <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee.</div>
+        <div class="pub-venue">Manuscript in preparation.</div>
     </div>
 
-    <div class="pub">
-        <span class="pub-title">Analyzing Historical Revisionism in LLMs in the Context of Indian History</span>
-        <span class="pub-status status-ongoing">In Progress</span><br>
-        <span class="pub-authors">Kartik Pandit, Sourav Ganguly, Arnesh Banerjee, Avirup Chakraborty, Arnob Ghosh.</span><br>
-        <span class="pub-venue">Advisor: Prof. Arnob Ghosh</span>
+    <div class="ongoing-card">
+        <div class="pub-title-row">
+            <span class="pub-title">Analyzing Historical Revisionism in LLMs in the Context of Indian History</span>
+            <span class="pub-status status-ongoing">In Progress</span>
+        </div>
+        <div class="pub-authors">Kartik Pandit, Sourav Ganguly, Arnesh Banerjee, Avirup Chakraborty, Arnob Ghosh.</div>
+        <div class="pub-venue">Advisor: Prof. Arnob Ghosh</div>
     </div>
 
-    <div class="pub">
-        <span class="pub-title">Curriculum Augmented RLVR for Reasoning in Small Language Models</span>
-        <span class="pub-status status-ongoing">In Progress</span><br>
-        <span class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee, Anubrata Monday.</span><br>
-        <span class="pub-venue">Advisor: Jhalak Dutta</span>
+    <div class="ongoing-card">
+        <div class="pub-title-row">
+            <span class="pub-title">Curriculum Augmented RLVR for Reasoning in Small Language Models</span>
+            <span class="pub-status status-ongoing">In Progress</span>
+        </div>
+        <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee, Anubrata Monday.</div>
+        <div class="pub-venue">Advisor: Jhalak Dutta</div>
     </div>
 
-    <div class="pub">
-        <span class="pub-title">Understanding the Limitations of LLMs in Mathematical Reasoning</span>
-        <span class="pub-status status-ongoing">In Progress</span><br>
-        <span class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee.</span><br>
-        <span class="pub-venue">Advisor: Prof. Subhajit Dutta</span>
+    <div class="ongoing-card">
+        <div class="pub-title-row">
+            <span class="pub-title">Understanding the Limitations of LLMs in Mathematical Reasoning</span>
+            <span class="pub-status status-ongoing">In Progress</span>
+        </div>
+        <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee.</div>
+        <div class="pub-venue">Advisor: Prof. Subhajit Dutta</div>
     </div>
 
+    <!-- PROJECTS -->
     <h2>Important Projects</h2>
 
-    <div class="project">
-        <strong>Co-evolutionary RL for Autonomous Drone Warfare Simulation.</strong> (2026)<br>
-        <span style="font-size: 0.93em; color: #333;">Co-evolutionary multi-agent simulation using PPO reinforcement learning and behavior trees to model strategic interactions in asymmetric conflict, with self-play Elo tracking, curriculum learning, and cost asymmetry analysis.</span>
-    </div>
+    <div class="projects-grid">
+        <div class="project-card">
+            <div class="project-header">
+                <div class="project-title">Co-evolutionary RL for Autonomous Drone Warfare Simulation</div>
+                <span class="project-year">2026</span>
+            </div>
+            <div class="project-desc">Co-evolutionary multi-agent simulation using PPO reinforcement learning and behavior trees to model strategic interactions in asymmetric conflict, with self-play Elo tracking, curriculum learning, and cost asymmetry analysis.</div>
+        </div>
 
-    <div class="project">
-        <strong><a href="https://github.com/ArneshBanerjee/Smart-Competency-Diagnostic-and-Candidate-Profile-Score-Calculator">Candidate Smart Profile Competency Score Calculator.</a></strong> (SIH 2024)<br>
-        <span style="font-size: 0.93em; color: #333;">ML system to predict job categories from resumes and recommend personalized courses via competency scoring.</span>
-    </div>
+        <div class="project-card">
+            <div class="project-header">
+                <div class="project-title"><a href="https://github.com/ArneshBanerjee/Smart-Competency-Diagnostic-and-Candidate-Profile-Score-Calculator">Candidate Smart Profile Competency Score Calculator</a></div>
+                <span class="project-year">SIH 2024</span>
+            </div>
+            <div class="project-desc">ML system to predict job categories from resumes and recommend personalized courses via competency scoring.</div>
+        </div>
 
-    <div class="project">
-        <strong><a href="https://github.com/ArneshBanerjee/Moonquake-Classification">Moonquake Classification Dashboard.</a></strong> (NASA Space Apps 2024)<br>
-        <span style="font-size: 0.93em; color: #333;">Shiny dashboard classifying Apollo moonquake data with 93.33% accuracy using Random Forest.</span>
+        <div class="project-card">
+            <div class="project-header">
+                <div class="project-title"><a href="https://github.com/ArneshBanerjee/Moonquake-Classification">Moonquake Classification Dashboard</a></div>
+                <span class="project-year">NASA 2024</span>
+            </div>
+            <div class="project-desc">Shiny dashboard classifying Apollo moonquake data with 93.33% accuracy using Random Forest.</div>
+        </div>
     </div>
 
     <footer>
