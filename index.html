@@ -6,581 +6,740 @@
     <title>Arnesh Banerjee</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #030712;
+            --surface: rgba(15, 23, 42, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --accent-1: #6366f1;
+            --accent-2: #22d3ee;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
+
         html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', system-ui, sans-serif;
-            font-size: 15.5px;
-            color: #1c1b18;
-            background: #f5f4f0;
-            line-height: 1.7;
+            font-size: 15px;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.75;
         }
 
-        a { color: #0047ab; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        a { color: var(--accent-2); text-decoration: none; }
+        a:hover { color: #67e8f9; }
 
-        /* ── NAV ─────────────────────────────── */
+        /* ── NAV ── */
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 100;
-            background: rgba(245, 244, 240, 0.93);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid #d6d2cc;
+            padding: 0 32px;
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .nav-inner {
-            max-width: 1040px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 0 36px;
-            height: 52px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .nav-name {
-            font-size: 0.78em;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #1c1b18;
-            text-decoration: none;
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.05em;
+            background: linear-gradient(135deg, #a5b4fc, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .nav-links { display: flex; gap: 28px; }
         .nav-links a {
-            font-size: 0.8em;
-            color: #7a7775;
-            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.875em;
             font-weight: 500;
-            transition: color 0.15s;
+            transition: color 0.2s;
         }
-        .nav-links a:hover { color: #1c1b18; }
+        .nav-links a:hover { color: var(--text); }
 
-        /* ── HERO ────────────────────────────── */
+        /* ── HERO ── */
         .hero {
-            max-width: 1040px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 96px 32px 72px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 10% 50%, rgba(99,102,241,0.13), transparent),
+                radial-gradient(ellipse 55% 50% at 90% 45%, rgba(34,211,238,0.08), transparent);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+        .hero-inner {
+            max-width: 960px;
             margin: 0 auto;
-            padding: 108px 36px 72px;
+            width: 100%;
             display: grid;
-            grid-template-columns: 1fr 188px;
-            gap: 52px;
-            align-items: start;
+            grid-template-columns: 1fr auto;
+            gap: 72px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.77em;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-1);
+            margin-bottom: 18px;
+        }
+        .hero-label::before {
+            content: '';
+            width: 28px; height: 2px;
+            background: var(--accent-1);
+            border-radius: 2px;
         }
         .hero-name {
-            font-family: 'Instrument Serif', Georgia, serif;
-            font-style: italic;
-            font-weight: 400;
-            font-size: clamp(3.2em, 7vw, 5.8em);
-            line-height: 1.0;
-            letter-spacing: -1.5px;
-            color: #1c1b18;
-            margin-bottom: 22px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.8em, 6vw, 4.6em);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #a5b4fc 45%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
         }
-        .hero-meta {
-            font-size: 0.84em;
-            color: #7a7775;
-            margin-bottom: 26px;
+        .hero-affil {
+            font-size: 0.875em;
+            color: var(--text-muted);
+            margin-bottom: 24px;
             display: flex;
-            gap: 8px;
             align-items: center;
+            gap: 8px;
             flex-wrap: wrap;
         }
-        .sep { color: #c8c4be; }
+        .dot { color: rgba(99,102,241,0.7); }
         .hero-bio {
-            font-size: 0.96em;
-            color: #3d3c38;
-            line-height: 1.88;
-            max-width: 550px;
+            font-size: 0.935em;
+            color: #cbd5e1;
+            line-height: 1.9;
+            max-width: 560px;
             margin-bottom: 28px;
         }
-        .hero-contact {
-            font-size: 0.84em;
-            color: #7a7775;
-            margin-bottom: 26px;
-        }
-        .hero-contact a { color: #0047ab; }
-        .hero-contact .sep { margin: 0 6px; }
-        .hero-links { display: flex; gap: 8px; flex-wrap: wrap; }
-        .btn {
-            display: inline-block;
-            font-size: 0.82em;
-            font-weight: 500;
-            padding: 7px 18px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: all 0.15s;
-            cursor: pointer;
-        }
-        .btn-solid { background: #1c1b18; color: #f5f4f0; }
-        .btn-solid:hover { background: #0047ab; text-decoration: none; color: #fff; }
-        .btn-outline {
-            border: 1px solid #ccc8c2;
-            color: #4a4843;
-            background: transparent;
-        }
-        .btn-outline:hover {
-            border-color: #1c1b18;
-            color: #1c1b18;
-            text-decoration: none;
-        }
-        .hero-photo-col { padding-top: 12px; }
-        .hero-photo {
-            width: 100%;
-            aspect-ratio: 1;
-            border-radius: 10px;
-            object-fit: cover;
-            display: block;
-            border: 1px solid #d6d2cc;
-        }
-
-        /* ── SECTIONS ────────────────────────── */
-        .section-wrap {
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: 60px 36px;
-            border-top: 1px solid #d6d2cc;
-        }
-        .section-head {
+        .hero-email {
+            font-size: 0.85em;
+            color: var(--text-dim);
+            margin-bottom: 32px;
             display: flex;
             align-items: center;
-            gap: 18px;
-            margin-bottom: 36px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
-        .section-head h2 {
-            font-size: 0.7em;
+        .hero-email a { color: var(--text-muted); transition: color 0.2s; }
+        .hero-email a:hover { color: var(--accent-2); }
+        .hero-email .sep { color: var(--text-dim); }
+
+        .hero-links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+            padding: 9px 22px;
+            border-radius: 100px;
+            transition: all 0.2s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #22d3ee);
+            color: #fff;
+            box-shadow: 0 0 24px rgba(99,102,241,0.35);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 36px rgba(99,102,241,0.55);
+            color: #fff;
+        }
+        .btn-ghost {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--surface-border);
+        }
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        /* Photo */
+        .hero-photo-wrap { position: relative; }
+        .hero-photo-glow {
+            position: absolute;
+            inset: -24px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99,102,241,0.28) 0%, transparent 70%);
+            animation: glow-pulse 4s ease-in-out infinite;
+        }
+        @keyframes glow-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50%       { transform: scale(1.12); opacity: 1; }
+        }
+        .hero-photo {
+            width: 210px; height: 210px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(99,102,241,0.45);
+            box-shadow: 0 0 0 8px rgba(99,102,241,0.07), 0 0 60px rgba(99,102,241,0.2);
+        }
+
+        /* ── SECTIONS ── */
+        .section {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 80px 32px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.71em;
             font-weight: 600;
             letter-spacing: 0.13em;
             text-transform: uppercase;
-            color: #0047ab;
-            white-space: nowrap;
+            color: var(--accent-1);
+            margin-bottom: 10px;
         }
-        .section-head::after {
+        .section-label::after {
             content: '';
-            flex: 1;
-            height: 1px;
-            background: #d6d2cc;
+            width: 36px; height: 1px;
+            background: var(--accent-1);
+            opacity: 0.45;
+        }
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.85em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            margin-bottom: 36px;
         }
 
-        /* ── TAGS ────────────────────────────── */
-        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        /* ── TAGS ── */
+        .tags { display: flex; flex-wrap: wrap; gap: 10px; }
         .tag {
             font-size: 0.82em;
             font-weight: 500;
-            padding: 5px 14px;
-            border-radius: 5px;
-            background: #eceae5;
-            color: #4a4843;
-            border: 1px solid #d6d2cc;
-            transition: background 0.15s, color 0.15s, border-color 0.15s;
+            padding: 6px 16px;
+            border-radius: 100px;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.22);
+            color: #a5b4fc;
+            transition: all 0.2s;
         }
         .tag:hover {
-            background: #1c1b18;
-            color: #f5f4f0;
-            border-color: #1c1b18;
+            background: rgba(99,102,241,0.2);
+            border-color: rgba(99,102,241,0.45);
+            color: #c7d2fe;
         }
 
-        /* ── EXPERIENCE ──────────────────────── */
-        .exp-list { display: flex; flex-direction: column; gap: 28px; }
-        .exp-item {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            column-gap: 32px;
-            padding-left: 18px;
-            border-left: 2.5px solid #0047ab;
+        /* ── TIMELINE ── */
+        .timeline { position: relative; padding-left: 32px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 10px; bottom: 10px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-1), var(--accent-2));
+            border-radius: 2px;
+            opacity: 0.35;
         }
-        .exp-inst {
+        .timeline-item { position: relative; margin-bottom: 20px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px; top: 22px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--accent-1);
+            box-shadow: 0 0 14px rgba(99,102,241,0.7);
+        }
+        .timeline-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: border-color 0.2s;
+        }
+        .timeline-card:hover { border-color: rgba(99,102,241,0.3); }
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+        .timeline-inst {
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
-            font-size: 0.97em;
-            color: #1c1b18;
-            margin-bottom: 2px;
+            font-size: 1em;
+            color: var(--text);
         }
-        .exp-advisor {
-            font-size: 0.85em;
-            color: #7a7775;
-            margin-bottom: 13px;
-        }
-        .exp-date {
-            font-size: 0.79em;
-            color: #9a9895;
-            text-align: right;
-            padding-top: 3px;
+        .timeline-date {
+            font-size: 0.77em;
+            font-weight: 500;
+            color: var(--accent-2);
+            background: rgba(34,211,238,0.07);
+            border: 1px solid rgba(34,211,238,0.18);
+            padding: 3px 11px;
+            border-radius: 100px;
             white-space: nowrap;
-            line-height: 1.4;
+            flex-shrink: 0;
         }
-        .exp-item ul { padding-left: 16px; margin: 0; grid-column: 1 / -1; }
-        .exp-item ul li {
+        .timeline-advisor {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+        .timeline-card ul { padding-left: 18px; margin: 0; }
+        .timeline-card ul li {
             font-size: 0.875em;
-            color: #5a5855;
-            margin-bottom: 5px;
+            color: #94a3b8;
+            margin-bottom: 6px;
             line-height: 1.65;
         }
 
-        /* ── PUBLICATIONS ────────────────────── */
-        .pub-list { display: flex; flex-direction: column; gap: 22px; }
-        .pub-item { display: flex; gap: 14px; align-items: flex-start; }
-        .pub-badge {
-            font-size: 0.67em;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 4px;
-            white-space: nowrap;
-            flex-shrink: 0;
-            margin-top: 3px;
+        /* ── PUB CARDS ── */
+        .pub-list { display: flex; flex-direction: column; gap: 14px; }
+        .pub-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
         }
-        .badge-preprint { background: #fff7ed; color: #b45309; border: 1px solid #fed7aa; }
-        .badge-oral     { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
-        .badge-ongoing  { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-        .pub-title {
-            font-weight: 600;
-            font-size: 0.955em;
-            color: #1c1b18;
-            line-height: 1.45;
-            margin-bottom: 5px;
+        .pub-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #6366f1, #22d3ee);
+            opacity: 0;
+            transition: opacity 0.25s;
         }
-        .pub-authors {
-            font-size: 0.865em;
-            color: #7a7775;
-            margin-bottom: 4px;
-        }
-        .pub-authors strong { color: #3d3c38; font-weight: 600; }
-        .pub-venue {
-            font-size: 0.835em;
-            color: #9a9895;
-            font-style: italic;
-        }
-        .pub-venue a { color: #0047ab; font-style: normal; }
+        .pub-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); }
+        .pub-card:hover::before { opacity: 1; }
 
-        /* Divider between published + ongoing */
-        .ongoing-section { margin-top: 52px; }
-
-        /* ── PROJECTS ────────────────────────── */
-        .proj-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-        }
-        .proj-item {
-            padding: 22px 24px 22px 0;
-            border-top: 1px solid #d6d2cc;
-        }
-        .proj-item:nth-child(even) {
-            padding-left: 24px;
-            padding-right: 0;
-            border-left: 1px solid #d6d2cc;
-        }
-        .proj-header {
+        .pub-title-row {
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            gap: 12px;
-            margin-bottom: 7px;
-        }
-        .proj-title {
-            font-weight: 600;
-            font-size: 0.93em;
-            color: #1c1b18;
-            line-height: 1.35;
-        }
-        .proj-title a { color: #1c1b18; }
-        .proj-title a:hover { color: #0047ab; text-decoration: none; }
-        .proj-year { font-size: 0.78em; color: #b0aca6; white-space: nowrap; flex-shrink: 0; }
-        .proj-desc { font-size: 0.86em; color: #7a7775; line-height: 1.62; }
-
-        /* ── FOOTER ──────────────────────────── */
-        footer {
-            border-top: 1px solid #d6d2cc;
-            margin-top: 0;
-        }
-        .footer-inner {
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: 52px 36px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 24px;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
             flex-wrap: wrap;
         }
-        .footer-left {}
-        .footer-cta {
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            font-size: 1.65em;
-            color: #1c1b18;
-            line-height: 1.2;
+        .pub-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.975em;
+            color: var(--text);
+            line-height: 1.45;
+            flex: 1;
+            min-width: 200px;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.72em;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 3px 11px;
+            border-radius: 100px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .badge-preprint {
+            background: rgba(251,146,60,0.1);
+            border: 1px solid rgba(251,146,60,0.28);
+            color: #fb923c;
+        }
+        .badge-oral {
+            background: rgba(34,197,94,0.09);
+            border: 1px solid rgba(34,197,94,0.28);
+            color: #4ade80;
+        }
+        .badge-ongoing {
+            background: rgba(34,211,238,0.07);
+            border: 1px solid rgba(34,211,238,0.22);
+            color: var(--accent-2);
+        }
+        .pub-authors {
+            font-size: 0.875em;
+            color: var(--text-muted);
             margin-bottom: 6px;
         }
-        .footer-sub { font-size: 0.84em; color: #7a7775; }
-        .footer-right { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-        .footer-meta {
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: 0 36px 28px;
-            font-size: 0.77em;
-            color: #b0aca6;
-        }
+        .pub-authors strong { color: #e2e8f0; font-weight: 600; }
+        .pub-venue { font-size: 0.82em; color: var(--text-dim); font-style: italic; }
+        .pub-venue a { color: var(--accent-2); font-style: normal; }
 
-        /* ── SCROLL ANIMATION ────────────────── */
+        /* ── ONGOING ── */
+        .ongoing-list { display: flex; flex-direction: column; gap: 10px; }
+        .ongoing-card {
+            background: rgba(15,23,42,0.4);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 16px 20px;
+            transition: border-color 0.2s;
+        }
+        .ongoing-card:hover { border-color: rgba(34,211,238,0.2); }
+
+        /* ── PROJECTS ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            padding: 22px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+        .project-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(99,102,241,0.3);
+            box-shadow: 0 10px 40px rgba(99,102,241,0.1);
+        }
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .project-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 0.95em;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .project-title a { color: var(--text); }
+        .project-title a:hover { color: var(--accent-2); }
+        .project-year {
+            font-size: 0.73em;
+            font-weight: 600;
+            color: var(--accent-1);
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            padding: 2px 10px;
+            border-radius: 100px;
+            flex-shrink: 0;
+        }
+        .project-desc { font-size: 0.855em; color: var(--text-muted); line-height: 1.65; }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 64px 32px 48px;
+        }
+        .footer-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .footer-cta {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5em, 3vw, 2.1em);
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            background: linear-gradient(135deg, #e0e7ff, #a5b4fc 50%, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .footer-sub {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+        .footer-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .footer-meta { font-size: 0.78em; color: var(--text-dim); margin-top: 40px; }
+
+        /* ── SCROLL ANIMATIONS ── */
         .fade-up {
             opacity: 0;
-            transform: translateY(14px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(22px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
         }
-        .fade-up.visible { opacity: 1; transform: none; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* ── RESPONSIVE ──────────────────────── */
-        @media (max-width: 680px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding-top: 84px;
-                gap: 28px;
-            }
-            .hero-photo-col { order: -1; max-width: 120px; }
-            .exp-item { grid-template-columns: 1fr; }
-            .exp-date { text-align: left; margin-bottom: 10px; }
-            .proj-grid { grid-template-columns: 1fr; }
-            .proj-item:nth-child(even) { padding-left: 0; border-left: none; }
-            .footer-inner { flex-direction: column; align-items: flex-start; }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 720px) {
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
+            .hero-photo-wrap { order: -1; display: flex; justify-content: center; }
+            .hero-label::before { display: none; }
+            .hero-bio { text-align: left; }
+            .hero-links { justify-content: center; }
             .nav-links { display: none; }
-            .section-wrap { padding: 48px 20px; }
-            .hero { padding-left: 20px; padding-right: 20px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .timeline { padding-left: 20px; }
+            .timeline-item::before { left: -24px; }
+            .section { padding: 56px 20px; }
         }
     </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
     <div class="nav-inner">
-        <a class="nav-name" href="#top">Arnesh Banerjee</a>
+        <span class="nav-logo">Arnesh Banerjee</span>
         <div class="nav-links">
             <a href="#interests">Interests</a>
             <a href="#experience">Experience</a>
             <a href="#publications">Publications</a>
-            <a href="#projects">Projects</a>
         </div>
     </div>
 </nav>
 
-<header class="hero" id="top">
-    <div class="hero-main">
-        <h1 class="hero-name">Arnesh<br>Banerjee</h1>
-        <div class="hero-meta">
-            <span>Undergraduate Researcher</span>
-            <span class="sep">·</span>
-            <span>B.Tech CSE (Data Science)</span>
-            <span class="sep">·</span>
-            <span>Heritage Institute of Technology, Kolkata</span>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-text">
+            <div class="hero-label">Undergraduate Researcher</div>
+            <h1 class="hero-name">Arnesh<br>Banerjee</h1>
+            <p class="hero-affil">
+                B.Tech CSE (Data Science)
+                <span class="dot">·</span>
+                Heritage Institute of Technology, Kolkata
+            </p>
+            <p class="hero-bio">
+                I am an undergraduate researcher broadly interested in multi-agent reinforcement learning, co-evolutionary dynamics, and AI safety. My current work spans autonomous systems governance, RL environments and simulation, and applied ML — including medical image segmentation using hybrid CNN-Transformer architectures and safety benchmarking of large language models.
+            </p>
+            <p class="hero-email">
+                <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
+            </p>
+            <div class="hero-links">
+                <a class="btn btn-primary" href="Arnesh_Banerjee_CV_1pg.pdf">CV [PDF]</a>
+                <a class="btn btn-ghost" href="https://github.com/ArneshBanerjee">GitHub</a>
+                <a class="btn btn-ghost" href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
+            </div>
         </div>
-        <p class="hero-bio">
-            I am broadly interested in the safety, alignment, and reasoning capabilities of large language models. My current work spans understanding limitations of LLMs in mathematical reasoning, analyzing historical revisionism in LLM outputs, curriculum-augmented reinforcement learning for improving reasoning in smaller models, and medical image segmentation using hybrid CNN-Transformer architectures. I also work on multi-agent reinforcement learning with a focus on AI governance. Previously, I worked with Prof. Debotosh Bhattacharjee (Jadavpur University) and Dr. Arnob Ghosh (NJIT) on safe RLHF and LLM safety benchmarking. My work has been published at AGC 2026 and is available as pre-prints on arXiv.
-        </p>
-        <p class="hero-contact">
-            <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
-            <span class="sep">·</span>
-            <a href="mailto:ab3237@njit.edu">ab3237@njit.edu</a>
-        </p>
-        <div class="hero-links">
-            <a class="btn btn-solid" href="Arnesh-Banerjee-CV.pdf">CV [PDF]</a>
-            <a class="btn btn-outline" href="https://github.com/ArneshBanerjee">GitHub</a>
-            <a class="btn btn-outline" href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
-            <a class="btn btn-outline" href="LOR Combined.pdf">Rec. Letters</a>
+        <div class="hero-photo-wrap">
+            <div class="hero-photo-glow"></div>
+            <img class="hero-photo" src="me.jpeg" alt="Arnesh Banerjee">
         </div>
     </div>
-    <div class="hero-photo-col">
-        <img class="hero-photo" src="me.jpeg" alt="Arnesh Banerjee">
-    </div>
-</header>
+</section>
 
 <!-- INTERESTS -->
-<section class="section-wrap" id="interests">
-    <div class="section-head"><h2>Research Interests</h2></div>
+<section class="section" id="interests">
+    <div class="section-label">Focus Areas</div>
+    <h2 class="section-title">Research Interests</h2>
     <div class="tags">
-        <span class="tag">Multi-Agent Reinforcement Learning</span>
-        <span class="tag">AI Governance</span>
-        <span class="tag">Applied Machine Learning</span>
+        <span class="tag">Multi-Agent Reinforcement Learning (MARL)</span>
+        <span class="tag">RL Environments &amp; Simulation</span>
+        <span class="tag">Co-Evolutionary Dynamics</span>
         <span class="tag">AI Safety &amp; Alignment</span>
-        <span class="tag">Large Language Models</span>
-        <span class="tag">Reinforcement Learning from Human Feedback</span>
-        <span class="tag">Medical Imaging</span>
+        <span class="tag">Autonomous Systems Governance</span>
+        <span class="tag">Applied ML</span>
     </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section class="section-wrap" id="experience">
-    <div class="section-head"><h2>Research Experience</h2></div>
-    <div class="exp-list">
+<section class="section" id="experience">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">Research Experience</h2>
+    <div class="timeline">
 
-        <div class="exp-item fade-up">
-            <div>
-                <div class="exp-inst">Jadavpur University</div>
-                <div class="exp-advisor">Advisor: Prof. Debotosh Bhattacharjee</div>
+        <div class="timeline-item fade-up">
+            <div class="timeline-card">
+                <div class="timeline-header">
+                    <span class="timeline-inst">Jadavpur University</span>
+                    <span class="timeline-date">Nov 2025 – Present · Remote</span>
+                </div>
+                <div class="timeline-advisor">Advisor: Prof. Debotosh Bhattacharjee</div>
+                <ul>
+                    <li>Achieved 98.10% Dice and 96.39% IoU on breast thermography tumor segmentation using a ResNet34 + ASPP + ViT decoder with SE attention, evaluated via 5-fold cross-validation.</li>
+                    <li>Conducted a rigorous ablation study (20 training runs) across U-Net, ResNet-only, and hybrid architectures, demonstrating generalization trade-offs in medical imaging.</li>
+                    <li>Built a fully automated cross-validation pipeline with checkpointing, experiment logging, and reproducible training.</li>
+                </ul>
             </div>
-            <div class="exp-date">Nov 2025 – Present<br>Remote</div>
-            <ul>
-                <li>Achieved 98.10% Dice and 96.39% IoU on breast thermography tumor segmentation using a ResNet34 + ASPP + ViT decoder with SE attention, evaluated via 5-fold cross-validation.</li>
-                <li>Conducted a rigorous ablation study (20 training runs) across U-Net, ResNet-only, and hybrid architectures, demonstrating generalization trade-offs in medical imaging.</li>
-                <li>Built a fully automated cross-validation pipeline with checkpointing, experiment logging, and reproducible training.</li>
-            </ul>
         </div>
 
-        <div class="exp-item fade-up">
-            <div>
-                <div class="exp-inst">New Jersey Institute of Technology</div>
-                <div class="exp-advisor">Advisor: Dr. Arnob Ghosh</div>
+        <div class="timeline-item fade-up">
+            <div class="timeline-card">
+                <div class="timeline-header">
+                    <span class="timeline-inst">New Jersey Institute of Technology <a href="NJIT-certificate.pdf" style="font-size:0.8em;font-weight:500;color:var(--accent-2);margin-left:6px;">[Certificate]</a></span>
+                    <span class="timeline-date">Jun – Jul 2025, Aug – Nov 2025 · On-site / Virtual</span>
+                </div>
+                <div class="timeline-advisor">Advisor: Prof. Arnob Ghosh</div>
+                <ul>
+                    <li>Constructed a cost-model training dataset for a modified Safe RLHF pipeline with improved cost-model results.</li>
+                    <li>Designed and tested a comparative 800-datapoint safety benchmark against state-of-the-art LLMs (GPT, DeepSeek, Gemini, Qwen, Mistral).</li>
+                    <li>Demonstrated 50% higher safety compliance than ChatGPT 5 across benchmark scenarios.</li>
+                </ul>
             </div>
-            <div class="exp-date">Jun – Nov 2025<br>On-site / Virtual</div>
-            <ul>
-                <li>Constructed a cost-model training dataset for a modified Safe RLHF pipeline with improved cost-model results.</li>
-                <li>Designed and tested a comparative 800-datapoint safety benchmark against state-of-the-art LLMs (GPT, DeepSeek, Gemini, Qwen, Mistral).</li>
-                <li>Demonstrated 50% higher safety compliance than ChatGPT 5 across benchmark scenarios.</li>
-            </ul>
         </div>
 
-        <div class="exp-item fade-up">
-            <div>
-                <div class="exp-inst">Heritage Institute of Technology</div>
-                <div class="exp-advisor">Advisor: Ms. Arpita Talukdar</div>
+        <div class="timeline-item fade-up">
+            <div class="timeline-card">
+                <div class="timeline-header">
+                    <span class="timeline-inst">Heritage Institute of Technology</span>
+                    <span class="timeline-date">Oct 2024 – Mar 2025 · On-site</span>
+                </div>
+                <div class="timeline-advisor">Advisor: Prof. Arpita Talukdar</div>
+                <ul>
+                    <li>Developed a dual-stage ML framework for breast cancer diagnosis and recurrence prediction using WDBC and WPBC datasets, evaluating RF, SVM, Logistic Regression, MLP, and XGBoost with stratified 10-fold cross-validation.</li>
+                    <li>Implemented RFE and SFS feature selection with SMOTE and GridSearchCV tuning, improving WPBC accuracy to 93.67% and WDBC to 97.77%.</li>
+                    <li>Conducted comparative performance analysis and interpreted clinically relevant nuclear features with confidence intervals.</li>
+                </ul>
             </div>
-            <div class="exp-date">Oct 2024 – Mar 2025<br>On-site</div>
-            <ul>
-                <li>Developed a dual-stage ML framework for breast cancer diagnosis and recurrence prediction using WDBC and WPBC datasets, evaluating RF, SVM, Logistic Regression, MLP, and XGBoost with stratified 10-fold cross-validation.</li>
-                <li>Implemented RFE and SFS feature selection with SMOTE and GridSearchCV tuning, improving WPBC accuracy to 93.67% and WDBC to 97.77%.</li>
-                <li>Conducted comparative performance analysis and interpreted clinically relevant nuclear features with confidence intervals.</li>
-            </ul>
         </div>
 
     </div>
 </section>
 
 <!-- PUBLICATIONS -->
-<section class="section-wrap" id="publications">
-    <div class="section-head"><h2>Publications</h2></div>
+<section class="section" id="publications">
+    <div class="section-label">Work</div>
+    <h2 class="section-title">Publications</h2>
     <div class="pub-list">
 
-        <div class="pub-item fade-up">
-            <span class="pub-badge badge-preprint">Pre-print</span>
-            <div>
-                <div class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models</div>
-                <div class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh</div>
-                <div class="pub-venue"><a href="https://arxiv.org/abs/2510.03520">arXiv: 2510.03520</a>, 2025</div>
+        <div class="pub-card fade-up">
+            <div class="pub-title-row">
+                <span class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis</span>
+                <span class="badge badge-oral">Oral</span>
             </div>
-        </div>
-
-        <div class="pub-item fade-up">
-            <span class="pub-badge badge-oral">Oral</span>
-            <div>
-                <div class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis</div>
-                <div class="pub-authors">Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar</div>
-                <div class="pub-venue">4th Analytics Global Conference (AGC 2026), March 2026 &mdash; <a href="Agc_2026_certificate.pdf">Certificate</a></div>
-            </div>
+            <div class="pub-authors">Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar. 2026.</div>
+            <div class="pub-venue">In the proceedings of the 4th Analytics Global Conference (AGC 2026), March 2026</div>
         </div>
 
     </div>
 
-    <div class="ongoing-section">
-        <div class="section-head"><h2>Ongoing Research</h2></div>
+    <!-- PRE-PRINTS -->
+    <div style="margin-top: 52px;">
+        <div class="section-label">Pre-prints</div>
+        <h2 class="section-title" style="margin-top: 8px;">Pre-prints</h2>
         <div class="pub-list">
 
-            <div class="pub-item fade-up">
-                <span class="pub-badge badge-ongoing">In Progress</span>
-                <div>
-                    <div class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation</div>
-                    <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee</div>
-                    <div class="pub-venue">Manuscript in preparation</div>
+            <div class="pub-card fade-up">
+                <div class="pub-title-row">
+                    <span class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models</span>
+                    <span class="badge badge-preprint">Pre-print</span>
                 </div>
+                <div class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh. 2025.</div>
+                <div class="pub-venue">arXiv preprint <a href="https://arxiv.org/abs/2510.03520">arXiv:2510.03520</a></div>
             </div>
 
-            <div class="pub-item fade-up">
-                <span class="pub-badge badge-ongoing">In Progress</span>
-                <div>
-                    <div class="pub-title">Analyzing Historical Revisionism in LLMs in the Context of Indian History</div>
-                    <div class="pub-authors">Kartik Pandit, Sourav Ganguly, Arnesh Banerjee, Avirup Chakraborty, Arnob Ghosh</div>
-                    <div class="pub-venue">Advisor: Prof. Arnob Ghosh</div>
+            <div class="pub-card fade-up">
+                <div class="pub-title-row">
+                    <span class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation</span>
+                    <span class="badge badge-preprint">Pre-print</span>
                 </div>
-            </div>
-
-            <div class="pub-item fade-up">
-                <span class="pub-badge badge-ongoing">In Progress</span>
-                <div>
-                    <div class="pub-title">Curriculum Augmented RLVR for Reasoning in Small Language Models</div>
-                    <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee, Anubrata Monday</div>
-                    <div class="pub-venue">Advisor: Jhalak Dutta</div>
-                </div>
-            </div>
-
-            <div class="pub-item fade-up">
-                <span class="pub-badge badge-ongoing">In Progress</span>
-                <div>
-                    <div class="pub-title">Understanding the Limitations of LLMs in Mathematical Reasoning</div>
-                    <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee</div>
-                    <div class="pub-venue">Advisor: Prof. Subhajit Dutta</div>
-                </div>
+                <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee</div>
+                <div class="pub-venue">Advisor: Prof. Debotosh Bhattacharjee</div>
             </div>
 
         </div>
     </div>
-</section>
 
-<!-- PROJECTS -->
-<section class="section-wrap" id="projects">
-    <div class="section-head"><h2>Projects</h2></div>
-    <div class="proj-grid">
+    <!-- ONGOING -->
+    <div style="margin-top: 52px;">
+        <div class="section-label">In Progress</div>
+        <h2 class="section-title" style="margin-top: 8px;">Independent &amp; Ongoing Research</h2>
+        <div class="ongoing-list">
 
-        <div class="proj-item fade-up">
-            <div class="proj-header">
-                <div class="proj-title">Co-evolutionary RL for Autonomous Drone Warfare Simulation</div>
-                <span class="proj-year">2026</span>
+            <div class="ongoing-card fade-up">
+                <div class="pub-title-row">
+                    <span class="pub-title">Co-evolutionary Multi Agent RL for Autonomous Drone Warfare Simulation</span>
+                    <span class="badge badge-ongoing">Ongoing</span>
+                </div>
+                <div class="pub-authors"><strong>Arnesh Banerjee</strong></div>
             </div>
-            <div class="proj-desc">Co-evolutionary multi-agent simulation using PPO reinforcement learning and behavior trees to model strategic interactions in asymmetric conflict, with self-play Elo tracking, curriculum learning, and cost asymmetry analysis.</div>
-        </div>
 
-        <div class="proj-item fade-up">
-            <div class="proj-header">
-                <div class="proj-title"><a href="https://github.com/ArneshBanerjee/Smart-Competency-Diagnostic-and-Candidate-Profile-Score-Calculator">Candidate Smart Profile Competency Score Calculator</a></div>
-                <span class="proj-year">SIH 2024</span>
+            <div class="ongoing-card fade-up">
+                <div class="pub-title-row">
+                    <span class="pub-title">Analyzing Historical Revisionism in LLMs in the Context of Indian History</span>
+                    <span class="badge badge-ongoing">Ongoing</span>
+                </div>
+                <div class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Avirup Chakraborty, Arnob Ghosh</div>
+                <div class="pub-venue">Advisor: Dr. Arnob Ghosh</div>
             </div>
-            <div class="proj-desc">ML system to predict job categories from resumes and recommend personalized courses via competency scoring.</div>
-        </div>
 
-        <div class="proj-item fade-up">
-            <div class="proj-header">
-                <div class="proj-title"><a href="https://github.com/ArneshBanerjee/Moonquake-Classification">Moonquake Classification Dashboard</a></div>
-                <span class="proj-year">NASA 2024</span>
-            </div>
-            <div class="proj-desc">Shiny dashboard classifying Apollo moonquake data with 93.33% accuracy using Random Forest.</div>
         </div>
-
     </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
     <div class="footer-inner">
-        <div class="footer-left">
-            <div class="footer-cta">Let's work together.</div>
-            <div class="footer-sub">Open to research collaborations, internships, and interesting problems.</div>
+        <div class="footer-cta">Open to collaborations.</div>
+        <div class="footer-sub">Research collaborations, internships, and interesting problems.</div>
+        <div class="footer-links">
+            <a class="btn btn-primary" href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">Get in touch</a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
+            <a class="btn btn-ghost" href="https://github.com/ArneshBanerjee">GitHub</a>
         </div>
-        <div class="footer-right">
-            <a class="btn btn-solid" href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">Get in touch</a>
-            <a class="btn btn-outline" href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
-            <a class="btn btn-outline" href="https://github.com/ArneshBanerjee">GitHub</a>
-        </div>
+        <div class="footer-meta">Last updated March 2026.</div>
     </div>
-    <div class="footer-meta">Last updated March 2026.</div>
 </footer>
 
 <script>
-    const io = new IntersectionObserver(
+    const observer = new IntersectionObserver(
         entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-        { threshold: 0.07 }
+        { threshold: 0.08 }
     );
-    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
 
-</body>
 </html>
