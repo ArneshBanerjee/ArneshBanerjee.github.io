@@ -1,582 +1,864 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arnesh Banerjee</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Arnesh Banerjee</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
 
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            font-size: 15.5px;
-            color: #1c1b18;
-            background: #f5f4f0;
-            line-height: 1.75;
-        }
+            body {
+                font-family: "Inter", system-ui, sans-serif;
+                font-size: 15.5px;
+                color: #1c1b18;
+                background: #f5f4f0;
+                line-height: 1.75;
+            }
 
-        a { color: #0047ab; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+            a {
+                color: #0047ab;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
 
-        /* ── NAV ── */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            padding: 0 32px;
-            background: rgba(245, 244, 240, 0.93);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid #d6d2cc;
-        }
-        .nav-inner {
-            max-width: 960px;
-            margin: 0 auto;
-            height: 52px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .nav-logo {
-            font-weight: 600;
-            font-size: 0.9em;
-            color: #1c1b18;
-            letter-spacing: -0.2px;
-        }
-        .nav-links { display: flex; gap: 28px; }
-        .nav-links a {
-            color: #7a7775;
-            font-size: 0.84em;
-            font-weight: 500;
-            transition: color 0.15s;
-            text-decoration: none;
-        }
-        .nav-links a:hover { color: #1c1b18; text-decoration: none; }
+            /* ── NAV ── */
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;
+                padding: 0 32px;
+                background: rgba(245, 244, 240, 0.93);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-bottom: 1px solid #d6d2cc;
+            }
+            .nav-inner {
+                max-width: 960px;
+                margin: 0 auto;
+                height: 52px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .nav-logo {
+                font-weight: 600;
+                font-size: 0.9em;
+                color: #1c1b18;
+                letter-spacing: -0.2px;
+            }
+            .nav-links {
+                display: flex;
+                gap: 28px;
+            }
+            .nav-links a {
+                color: #7a7775;
+                font-size: 0.84em;
+                font-weight: 500;
+                transition: color 0.15s;
+                text-decoration: none;
+            }
+            .nav-links a:hover {
+                color: #1c1b18;
+                text-decoration: none;
+            }
 
-        /* ── HERO ── */
-        .hero {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 108px 32px 72px;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 56px;
-            align-items: start;
-        }
-        .hero-name {
-            font-size: clamp(2.6em, 6vw, 4em);
-            font-weight: 700;
-            line-height: 1.05;
-            letter-spacing: -1.5px;
-            color: #1c1b18;
-            margin-bottom: 20px;
-        }
-        .hero-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.77em;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #0047ab;
-            margin-bottom: 16px;
-        }
-        .hero-label::before {
-            content: '';
-            width: 24px; height: 2px;
-            background: #0047ab;
-            border-radius: 2px;
-        }
-        .hero-affil {
-            font-size: 0.85em;
-            color: #7a7775;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .dot { color: #c8c4be; }
-        .hero-bio {
-            font-size: 0.95em;
-            color: #3d3c38;
-            line-height: 1.85;
-            max-width: 540px;
-            margin-bottom: 28px;
-        }
-        .hero-email {
-            font-size: 0.84em;
-            color: #7a7775;
-            margin-bottom: 28px;
-        }
-        .hero-email a { color: #0047ab; }
-        .hero-links { display: flex; flex-wrap: wrap; gap: 8px; }
+            /* ── HERO ── */
+            .hero {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 108px 32px 72px;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 56px;
+                align-items: start;
+            }
+            .hero-name {
+                font-size: clamp(2.6em, 6vw, 4em);
+                font-weight: 700;
+                line-height: 1.05;
+                letter-spacing: -1.5px;
+                color: #1c1b18;
+                margin-bottom: 20px;
+            }
+            .hero-label {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 0.77em;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #0047ab;
+                margin-bottom: 16px;
+            }
+            .hero-label::before {
+                content: "";
+                width: 24px;
+                height: 2px;
+                background: #0047ab;
+                border-radius: 2px;
+            }
+            .hero-affil {
+                font-size: 0.85em;
+                color: #7a7775;
+                margin-bottom: 24px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .dot {
+                color: #c8c4be;
+            }
+            .hero-bio {
+                font-size: 0.95em;
+                color: #3d3c38;
+                line-height: 1.85;
+                max-width: 540px;
+                margin-bottom: 28px;
+            }
+            .hero-email {
+                font-size: 0.84em;
+                color: #7a7775;
+                margin-bottom: 28px;
+            }
+            .hero-email a {
+                color: #0047ab;
+            }
+            .hero-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
 
-        .btn {
-            display: inline-block;
-            font-size: 0.82em;
-            font-weight: 500;
-            padding: 7px 18px;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: all 0.15s;
-            cursor: pointer;
-        }
-        .btn:hover { text-decoration: none; }
-        .btn-primary { background: #1c1b18; color: #f5f4f0; }
-        .btn-primary:hover { background: #0047ab; color: #fff; }
-        .btn-ghost {
-            border: 1px solid #ccc8c2;
-            color: #4a4843;
-            background: transparent;
-        }
-        .btn-ghost:hover { border-color: #1c1b18; color: #1c1b18; }
+            .btn {
+                display: inline-block;
+                font-size: 0.82em;
+                font-weight: 500;
+                padding: 7px 18px;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: all 0.15s;
+                cursor: pointer;
+            }
+            .btn:hover {
+                text-decoration: none;
+            }
+            .btn-primary {
+                background: #1c1b18;
+                color: #f5f4f0;
+            }
+            .btn-primary:hover {
+                background: #0047ab;
+                color: #fff;
+            }
+            .btn-ghost {
+                border: 1px solid #ccc8c2;
+                color: #4a4843;
+                background: transparent;
+            }
+            .btn-ghost:hover {
+                border-color: #1c1b18;
+                color: #1c1b18;
+            }
 
-        /* Photo */
-        .hero-photo-wrap { padding-top: 8px; }
-        .hero-photo {
-            width: 190px; height: 190px;
-            border-radius: 10px;
-            object-fit: cover;
-            display: block;
-            border: 1px solid #d6d2cc;
-        }
+            /* Photo */
+            .hero-photo-wrap {
+                padding-top: 8px;
+            }
+            .hero-photo {
+                width: 190px;
+                height: 190px;
+                border-radius: 10px;
+                object-fit: cover;
+                display: block;
+                border: 1px solid #d6d2cc;
+            }
 
-        /* ── SECTIONS ── */
-        .section {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 60px 32px;
-            border-top: 1px solid #d6d2cc;
-        }
-        .section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.7em;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #0047ab;
-            margin-bottom: 10px;
-        }
-        .section-label::after {
-            content: '';
-            width: 36px; height: 1px;
-            background: #0047ab;
-            opacity: 0.35;
-        }
-        .section-title {
-            font-size: 1.6em;
-            font-weight: 700;
-            letter-spacing: -0.4px;
-            color: #1c1b18;
-            margin-bottom: 32px;
-        }
+            /* ── SECTIONS ── */
+            .section {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 60px 32px;
+                border-top: 1px solid #d6d2cc;
+            }
+            .section-label {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 0.7em;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #0047ab;
+                margin-bottom: 10px;
+            }
+            .section-label::after {
+                content: "";
+                width: 36px;
+                height: 1px;
+                background: #0047ab;
+                opacity: 0.35;
+            }
+            .section-title {
+                font-size: 1.6em;
+                font-weight: 700;
+                letter-spacing: -0.4px;
+                color: #1c1b18;
+                margin-bottom: 32px;
+            }
 
-        /* ── TAGS ── */
-        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag {
-            font-size: 0.82em;
-            font-weight: 500;
-            padding: 5px 14px;
-            border-radius: 5px;
-            background: #eceae5;
-            color: #4a4843;
-            border: 1px solid #d6d2cc;
-            transition: background 0.15s, color 0.15s, border-color 0.15s;
-        }
-        .tag:hover {
-            background: #1c1b18;
-            color: #f5f4f0;
-            border-color: #1c1b18;
-        }
+            /* ── TAGS ── */
+            .tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .tag {
+                font-size: 0.82em;
+                font-weight: 500;
+                padding: 5px 14px;
+                border-radius: 5px;
+                background: #eceae5;
+                color: #4a4843;
+                border: 1px solid #d6d2cc;
+                transition:
+                    background 0.15s,
+                    color 0.15s,
+                    border-color 0.15s;
+            }
+            .tag:hover {
+                background: #1c1b18;
+                color: #f5f4f0;
+                border-color: #1c1b18;
+            }
 
-        /* ── TIMELINE ── */
-        .timeline { position: relative; padding-left: 28px; }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 10px; bottom: 10px;
-            width: 2px;
-            background: #0047ab;
-            border-radius: 2px;
-            opacity: 0.3;
-        }
-        .timeline-item { position: relative; margin-bottom: 20px; }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -32px; top: 22px;
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: #0047ab;
-        }
-        .timeline-card {
-            background: #fff;
-            border: 1px solid #e5e2dc;
-            border-radius: 10px;
-            padding: 20px 24px;
-            transition: border-color 0.15s;
-        }
-        .timeline-card:hover { border-color: #b0aca6; }
-        .timeline-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 4px;
-            flex-wrap: wrap;
-        }
-        .timeline-inst {
-            font-weight: 600;
-            font-size: 0.97em;
-            color: #1c1b18;
-        }
-        .timeline-inst a {
-            font-size: 0.82em;
-            font-weight: 500;
-            color: #0047ab;
-            margin-left: 6px;
-        }
-        .timeline-date {
-            font-size: 0.77em;
-            font-weight: 500;
-            color: #7a7775;
-            background: #f0eeea;
-            border: 1px solid #e5e2dc;
-            padding: 3px 11px;
-            border-radius: 5px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-        .timeline-advisor {
-            font-size: 0.85em;
-            color: #7a7775;
-            margin-bottom: 14px;
-        }
-        .timeline-card ul { padding-left: 18px; margin: 0; }
-        .timeline-card ul li {
-            font-size: 0.875em;
-            color: #5a5855;
-            margin-bottom: 5px;
-            line-height: 1.65;
-        }
+            /* ── TIMELINE ── */
+            .timeline {
+                position: relative;
+                padding-left: 28px;
+            }
+            .timeline::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 10px;
+                bottom: 10px;
+                width: 2px;
+                background: #0047ab;
+                border-radius: 2px;
+                opacity: 0.3;
+            }
+            .timeline-item {
+                position: relative;
+                margin-bottom: 20px;
+            }
+            .timeline-item:last-child {
+                margin-bottom: 0;
+            }
+            .timeline-item::before {
+                content: "";
+                position: absolute;
+                left: -32px;
+                top: 22px;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #0047ab;
+            }
+            .timeline-card {
+                background: #fff;
+                border: 1px solid #e5e2dc;
+                border-radius: 10px;
+                padding: 20px 24px;
+                transition: border-color 0.15s;
+            }
+            .timeline-card:hover {
+                border-color: #b0aca6;
+            }
+            .timeline-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 12px;
+                margin-bottom: 4px;
+                flex-wrap: wrap;
+            }
+            .timeline-inst {
+                font-weight: 600;
+                font-size: 0.97em;
+                color: #1c1b18;
+            }
+            .timeline-inst a {
+                font-size: 0.82em;
+                font-weight: 500;
+                color: #0047ab;
+                margin-left: 6px;
+            }
+            .timeline-date {
+                font-size: 0.77em;
+                font-weight: 500;
+                color: #7a7775;
+                background: #f0eeea;
+                border: 1px solid #e5e2dc;
+                padding: 3px 11px;
+                border-radius: 5px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .timeline-advisor {
+                font-size: 0.85em;
+                color: #7a7775;
+                margin-bottom: 14px;
+            }
+            .timeline-card ul {
+                padding-left: 18px;
+                margin: 0;
+            }
+            .timeline-card ul li {
+                font-size: 0.875em;
+                color: #5a5855;
+                margin-bottom: 5px;
+                line-height: 1.65;
+            }
 
-        /* ── PUB CARDS ── */
-        .pub-list { display: flex; flex-direction: column; gap: 14px; }
-        .pub-card {
-            background: #fff;
-            border: 1px solid #e5e2dc;
-            border-radius: 10px;
-            padding: 18px 22px;
-            transition: border-color 0.15s;
-        }
-        .pub-card:hover { border-color: #b0aca6; }
-        .pub-title-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-        }
-        .pub-title {
-            font-weight: 600;
-            font-size: 0.96em;
-            color: #1c1b18;
-            line-height: 1.45;
-            flex: 1;
-            min-width: 200px;
-        }
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            font-size: 0.7em;
-            font-weight: 600;
-            letter-spacing: 0.03em;
-            padding: 3px 10px;
-            border-radius: 5px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-        .badge-preprint { background: #fff7ed; color: #b45309; border: 1px solid #fed7aa; }
-        .badge-oral     { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
-        .badge-ongoing  { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-        .pub-authors {
-            font-size: 0.87em;
-            color: #7a7775;
-            margin-bottom: 5px;
-        }
-        .pub-authors strong { color: #3d3c38; font-weight: 600; }
-        .pub-venue { font-size: 0.82em; color: #9a9895; font-style: italic; }
-        .pub-venue a { color: #0047ab; font-style: normal; }
+            /* ── PUB CARDS ── */
+            .pub-list {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+            .pub-card {
+                background: #fff;
+                border: 1px solid #e5e2dc;
+                border-radius: 10px;
+                padding: 18px 22px;
+                transition: border-color 0.15s;
+            }
+            .pub-card:hover {
+                border-color: #b0aca6;
+            }
+            .pub-title-row {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 8px;
+                flex-wrap: wrap;
+            }
+            .pub-title {
+                font-weight: 600;
+                font-size: 0.96em;
+                color: #1c1b18;
+                line-height: 1.45;
+                flex: 1;
+                min-width: 200px;
+            }
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                font-size: 0.7em;
+                font-weight: 600;
+                letter-spacing: 0.03em;
+                padding: 3px 10px;
+                border-radius: 5px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .badge-preprint {
+                background: #fff7ed;
+                color: #b45309;
+                border: 1px solid #fed7aa;
+            }
+            .badge-oral {
+                background: #f0fdf4;
+                color: #15803d;
+                border: 1px solid #bbf7d0;
+            }
+            .badge-ongoing {
+                background: #eff6ff;
+                color: #1d4ed8;
+                border: 1px solid #bfdbfe;
+            }
+            .pub-authors {
+                font-size: 0.87em;
+                color: #7a7775;
+                margin-bottom: 5px;
+            }
+            .pub-authors strong {
+                color: #3d3c38;
+                font-weight: 600;
+            }
+            .pub-venue {
+                font-size: 0.82em;
+                color: #9a9895;
+                font-style: italic;
+            }
+            .pub-venue a {
+                color: #0047ab;
+                font-style: normal;
+            }
 
-        /* ── ONGOING ── */
-        .ongoing-list { display: flex; flex-direction: column; gap: 10px; }
-        .ongoing-card {
-            background: #fafaf7;
-            border: 1px solid #e5e2dc;
-            border-radius: 10px;
-            padding: 16px 20px;
-            transition: border-color 0.15s;
-        }
-        .ongoing-card:hover { border-color: #b0aca6; }
+            /* ── ONGOING ── */
+            .ongoing-list {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .ongoing-card {
+                background: #fafaf7;
+                border: 1px solid #e5e2dc;
+                border-radius: 10px;
+                padding: 16px 20px;
+                transition: border-color 0.15s;
+            }
+            .ongoing-card:hover {
+                border-color: #b0aca6;
+            }
 
-        /* ── FOOTER ── */
-        footer {
-            border-top: 1px solid #d6d2cc;
-            padding: 52px 32px 40px;
-        }
-        .footer-inner {
-            max-width: 960px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .footer-cta {
-            font-size: 1.5em;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            color: #1c1b18;
-            margin-bottom: 8px;
-        }
-        .footer-sub {
-            font-size: 0.88em;
-            color: #7a7775;
-            margin-bottom: 24px;
-        }
-        .footer-links { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-        .footer-meta { font-size: 0.77em; color: #b0aca6; margin-top: 36px; }
+            /* ── FOOTER ── */
+            footer {
+                border-top: 1px solid #d6d2cc;
+                padding: 52px 32px 40px;
+            }
+            .footer-inner {
+                max-width: 960px;
+                margin: 0 auto;
+                text-align: center;
+            }
+            .footer-cta {
+                font-size: 1.5em;
+                font-weight: 700;
+                letter-spacing: -0.3px;
+                color: #1c1b18;
+                margin-bottom: 8px;
+            }
+            .footer-sub {
+                font-size: 0.88em;
+                color: #7a7775;
+                margin-bottom: 24px;
+            }
+            .footer-links {
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .footer-meta {
+                font-size: 0.77em;
+                color: #b0aca6;
+                margin-top: 36px;
+            }
 
-        /* ── SCROLL ANIMATIONS ── */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(14px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        .fade-up.visible { opacity: 1; transform: none; }
+            /* ── SCROLL ANIMATIONS ── */
+            .fade-up {
+                opacity: 0;
+                transform: translateY(14px);
+                transition:
+                    opacity 0.5s ease,
+                    transform 0.5s ease;
+            }
+            .fade-up.visible {
+                opacity: 1;
+                transform: none;
+            }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 680px) {
-            .hero { grid-template-columns: 1fr; padding-top: 84px; gap: 24px; }
-            .hero-photo-wrap { order: -1; }
-            .hero-photo { width: 120px; height: 120px; }
-            .hero-label::before { display: none; }
-            .nav-links { display: none; }
-            .timeline { padding-left: 20px; }
-            .timeline-item::before { left: -24px; }
-            .section { padding: 48px 20px; }
-            .hero { padding-left: 20px; padding-right: 20px; }
-        }
-    </style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav>
-    <div class="nav-inner">
-        <span class="nav-logo">Arnesh Banerjee</span>
-        <div class="nav-links">
-            <a href="#interests">Interests</a>
-            <a href="#experience">Experience</a>
-            <a href="#publications">Publications</a>
-        </div>
-    </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="top">
-    <div class="hero-text">
-        <div class="hero-label">Undergraduate Researcher</div>
-        <h1 class="hero-name">Arnesh<br>Banerjee</h1>
-        <p class="hero-affil">
-            B.Tech CSE (Data Science)
-            <span class="dot">·</span>
-            Heritage Institute of Technology, Kolkata
-        </p>
-        <p class="hero-bio">
-            I am an undergraduate researcher broadly interested in multi-agent reinforcement learning, co-evolutionary dynamics, and AI safety. My current work spans autonomous systems governance, RL environments and simulation, and applied ML — including medical image segmentation using hybrid CNN-Transformer architectures and safety benchmarking of large language models.
-        </p>
-        <p class="hero-email">
-            <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
-        </p>
-        <div class="hero-links">
-            <a class="btn btn-primary" href="Arnesh_Banerjee_CV_1pg.pdf">CV [PDF]</a>
-            <a class="btn btn-ghost" href="LOR Combined.pdf">Rec. Letters</a>
-            <a class="btn btn-ghost" href="https://github.com/ArneshBanerjee">GitHub</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
-        </div>
-    </div>
-    <div class="hero-photo-wrap">
-        <img class="hero-photo" src="me.jpeg" alt="Arnesh Banerjee">
-    </div>
-</section>
-
-<!-- INTERESTS -->
-<section class="section" id="interests">
-    <div class="section-label">Focus Areas</div>
-    <h2 class="section-title">Research Interests</h2>
-    <div class="tags">
-        <span class="tag">Multi-Agent Reinforcement Learning (MARL)</span>
-        <span class="tag">RL Environments &amp; Simulation</span>
-        <span class="tag">Co-Evolutionary Dynamics</span>
-        <span class="tag">AI Safety &amp; Alignment</span>
-        <span class="tag">Autonomous Systems Governance</span>
-        <span class="tag">Applied ML</span>
-    </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section class="section" id="experience">
-    <div class="section-label">Background</div>
-    <h2 class="section-title">Research Experience</h2>
-    <div class="timeline">
-
-        <div class="timeline-item fade-up">
-            <div class="timeline-card">
-                <div class="timeline-header">
-                    <span class="timeline-inst">Jadavpur University</span>
-                    <span class="timeline-date">Nov 2025 – Present · Remote</span>
+            /* ── RESPONSIVE ── */
+            @media (max-width: 680px) {
+                .hero {
+                    grid-template-columns: 1fr;
+                    padding-top: 84px;
+                    gap: 24px;
+                }
+                .hero-photo-wrap {
+                    order: -1;
+                }
+                .hero-photo {
+                    width: 120px;
+                    height: 120px;
+                }
+                .hero-label::before {
+                    display: none;
+                }
+                .nav-links {
+                    display: none;
+                }
+                .timeline {
+                    padding-left: 20px;
+                }
+                .timeline-item::before {
+                    left: -24px;
+                }
+                .section {
+                    padding: 48px 20px;
+                }
+                .hero {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- NAV -->
+        <nav>
+            <div class="nav-inner">
+                <span class="nav-logo">Arnesh Banerjee</span>
+                <div class="nav-links">
+                    <a href="#interests">Interests</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#publications">Publications</a>
                 </div>
-                <div class="timeline-advisor">Advisor: Prof. Debotosh Bhattacharjee</div>
-                <ul>
-                    <li>Achieved 98.10% Dice and 96.39% IoU on breast thermography tumor segmentation using a ResNet34 + ASPP + ViT decoder with SE attention, evaluated via 5-fold cross-validation.</li>
-                    <li>Conducted a rigorous ablation study (20 training runs) across U-Net, ResNet-only, and hybrid architectures, demonstrating generalization trade-offs in medical imaging.</li>
-                    <li>Built a fully automated cross-validation pipeline with checkpointing, experiment logging, and reproducible training.</li>
-                </ul>
             </div>
-        </div>
+        </nav>
 
-        <div class="timeline-item fade-up">
-            <div class="timeline-card">
-                <div class="timeline-header">
-                    <span class="timeline-inst">New Jersey Institute of Technology <a href="NJIT-certificate.pdf">[Certificate]</a></span>
-                    <span class="timeline-date">Jun – Jul 2025, Aug – Nov 2025 · On-site / Virtual</span>
+        <!-- HERO -->
+        <section class="hero" id="top">
+            <div class="hero-text">
+                <div class="hero-label">Undergraduate Researcher</div>
+                <h1 class="hero-name">Arnesh<br />Banerjee</h1>
+                <p class="hero-affil">
+                    B.Tech CSE (Data Science)
+                    <span class="dot">·</span>
+                    Heritage Institute of Technology, Kolkata
+                </p>
+                <p class="hero-bio">
+                    I am an undergraduate researcher broadly interested in
+                    multi-agent reinforcement learning, co-evolutionary
+                    dynamics, and AI safety. My current work spans autonomous
+                    systems governance, RL environments and simulation, and
+                    applied ML — including medical image segmentation using
+                    hybrid CNN-Transformer architectures and safety benchmarking
+                    of large language models. Upon completing my BTech I am
+                    looking to join a PhD program.
+                </p>
+                <p class="hero-email">
+                    <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in"
+                        >arnesh.banerjee.ds27@heritageit.edu.in</a
+                    >
+                </p>
+                <div class="hero-links">
+                    <a class="btn btn-primary" href="Arnesh_Banerjee_CV_1pg.pdf"
+                        >CV [PDF]</a
+                    >
+                    <a class="btn btn-ghost" href="LOR Combined.pdf"
+                        >Rec. Letters</a
+                    >
+                    <a
+                        class="btn btn-ghost"
+                        href="https://github.com/ArneshBanerjee"
+                        >GitHub</a
+                    >
+                    <a
+                        class="btn btn-ghost"
+                        href="https://www.linkedin.com/in/arnesh24/"
+                        >LinkedIn</a
+                    >
                 </div>
-                <div class="timeline-advisor">Advisor: Prof. Arnob Ghosh</div>
-                <ul>
-                    <li>Constructed a cost-model training dataset for a modified Safe RLHF pipeline with improved cost-model results.</li>
-                    <li>Designed and tested a comparative 800-datapoint safety benchmark against state-of-the-art LLMs (GPT, DeepSeek, Gemini, Qwen, Mistral).</li>
-                    <li>Demonstrated 50% higher safety compliance than ChatGPT 5 across benchmark scenarios.</li>
-                </ul>
             </div>
-        </div>
+            <div class="hero-photo-wrap">
+                <img class="hero-photo" src="me.jpeg" alt="Arnesh Banerjee" />
+            </div>
+        </section>
 
-        <div class="timeline-item fade-up">
-            <div class="timeline-card">
-                <div class="timeline-header">
-                    <span class="timeline-inst">Heritage Institute of Technology</span>
-                    <span class="timeline-date">Oct 2024 – Mar 2025 · On-site</span>
+        <!-- INTERESTS -->
+        <section class="section" id="interests">
+            <div class="section-label">Focus Areas</div>
+            <h2 class="section-title">Research Interests</h2>
+            <div class="tags">
+                <span class="tag"
+                    >Multi-Agent Reinforcement Learning (MARL)</span
+                >
+                <span class="tag">RL Environments &amp; Simulation</span>
+                <span class="tag">Co-Evolutionary Dynamics</span>
+                <span class="tag">AI Safety &amp; Alignment</span>
+                <span class="tag">Autonomous Systems Governance</span>
+                <span class="tag">Applied ML</span>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section class="section" id="experience">
+            <div class="section-label">Background</div>
+            <h2 class="section-title">Research Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item fade-up">
+                    <div class="timeline-card">
+                        <div class="timeline-header">
+                            <span class="timeline-inst"
+                                >Jadavpur University</span
+                            >
+                            <span class="timeline-date"
+                                >Nov 2025 – Present · Remote</span
+                            >
+                        </div>
+                        <div class="timeline-advisor">
+                            Advisor: Prof. Debotosh Bhattacharjee
+                        </div>
+                        <ul>
+                            <li>
+                                Achieved 98.10% Dice and 96.39% IoU on breast
+                                thermography tumor segmentation using a ResNet34
+                                + ASPP + ViT decoder with SE attention,
+                                evaluated via 5-fold cross-validation.
+                            </li>
+                            <li>
+                                Conducted a rigorous ablation study (20 training
+                                runs) across U-Net, ResNet-only, and hybrid
+                                architectures, demonstrating generalization
+                                trade-offs in medical imaging.
+                            </li>
+                            <li>
+                                Built a fully automated cross-validation
+                                pipeline with checkpointing, experiment logging,
+                                and reproducible training.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="timeline-advisor">Advisor: Prof. Arpita Talukdar</div>
-                <ul>
-                    <li>Developed a dual-stage ML framework for breast cancer diagnosis and recurrence prediction using WDBC and WPBC datasets, evaluating RF, SVM, Logistic Regression, MLP, and XGBoost with stratified 10-fold cross-validation.</li>
-                    <li>Implemented RFE and SFS feature selection with SMOTE and GridSearchCV tuning, improving WPBC accuracy to 93.67% and WDBC to 97.77%.</li>
-                    <li>Conducted comparative performance analysis and interpreted clinically relevant nuclear features with confidence intervals.</li>
-                </ul>
-            </div>
-        </div>
 
-    </div>
-</section>
-
-<!-- PUBLICATIONS -->
-<section class="section" id="publications">
-    <div class="section-label">Work</div>
-    <h2 class="section-title">Publications</h2>
-    <div class="pub-list">
-
-        <div class="pub-card fade-up">
-            <div class="pub-title-row">
-                <span class="pub-title">Recursive and Wrapper-Based Feature Selection for Breast Cancer Diagnosis and Prognosis</span>
-                <span class="badge badge-oral">Oral</span>
-            </div>
-            <div class="pub-authors">Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>, Arpita Talukdar. 2026.</div>
-            <div class="pub-venue">In the proceedings of the 4th Analytics Global Conference (AGC 2026), March 2026</div>
-        </div>
-
-    </div>
-
-    <!-- PRE-PRINTS -->
-    <div style="margin-top: 48px;">
-        <div class="section-label">Pre-prints</div>
-        <h2 class="section-title" style="margin-top: 8px;">Pre-prints</h2>
-        <div class="pub-list">
-
-            <div class="pub-card fade-up">
-                <div class="pub-title-row">
-                    <span class="pub-title">Certifiable Safe RLHF: Fixed-Penalty Constraint Optimization for Safer Language Models</span>
-                    <span class="badge badge-preprint">Pre-print</span>
+                <div class="timeline-item fade-up">
+                    <div class="timeline-card">
+                        <div class="timeline-header">
+                            <span class="timeline-inst"
+                                >New Jersey Institute of Technology
+                                <a href="NJIT-certificate.pdf"
+                                    >[Certificate]</a
+                                ></span
+                            >
+                            <span class="timeline-date"
+                                >Jun – Jul 2025, Aug – Nov 2025 · On-site /
+                                Virtual</span
+                            >
+                        </div>
+                        <div class="timeline-advisor">
+                            Advisor: Prof. Arnob Ghosh
+                        </div>
+                        <ul>
+                            <li>
+                                Constructed a cost-model training dataset for a
+                                modified Safe RLHF pipeline with improved
+                                cost-model results.
+                            </li>
+                            <li>
+                                Designed and tested a comparative 800-datapoint
+                                safety benchmark against state-of-the-art LLMs
+                                (GPT, DeepSeek, Gemini, Qwen, Mistral).
+                            </li>
+                            <li>
+                                Demonstrated 50% higher safety compliance than
+                                ChatGPT 5 across benchmark scenarios.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob Ghosh. 2025.</div>
-                <div class="pub-venue">arXiv preprint <a href="https://arxiv.org/abs/2510.03520">arXiv:2510.03520</a></div>
-            </div>
 
-            <div class="pub-card fade-up">
-                <div class="pub-title-row">
-                    <span class="pub-title">Multiscale Transformer-Enhanced U-Net with Level-Set Regularization for Breast Thermography Segmentation</span>
-                    <span class="badge badge-preprint">Pre-print</span>
+                <div class="timeline-item fade-up">
+                    <div class="timeline-card">
+                        <div class="timeline-header">
+                            <span class="timeline-inst"
+                                >Heritage Institute of Technology</span
+                            >
+                            <span class="timeline-date"
+                                >Oct 2024 – Mar 2025 · On-site</span
+                            >
+                        </div>
+                        <div class="timeline-advisor">
+                            Advisor: Prof. Arpita Talukdar
+                        </div>
+                        <ul>
+                            <li>
+                                Developed a dual-stage ML framework for breast
+                                cancer diagnosis and recurrence prediction using
+                                WDBC and WPBC datasets, evaluating RF, SVM,
+                                Logistic Regression, MLP, and XGBoost with
+                                stratified 10-fold cross-validation.
+                            </li>
+                            <li>
+                                Implemented RFE and SFS feature selection with
+                                SMOTE and GridSearchCV tuning, improving WPBC
+                                accuracy to 93.67% and WDBC to 97.77%.
+                            </li>
+                            <li>
+                                Conducted comparative performance analysis and
+                                interpreted clinically relevant nuclear features
+                                with confidence intervals.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="pub-authors"><strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee</div>
-                <div class="pub-venue">Advisor: Prof. Debotosh Bhattacharjee</div>
             </div>
+        </section>
 
-        </div>
-    </div>
-
-    <!-- ONGOING -->
-    <div style="margin-top: 48px;">
-        <div class="section-label">In Progress</div>
-        <h2 class="section-title" style="margin-top: 8px;">Independent &amp; Ongoing Research</h2>
-        <div class="ongoing-list">
-
-            <div class="ongoing-card fade-up">
-                <div class="pub-title-row">
-                    <span class="pub-title">Co-evolutionary Multi Agent RL for Autonomous Drone Warfare Simulation</span>
-                    <span class="badge badge-ongoing">Ongoing</span>
+        <!-- PUBLICATIONS -->
+        <section class="section" id="publications">
+            <div class="section-label">Work</div>
+            <h2 class="section-title">Publications</h2>
+            <div class="pub-list">
+                <div class="pub-card fade-up">
+                    <div class="pub-title-row">
+                        <span class="pub-title"
+                            >Recursive and Wrapper-Based Feature Selection for
+                            Breast Cancer Diagnosis and Prognosis</span
+                        >
+                        <span class="badge badge-oral">Oral</span>
+                    </div>
+                    <div class="pub-authors">
+                        Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>,
+                        Arpita Talukdar. 2026.
+                    </div>
+                    <div class="pub-venue">
+                        In the proceedings of the 4th Analytics Global
+                        Conference (AGC 2026), March 2026
+                    </div>
                 </div>
-                <div class="pub-authors"><strong>Arnesh Banerjee</strong></div>
             </div>
 
-            <div class="ongoing-card fade-up">
-                <div class="pub-title-row">
-                    <span class="pub-title">Analyzing Historical Revisionism in LLMs in the Context of Indian History</span>
-                    <span class="badge badge-ongoing">Ongoing</span>
+            <!-- PRE-PRINTS -->
+            <div style="margin-top: 48px">
+                <div class="section-label">Pre-prints</div>
+                <h2 class="section-title" style="margin-top: 8px">
+                    Pre-prints
+                </h2>
+                <div class="pub-list">
+                    <div class="pub-card fade-up">
+                        <div class="pub-title-row">
+                            <span class="pub-title"
+                                >Certifiable Safe RLHF: Fixed-Penalty Constraint
+                                Optimization for Safer Language Models</span
+                            >
+                            <span class="badge badge-preprint">Pre-print</span>
+                        </div>
+                        <div class="pub-authors">
+                            Kartik Pandit, Sourav Ganguly,
+                            <strong>Arnesh Banerjee</strong>, Shaahin Angizi,
+                            Arnob Ghosh. 2025.
+                        </div>
+                        <div class="pub-venue">
+                            arXiv preprint
+                            <a href="https://arxiv.org/abs/2510.03520"
+                                >arXiv:2510.03520</a
+                            >
+                        </div>
+                    </div>
+
+                    <div class="pub-card fade-up">
+                        <div class="pub-title-row">
+                            <span class="pub-title"
+                                >Multiscale Transformer-Enhanced U-Net with
+                                Level-Set Regularization for Breast Thermography
+                                Segmentation</span
+                            >
+                            <span class="badge badge-preprint">Pre-print</span>
+                        </div>
+                        <div class="pub-authors">
+                            <strong>Arnesh Banerjee</strong>, Debotosh
+                            Bhattacharjee
+                        </div>
+                        <div class="pub-venue">
+                            Advisor: Prof. Debotosh Bhattacharjee
+                        </div>
+                    </div>
                 </div>
-                <div class="pub-authors">Kartik Pandit, Sourav Ganguly, <strong>Arnesh Banerjee</strong>, Avirup Chakraborty, Arnob Ghosh</div>
-                <div class="pub-venue">Advisor: Dr. Arnob Ghosh</div>
             </div>
 
-        </div>
-    </div>
-</section>
+            <!-- ONGOING -->
+            <div style="margin-top: 48px">
+                <div class="section-label">In Progress</div>
+                <h2 class="section-title" style="margin-top: 8px">
+                    Independent &amp; Ongoing Research
+                </h2>
+                <div class="ongoing-list">
+                    <div class="ongoing-card fade-up">
+                        <div class="pub-title-row">
+                            <span class="pub-title"
+                                >Co-evolutionary Multi Agent RL for Autonomous
+                                Drone Warfare Simulation</span
+                            >
+                            <span class="badge badge-ongoing">Ongoing</span>
+                        </div>
+                        <div class="pub-authors">
+                            <strong>Arnesh Banerjee</strong>
+                        </div>
+                    </div>
 
-<!-- FOOTER -->
-<footer>
-    <div class="footer-inner">
-        <div class="footer-cta">Open to collaborations.</div>
-        <div class="footer-sub">Research collaborations, internships, and interesting problems.</div>
-        <div class="footer-links">
-            <a class="btn btn-primary" href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">Get in touch</a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
-            <a class="btn btn-ghost" href="https://github.com/ArneshBanerjee">GitHub</a>
-        </div>
-        <div class="footer-meta">Last updated March 2026.</div>
-    </div>
-</footer>
+                    <div class="ongoing-card fade-up">
+                        <div class="pub-title-row">
+                            <span class="pub-title"
+                                >Analyzing Historical Revisionism in LLMs in the
+                                Context of Indian History</span
+                            >
+                            <span class="badge badge-ongoing">Ongoing</span>
+                        </div>
+                        <div class="pub-authors">
+                            Kartik Pandit, Sourav Ganguly,
+                            <strong>Arnesh Banerjee</strong>, Avirup
+                            Chakraborty, Arnob Ghosh
+                        </div>
+                        <div class="pub-venue">Advisor: Dr. Arnob Ghosh</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<script>
-    const observer = new IntersectionObserver(
-        entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-        { threshold: 0.08 }
-    );
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-</script>
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-inner">
+                <div class="footer-cta">Open to collaborations.</div>
+                <div class="footer-sub">
+                    Research collaborations, internships, and interesting
+                    problems.
+                </div>
+                <div class="footer-links">
+                    <a
+                        class="btn btn-primary"
+                        href="mailto:arnesh.banerjee.ds27@heritageit.edu.in"
+                        >Get in touch</a
+                    >
+                    <a
+                        class="btn btn-ghost"
+                        href="https://www.linkedin.com/in/arnesh24/"
+                        >LinkedIn</a
+                    >
+                    <a
+                        class="btn btn-ghost"
+                        href="https://github.com/ArneshBanerjee"
+                        >GitHub</a
+                    >
+                </div>
+                <div class="footer-meta">Last updated March 2026.</div>
+            </div>
+        </footer>
 
-</body>
+        <script>
+            const observer = new IntersectionObserver(
+                (entries) =>
+                    entries.forEach((e) => {
+                        if (e.isIntersecting) e.target.classList.add("visible");
+                    }),
+                { threshold: 0.08 },
+            );
+            document
+                .querySelectorAll(".fade-up")
+                .forEach((el) => observer.observe(el));
+        </script>
+    </body>
 </html>
