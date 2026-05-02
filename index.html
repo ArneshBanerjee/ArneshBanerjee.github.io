@@ -37,6 +37,29 @@
                 --blood-bright: #a82828;
                 --rule: #3a2c1c;
             }
+            [data-theme="light"] {
+                --bg: #e8dcbe;
+                --bg-elev: #ddcfa8;
+                --surface: #f1e7c9;
+                --surface-2: #e6d8b3;
+                --text: #2a1a0d;
+                --text-soft: #4a3520;
+                --text-mute: #7a5d3f;
+                --gold: #8a6a28;
+                --gold-bright: #b89234;
+                --gold-dim: #b89968;
+                --blood: #6b1818;
+                --blood-bright: #8a2828;
+                --rule: #b89968;
+            }
+            html, body, nav, .timeline-card, .pub-card, .ongoing-card,
+            .timeline-date, .timeline-tag, .badge, .btn, .proof-row a {
+                transition:
+                    background-color 500ms ease,
+                    color 500ms ease,
+                    border-color 500ms ease,
+                    box-shadow 500ms ease;
+            }
 
             body {
                 font-family: "EB Garamond", Georgia, serif;
@@ -107,10 +130,136 @@
             body:hover #wand-glow { opacity: 1; }
             @media (hover: none) { #wand-glow { display: none; } }
 
+            /* canvas/wand glow re-tinted for light theme so they stay visible */
+            [data-theme="light"] #magic-canvas {
+                mix-blend-mode: multiply;
+                opacity: 0.85;
+            }
+            [data-theme="light"] #wand-glow {
+                mix-blend-mode: multiply;
+                background: radial-gradient(circle, rgba(138, 106, 40, 0.32), rgba(138, 106, 40, 0.08) 35%, transparent 65%);
+            }
+            [data-theme="light"] body::after {
+                opacity: 0.6;
+                mix-blend-mode: multiply;
+            }
+            [data-theme="light"] .hero-name {
+                background: linear-gradient(
+                    100deg,
+                    #3a200c 0%,
+                    #6b4a1c 25%,
+                    #a87b32 45%,
+                    #8a6a28 55%,
+                    #6b4a1c 75%,
+                    #3a200c 100%
+                );
+                background-size: 250% 100%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                filter: drop-shadow(0 0 12px rgba(138, 106, 40, 0.25))
+                        drop-shadow(0 1px 2px rgba(42, 26, 13, 0.2));
+            }
+            [data-theme="light"] .hero-bio:first-of-type::first-letter {
+                background: linear-gradient(180deg, #3a200c, #8a6a28 60%, #b89234);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            /* ── theme toggle button (wand) ── */
+            .theme-toggle {
+                width: 38px;
+                height: 38px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background: transparent;
+                border: 1px solid var(--gold-dim);
+                color: var(--gold);
+                cursor: pointer;
+                padding: 0;
+                margin-left: 18px;
+                position: relative;
+                transition:
+                    color 0.25s,
+                    border-color 0.25s,
+                    box-shadow 0.25s,
+                    background-color 0.25s;
+            }
+            .theme-toggle:hover {
+                color: var(--gold-bright);
+                border-color: var(--gold);
+                background: rgba(201, 161, 74, 0.08);
+                box-shadow: 0 0 18px -4px rgba(201, 161, 74, 0.6);
+            }
+            .theme-toggle svg {
+                width: 18px;
+                height: 18px;
+                display: block;
+                transform-origin: 70% 70%;
+                transition: transform 0.4s ease;
+            }
+            .theme-toggle:hover svg {
+                transform: rotate(-15deg);
+            }
+            .theme-toggle.casting svg {
+                animation: wand-cast 900ms cubic-bezier(0.5, 0, 0.3, 1);
+            }
+            @keyframes wand-cast {
+                0%   { transform: rotate(0); }
+                15%  { transform: rotate(-30deg) scale(1.1); }
+                40%  { transform: rotate(35deg) scale(1.15); }
+                70%  { transform: rotate(-12deg) scale(1.05); }
+                100% { transform: rotate(0) scale(1); }
+            }
+
+            /* magical sweep across the screen during theme change */
+            #theme-sweep {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 9999;
+                opacity: 0;
+                background: linear-gradient(
+                    115deg,
+                    transparent 36%,
+                    rgba(230, 192, 103, 0.35) 47%,
+                    rgba(255, 250, 220, 0.85) 50%,
+                    rgba(230, 192, 103, 0.35) 53%,
+                    transparent 64%
+                );
+                background-size: 250% 100%;
+                background-position: -120% 50%;
+                mix-blend-mode: screen;
+            }
+            [data-theme="light"] #theme-sweep {
+                background: linear-gradient(
+                    115deg,
+                    transparent 36%,
+                    rgba(138, 106, 40, 0.35) 47%,
+                    rgba(74, 52, 18, 0.5) 50%,
+                    rgba(138, 106, 40, 0.35) 53%,
+                    transparent 64%
+                );
+                mix-blend-mode: multiply;
+            }
+            #theme-sweep.active {
+                animation: sweep 950ms cubic-bezier(0.4, 0, 0.6, 1) forwards;
+            }
+            @keyframes sweep {
+                0%   { background-position: -120% 50%; opacity: 0; }
+                15%  { opacity: 1; }
+                85%  { opacity: 1; }
+                100% { background-position: 220% 50%; opacity: 0; }
+            }
+
             @media (prefers-reduced-motion: reduce) {
                 .hero-name { animation: none; }
                 body::before { animation: none; }
                 #magic-canvas { display: none; }
+                #theme-sweep.active { animation: none; }
+                .theme-toggle.casting svg { animation: none; }
             }
 
             a {
@@ -861,8 +1010,11 @@
                 .hero-label::before {
                     display: none;
                 }
-                .nav-links {
+                .nav-links a {
                     display: none;
+                }
+                .nav-links {
+                    gap: 0;
                 }
                 .timeline {
                     padding-left: 20px;
@@ -883,6 +1035,7 @@
     <body>
         <canvas id="magic-canvas" aria-hidden="true"></canvas>
         <div id="wand-glow" aria-hidden="true"></div>
+        <div id="theme-sweep" aria-hidden="true"></div>
         <!-- NAV -->
         <nav>
             <div class="nav-inner">
@@ -892,6 +1045,35 @@
                     <a href="#experience">Experience</a>
                     <a href="#publications">Publications</a>
                     <a href="#achievements">Achievements</a>
+                    <button
+                        id="theme-toggle"
+                        class="theme-toggle"
+                        type="button"
+                        aria-label="Toggle light / dark theme"
+                        title="Cast Lumos / Nox"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <!-- wand handle -->
+                            <line x1="4" y1="20" x2="15.5" y2="8.5" />
+                            <!-- handle grip -->
+                            <line x1="5" y1="19" x2="6.5" y2="20.5" />
+                            <line x1="6" y1="18" x2="7.5" y2="19.5" />
+                            <!-- star tip -->
+                            <path d="M17 7l0.8 2 2 0.6-2 0.8L17 12.4l-0.8-2-2-0.8 2-0.6z" fill="currentColor" stroke="none" />
+                            <!-- sparkles -->
+                            <circle cx="20" cy="5" r="0.6" fill="currentColor" stroke="none" />
+                            <circle cx="14" cy="4" r="0.5" fill="currentColor" stroke="none" />
+                            <circle cx="21" cy="11" r="0.5" fill="currentColor" stroke="none" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </nav>
@@ -1420,8 +1602,23 @@
                     });
                 }
 
-                // cursor sparkles
+                // cursor sparkles (also used for theme-cast bursts)
                 const sparkles = [];
+                window.magicBurst = (x, y, count = 60, spread = 30) => {
+                    for (let i = 0; i < count; i++) {
+                        const ang = Math.random() * Math.PI * 2;
+                        const v = 1 + Math.random() * 4;
+                        sparkles.push({
+                            x: x + (Math.random() - 0.5) * spread,
+                            y: y + (Math.random() - 0.5) * spread,
+                            vx: Math.cos(ang) * v,
+                            vy: Math.sin(ang) * v - 0.5,
+                            life: 0,
+                            max: 50 + Math.random() * 60,
+                            r: 0.8 + Math.random() * 1.8,
+                        });
+                    }
+                };
                 let mouseX = -999, mouseY = -999, lastSpawn = 0;
                 const wand = document.getElementById("wand-glow");
                 window.addEventListener("mousemove", (e) => {
@@ -1552,6 +1749,68 @@
                     requestAnimationFrame(frame);
                 }
                 requestAnimationFrame(frame);
+            })();
+        </script>
+        <script>
+            // ── theme toggle: wand-cast animation + sweep + sparkle burst ──
+            (() => {
+                const root = document.documentElement;
+                const btn = document.getElementById("theme-toggle");
+                const sweep = document.getElementById("theme-sweep");
+                if (!btn || !sweep) return;
+
+                const stored = localStorage.getItem("theme");
+                if (stored === "light") root.dataset.theme = "light";
+                // dark is the default — no attribute needed
+
+                let casting = false;
+                btn.addEventListener("click", () => {
+                    if (casting) return;
+                    casting = true;
+
+                    btn.classList.add("casting");
+                    sweep.classList.remove("active");
+                    // force reflow so the animation restarts cleanly
+                    void sweep.offsetWidth;
+                    sweep.classList.add("active");
+
+                    // burst sparkles from the wand tip
+                    const r = btn.getBoundingClientRect();
+                    const cx = r.left + r.width * 0.7;
+                    const cy = r.top + r.height * 0.3;
+                    if (window.magicBurst) {
+                        window.magicBurst(cx, cy, 50, 14);
+                        // a second burst from the centre as the sweep crosses
+                        setTimeout(() => {
+                            if (window.magicBurst) {
+                                window.magicBurst(
+                                    window.innerWidth / 2,
+                                    window.innerHeight / 2,
+                                    80,
+                                    180
+                                );
+                            }
+                        }, 380);
+                    }
+
+                    // swap the theme mid-sweep so the wash hides the change
+                    setTimeout(() => {
+                        const isLight = root.dataset.theme === "light";
+                        if (isLight) {
+                            delete root.dataset.theme;
+                            localStorage.setItem("theme", "dark");
+                        } else {
+                            root.dataset.theme = "light";
+                            localStorage.setItem("theme", "light");
+                        }
+                    }, 430);
+
+                    setTimeout(() => {
+                        btn.classList.remove("casting");
+                        sweep.classList.remove("active");
+                        casting = false;
+                    }, 1000);
+                });
             })();
         </script>
     </body>
