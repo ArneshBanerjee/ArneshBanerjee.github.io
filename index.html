@@ -47,17 +47,23 @@
                 position: relative;
                 overflow-x: hidden;
             }
-            /* candlelight glows */
+            /* candlelight + moonlight glows (Hogwarts night) */
             body::before {
                 content: "";
                 position: fixed;
                 inset: 0;
                 background:
-                    radial-gradient(ellipse 60% 40% at 18% 12%, rgba(201, 161, 74, 0.10), transparent 60%),
-                    radial-gradient(ellipse 50% 40% at 90% 35%, rgba(122, 24, 24, 0.10), transparent 65%),
-                    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(201, 161, 74, 0.06), transparent 70%);
+                    radial-gradient(ellipse 60% 40% at 18% 12%, rgba(201, 161, 74, 0.12), transparent 60%),
+                    radial-gradient(ellipse 50% 40% at 90% 30%, rgba(40, 60, 130, 0.18), transparent 65%),
+                    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(122, 24, 24, 0.10), transparent 65%),
+                    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(70, 100, 180, 0.10), transparent 70%);
                 pointer-events: none;
                 z-index: -2;
+                animation: drift 28s ease-in-out infinite alternate;
+            }
+            @keyframes drift {
+                0%   { transform: translate3d(0, 0, 0) scale(1); }
+                100% { transform: translate3d(-2%, 1%, 0) scale(1.05); }
             }
             /* film grain */
             body::after {
@@ -72,6 +78,40 @@
             }
 
             ::selection { background: rgba(201, 161, 74, 0.35); color: #fff; }
+
+            /* magical canvas — sits between background glows and content */
+            #magic-canvas {
+                position: fixed;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: -1;
+            }
+            /* wand-tip glow that follows the cursor */
+            #wand-glow {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 360px;
+                height: 360px;
+                margin-left: -180px;
+                margin-top: -180px;
+                background: radial-gradient(circle, rgba(230, 192, 103, 0.18), rgba(230, 192, 103, 0.06) 30%, transparent 65%);
+                pointer-events: none;
+                z-index: 0;
+                mix-blend-mode: screen;
+                opacity: 0;
+                transition: opacity 0.4s ease;
+            }
+            body:hover #wand-glow { opacity: 1; }
+            @media (hover: none) { #wand-glow { display: none; } }
+
+            @media (prefers-reduced-motion: reduce) {
+                .hero-name { animation: none; }
+                body::before { animation: none; }
+                #magic-canvas { display: none; }
+            }
 
             a {
                 color: var(--gold);
@@ -165,12 +205,28 @@
                 letter-spacing: 0;
                 color: var(--text);
                 margin-bottom: 24px;
-                background: linear-gradient(180deg, #f0dfb6 0%, #c9a14a 60%, #8a6a28 100%);
+                background: linear-gradient(
+                    100deg,
+                    #8a6a28 0%,
+                    #c9a14a 25%,
+                    #fff2c8 45%,
+                    #e6c067 55%,
+                    #c9a14a 75%,
+                    #8a6a28 100%
+                );
+                background-size: 250% 100%;
+                background-position: 0% 50%;
                 -webkit-background-clip: text;
                 background-clip: text;
                 -webkit-text-fill-color: transparent;
-                filter: drop-shadow(0 2px 12px rgba(201, 161, 74, 0.25));
+                filter: drop-shadow(0 0 18px rgba(230, 192, 103, 0.35))
+                        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
                 position: relative;
+                animation: shimmer 6s ease-in-out infinite;
+            }
+            @keyframes shimmer {
+                0%, 100% { background-position: 0% 50%; }
+                50%      { background-position: 100% 50%; }
             }
             .hero-label {
                 display: inline-flex;
@@ -780,6 +836,8 @@
         </style>
     </head>
     <body>
+        <canvas id="magic-canvas" aria-hidden="true"></canvas>
+        <div id="wand-glow" aria-hidden="true"></div>
         <!-- NAV -->
         <nav>
             <div class="nav-inner">
@@ -1223,6 +1281,200 @@
             document
                 .querySelectorAll(".fade-up")
                 .forEach((el) => observer.observe(el));
+        </script>
+        <script>
+            // ── magical canvas: twinkling stars, drifting embers, shooting stars, cursor sparkles ──
+            (() => {
+                const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                if (reduce) return;
+
+                const canvas = document.getElementById("magic-canvas");
+                const ctx = canvas.getContext("2d");
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                let W = 0, H = 0;
+
+                function resize() {
+                    W = window.innerWidth;
+                    H = window.innerHeight;
+                    canvas.width = W * dpr;
+                    canvas.height = H * dpr;
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                }
+                resize();
+                window.addEventListener("resize", resize);
+
+                // twinkling stars
+                const starCount = Math.min(110, Math.floor((W * H) / 14000));
+                const stars = Array.from({ length: starCount }, () => ({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    r: Math.random() * 1.2 + 0.3,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.4 + Math.random() * 1.4,
+                    hue: Math.random() < 0.15 ? "blue" : "gold",
+                }));
+
+                // drifting golden embers (rising from the bottom like Hogwarts hall candles)
+                const embers = [];
+                function spawnEmber() {
+                    embers.push({
+                        x: Math.random() * W,
+                        y: H + 8,
+                        vy: -(0.15 + Math.random() * 0.55),
+                        vx: (Math.random() - 0.5) * 0.35,
+                        life: 0,
+                        max: 220 + Math.random() * 320,
+                        r: 0.6 + Math.random() * 1.5,
+                    });
+                }
+
+                // shooting stars (occasional)
+                const shooters = [];
+                function spawnShooter() {
+                    const fromTop = Math.random() < 0.7;
+                    shooters.push({
+                        x: Math.random() * W,
+                        y: fromTop ? -20 : Math.random() * H * 0.4,
+                        vx: 6 + Math.random() * 4,
+                        vy: 2 + Math.random() * 2.5,
+                        life: 0,
+                        max: 70,
+                    });
+                }
+
+                // cursor sparkles
+                const sparkles = [];
+                let mouseX = -999, mouseY = -999, lastSpawn = 0;
+                const wand = document.getElementById("wand-glow");
+                window.addEventListener("mousemove", (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    if (wand) {
+                        wand.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+                    }
+                    const now = performance.now();
+                    if (now - lastSpawn > 28) {
+                        lastSpawn = now;
+                        const count = 1 + (Math.random() < 0.4 ? 1 : 0);
+                        for (let i = 0; i < count; i++) {
+                            sparkles.push({
+                                x: mouseX + (Math.random() - 0.5) * 14,
+                                y: mouseY + (Math.random() - 0.5) * 14,
+                                vx: (Math.random() - 0.5) * 0.6,
+                                vy: -0.3 - Math.random() * 0.6,
+                                life: 0,
+                                max: 40 + Math.random() * 30,
+                                r: 0.6 + Math.random() * 1.4,
+                            });
+                        }
+                    }
+                });
+
+                let last = performance.now();
+                let nextShooter = performance.now() + 4000 + Math.random() * 6000;
+
+                function frame(now) {
+                    const dt = Math.min((now - last) / 16.67, 3);
+                    last = now;
+                    ctx.clearRect(0, 0, W, H);
+
+                    // stars
+                    for (const s of stars) {
+                        s.phase += 0.022 * s.speed * dt;
+                        const a = 0.25 + 0.75 * (Math.sin(s.phase) * 0.5 + 0.5);
+                        const color = s.hue === "blue" ? "180, 200, 255" : "230, 200, 120";
+                        ctx.fillStyle = `rgba(${color}, ${a * 0.9})`;
+                        ctx.beginPath();
+                        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = `rgba(${color}, ${a * 0.12})`;
+                        ctx.beginPath();
+                        ctx.arc(s.x, s.y, s.r * 5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    // embers
+                    if (Math.random() < 0.05 * dt && embers.length < 60) spawnEmber();
+                    for (let i = embers.length - 1; i >= 0; i--) {
+                        const e = embers[i];
+                        e.x += e.vx * dt;
+                        e.y += e.vy * dt;
+                        e.life += dt;
+                        if (e.life > e.max || e.y < -30) {
+                            embers.splice(i, 1);
+                            continue;
+                        }
+                        const a = Math.sin((e.life / e.max) * Math.PI) * 0.7;
+                        ctx.fillStyle = `rgba(255, 200, 110, ${a})`;
+                        ctx.beginPath();
+                        ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = `rgba(255, 160, 60, ${a * 0.18})`;
+                        ctx.beginPath();
+                        ctx.arc(e.x, e.y, e.r * 5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    // shooting stars
+                    if (now > nextShooter) {
+                        spawnShooter();
+                        nextShooter = now + 5000 + Math.random() * 9000;
+                    }
+                    for (let i = shooters.length - 1; i >= 0; i--) {
+                        const s = shooters[i];
+                        s.x += s.vx * dt;
+                        s.y += s.vy * dt;
+                        s.life += dt;
+                        if (s.life > s.max || s.x > W + 60 || s.y > H + 60) {
+                            shooters.splice(i, 1);
+                            continue;
+                        }
+                        const fade = 1 - s.life / s.max;
+                        const tailLen = 70;
+                        const grad = ctx.createLinearGradient(
+                            s.x, s.y,
+                            s.x - s.vx * tailLen / 8, s.y - s.vy * tailLen / 8
+                        );
+                        grad.addColorStop(0, `rgba(255, 240, 200, ${fade})`);
+                        grad.addColorStop(1, "rgba(255, 240, 200, 0)");
+                        ctx.strokeStyle = grad;
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath();
+                        ctx.moveTo(s.x, s.y);
+                        ctx.lineTo(s.x - s.vx * tailLen / 8, s.y - s.vy * tailLen / 8);
+                        ctx.stroke();
+                        ctx.fillStyle = `rgba(255, 250, 220, ${fade})`;
+                        ctx.beginPath();
+                        ctx.arc(s.x, s.y, 1.6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    // cursor sparkles
+                    for (let i = sparkles.length - 1; i >= 0; i--) {
+                        const sp = sparkles[i];
+                        sp.x += sp.vx * dt;
+                        sp.y += sp.vy * dt;
+                        sp.vy += 0.005 * dt;
+                        sp.life += dt;
+                        if (sp.life > sp.max) {
+                            sparkles.splice(i, 1);
+                            continue;
+                        }
+                        const a = (1 - sp.life / sp.max) * 0.95;
+                        ctx.fillStyle = `rgba(255, 230, 160, ${a})`;
+                        ctx.beginPath();
+                        ctx.arc(sp.x, sp.y, sp.r, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = `rgba(255, 200, 100, ${a * 0.3})`;
+                        ctx.beginPath();
+                        ctx.arc(sp.x, sp.y, sp.r * 4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    requestAnimationFrame(frame);
+                }
+                requestAnimationFrame(frame);
+            })();
         </script>
     </body>
 </html>
