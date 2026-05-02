@@ -738,6 +738,47 @@
                 font-size: 1.08em;
             }
 
+            /* ── PROOFS (achievement attachments) ── */
+            .proof-row {
+                margin-top: 12px;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 8px;
+            }
+            .proof-label {
+                font-family: "Cinzel", serif;
+                font-size: 0.62em;
+                font-weight: 600;
+                letter-spacing: 0.24em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-right: 4px;
+            }
+            .proof-label::after {
+                content: "✦";
+                margin-left: 8px;
+                opacity: 0.7;
+            }
+            .proof-row a {
+                font-family: "Cinzel", serif;
+                font-size: 0.62em;
+                font-weight: 500;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                color: var(--text-soft);
+                background: rgba(201, 161, 74, 0.06);
+                border: 1px solid var(--gold-dim);
+                padding: 5px 11px;
+                transition: all 0.25s ease;
+            }
+            .proof-row a:hover {
+                color: var(--gold-bright);
+                border-color: var(--gold);
+                background: rgba(201, 161, 74, 0.14);
+                box-shadow: 0 0 14px -4px rgba(201, 161, 74, 0.5);
+            }
+
             /* ── FOOTER ── */
             footer {
                 padding: 72px 32px 56px;
@@ -1209,6 +1250,39 @@
                         Selected for IIT Kharagpur, 3x IIT Patna, and IIT
                         Dhanbad for Summer Research Internship 2026, and IIM
                         Ahmedabad AI Venture Summer Internship 2026.
+                    </div>
+                    <div class="proof-row">
+                        <span class="proof-label">Proofs</span>
+                        <a
+                            href="Summer-Intern-2026/IIT%20KGP.png"
+                            target="_blank"
+                            rel="noopener"
+                            >IIT Kharagpur</a
+                        >
+                        <a
+                            href="Summer-Intern-2026/IIT%20Patna%201.png"
+                            target="_blank"
+                            rel="noopener"
+                            >IIT Patna · 1</a
+                        >
+                        <a
+                            href="Summer-Intern-2026/IIT%20Patna%202.png"
+                            target="_blank"
+                            rel="noopener"
+                            >IIT Patna · 2</a
+                        >
+                        <a
+                            href="Summer-Intern-2026/IIT%20Patna%203.png"
+                            target="_blank"
+                            rel="noopener"
+                            >IIT Patna · 3</a
+                        >
+                        <a
+                            href="Summer-Intern-2026/IIMA.png"
+                            target="_blank"
+                            rel="noopener"
+                            >IIM Ahmedabad</a
+                        >
                     </div>
                 </div>
                 <div class="ongoing-card fade-up">
