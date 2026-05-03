@@ -19,14 +19,16 @@
             html { scroll-behavior: smooth; }
 
             :root {
-                --bg: #ffffff;
+                --bg: #fdfcfa;
+                --bg-soft: #f5f2ec;
                 --text: #1a1a1a;
                 --text-soft: #2c2c2c;
                 --text-mute: #6b6b6b;
                 --link: #8b1a1a;
                 --link-hover: #b22222;
-                --rule: #e5e5e5;
-                --accent-bg: #f7f5f0;
+                --rule: #e3ddd1;
+                --rule-soft: #ece7db;
+                --accent: #8b1a1a;
             }
 
             body {
@@ -34,17 +36,56 @@
                 font-size: 17px;
                 color: var(--text);
                 background: var(--bg);
-                line-height: 1.6;
+                line-height: 1.65;
                 -webkit-font-smoothing: antialiased;
             }
 
             a {
                 color: var(--link);
                 text-decoration: none;
+                transition: color 0.15s ease;
             }
             a:hover {
                 color: var(--link-hover);
                 text-decoration: underline;
+                text-underline-offset: 2px;
+            }
+
+            /* ── NAV ── */
+            nav {
+                position: sticky;
+                top: 0;
+                z-index: 50;
+                background: rgba(253, 252, 250, 0.9);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border-bottom: 1px solid var(--rule);
+            }
+            .nav-inner {
+                max-width: 760px;
+                margin: 0 auto;
+                padding: 12px 28px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-family: "Inter", -apple-system, sans-serif;
+                font-size: 0.82em;
+            }
+            .nav-name {
+                font-weight: 600;
+                color: var(--text);
+            }
+            .nav-links {
+                display: flex;
+                gap: 22px;
+            }
+            .nav-links a {
+                color: var(--text-mute);
+                text-decoration: none;
+            }
+            .nav-links a:hover {
+                color: var(--accent);
+                text-decoration: none;
             }
 
             .container {
@@ -76,15 +117,21 @@
             .contact-row {
                 font-size: 0.95em;
                 color: var(--text-mute);
-            }
-            .contact-row a {
-                margin-right: 14px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0 16px;
             }
             .photo {
                 width: 160px;
                 height: 160px;
                 object-fit: cover;
                 border-radius: 4px;
+                box-shadow: 0 2px 14px -4px rgba(0, 0, 0, 0.15);
+                transition: transform 0.4s ease, box-shadow 0.4s ease;
+            }
+            .photo:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.18);
             }
 
             /* ── BIO ── */
@@ -96,27 +143,51 @@
 
             /* ── SECTIONS ── */
             section {
-                margin-top: 44px;
+                margin-top: 48px;
+                scroll-margin-top: 70px;
             }
             h2 {
                 font-family: "Source Serif 4", Georgia, serif;
-                font-size: 1.25em;
-                font-weight: 700;
-                letter-spacing: -0.005em;
-                margin-bottom: 18px;
-                padding-bottom: 6px;
-                border-bottom: 1px solid var(--rule);
+                font-size: 1.05em;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--text-mute);
+                margin-bottom: 22px;
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+            h2::after {
+                content: "";
+                flex: 1;
+                height: 1px;
+                background: linear-gradient(90deg, var(--rule), transparent);
             }
             h3 {
                 font-family: "Source Serif 4", Georgia, serif;
-                font-size: 1.02em;
+                font-size: 1.05em;
                 font-weight: 600;
                 margin-bottom: 2px;
+                color: var(--text);
             }
 
-            /* ── ENTRY (experience / publication) ── */
+            /* ── ENTRY ── */
             .entry {
-                margin-bottom: 22px;
+                position: relative;
+                padding: 16px 18px 16px 22px;
+                margin-bottom: 14px;
+                border-left: 2px solid var(--rule);
+                border-radius: 0 4px 4px 0;
+                transition:
+                    border-color 0.25s ease,
+                    background-color 0.25s ease,
+                    transform 0.25s ease;
+            }
+            .entry:hover {
+                border-left-color: var(--accent);
+                background: var(--bg-soft);
+                transform: translateX(2px);
             }
             .entry:last-child { margin-bottom: 0; }
             .entry-head {
@@ -128,7 +199,8 @@
             }
             .entry-meta {
                 color: var(--text-mute);
-                font-size: 0.9em;
+                font-family: "Inter", -apple-system, sans-serif;
+                font-size: 0.82em;
                 white-space: nowrap;
             }
             .entry-sub {
@@ -139,7 +211,7 @@
             }
             .entry ul {
                 margin-top: 6px;
-                padding-left: 20px;
+                padding-left: 18px;
                 color: var(--text-soft);
                 font-size: 0.97em;
             }
@@ -149,15 +221,29 @@
 
             /* ── PUBLICATIONS ── */
             .pub {
-                margin-bottom: 18px;
+                padding: 14px 18px 14px 22px;
+                margin-bottom: 12px;
+                border-left: 2px solid var(--rule);
+                border-radius: 0 4px 4px 0;
+                transition:
+                    border-color 0.25s ease,
+                    background-color 0.25s ease,
+                    transform 0.25s ease;
+            }
+            .pub:hover {
+                border-left-color: var(--accent);
+                background: var(--bg-soft);
+                transform: translateX(2px);
             }
             .pub-title {
                 font-weight: 600;
                 color: var(--text);
+                line-height: 1.45;
             }
             .pub-authors {
                 color: var(--text-soft);
                 font-size: 0.97em;
+                margin-top: 2px;
             }
             .pub-authors strong {
                 color: var(--text);
@@ -167,48 +253,103 @@
                 color: var(--text-mute);
                 font-size: 0.92em;
                 font-style: italic;
+                margin-top: 2px;
             }
             .tag {
                 display: inline-block;
                 font-family: "Inter", -apple-system, sans-serif;
-                font-size: 0.7em;
+                font-size: 0.68em;
                 font-weight: 500;
-                letter-spacing: 0.04em;
-                color: var(--text-mute);
-                background: var(--accent-bg);
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: var(--accent);
+                background: rgba(139, 26, 26, 0.07);
+                border: 1px solid rgba(139, 26, 26, 0.18);
                 padding: 1px 7px;
                 border-radius: 3px;
                 margin-left: 6px;
                 vertical-align: 2px;
             }
+            .tag-soft {
+                color: var(--text-mute);
+                background: var(--bg-soft);
+                border-color: var(--rule);
+            }
 
             /* ── ACHIEVEMENTS ── */
             .achievement-list {
-                padding-left: 20px;
-                color: var(--text-soft);
+                list-style: none;
+                padding: 0;
             }
             .achievement-list li {
-                margin-bottom: 8px;
+                padding: 12px 18px 12px 22px;
+                margin-bottom: 10px;
+                border-left: 2px solid var(--rule);
+                border-radius: 0 4px 4px 0;
+                color: var(--text-soft);
+                transition:
+                    border-color 0.25s ease,
+                    background-color 0.25s ease,
+                    transform 0.25s ease;
+            }
+            .achievement-list li:hover {
+                border-left-color: var(--accent);
+                background: var(--bg-soft);
+                transform: translateX(2px);
             }
 
             /* ── PROOFS ── */
             .proofs {
-                font-size: 0.88em;
+                font-family: "Inter", -apple-system, sans-serif;
+                font-size: 0.78em;
                 color: var(--text-mute);
-                margin-top: 4px;
+                margin-top: 6px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
             }
             .proofs a {
-                margin-right: 10px;
+                padding: 2px 8px;
+                border: 1px solid var(--rule);
+                border-radius: 3px;
+                color: var(--text-mute);
+                background: var(--bg);
+                transition: all 0.2s ease;
+            }
+            .proofs a:hover {
+                color: var(--accent);
+                border-color: var(--accent);
+                background: rgba(139, 26, 26, 0.04);
+                text-decoration: none;
             }
 
             /* ── FOOTER ── */
             footer {
-                margin-top: 56px;
-                padding-top: 20px;
+                margin-top: 64px;
+                padding-top: 24px;
                 border-top: 1px solid var(--rule);
                 color: var(--text-mute);
                 font-size: 0.88em;
                 text-align: center;
+            }
+
+            /* ── FADE-IN ON SCROLL ── */
+            .fade-in {
+                opacity: 0;
+                transform: translateY(8px);
+                transition:
+                    opacity 0.6s ease,
+                    transform 0.6s ease;
+            }
+            .fade-in.visible {
+                opacity: 1;
+                transform: none;
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .fade-in { opacity: 1; transform: none; }
+                .entry, .pub, .achievement-list li, .photo {
+                    transition: none;
+                }
             }
 
             /* ── RESPONSIVE ── */
@@ -225,12 +366,26 @@
                 .container { padding: 36px 20px 60px; }
                 h1 { font-size: 1.6em; }
                 .entry-head { gap: 4px; }
+                .nav-links { gap: 14px; }
+                .nav-links a:nth-child(n+4) { display: none; }
             }
         </style>
     </head>
     <body>
+        <nav>
+            <div class="nav-inner">
+                <span class="nav-name">Arnesh Banerjee</span>
+                <div class="nav-links">
+                    <a href="#experience">Experience</a>
+                    <a href="#publications">Publications</a>
+                    <a href="#ongoing">Ongoing</a>
+                    <a href="#achievements">Achievements</a>
+                </div>
+            </div>
+        </nav>
+
         <div class="container">
-            <header>
+            <header class="fade-in">
                 <div>
                     <h1>Arnesh Banerjee</h1>
                     <div class="affiliation">
@@ -248,7 +403,7 @@
                 <img class="photo" src="me.jpeg" alt="Arnesh Banerjee" />
             </header>
 
-            <div class="bio">
+            <div class="bio fade-in">
                 <p>
                     I am an undergraduate researcher interested in
                     multi-agent reinforcement learning, computer vision, and
@@ -266,11 +421,11 @@
             <section id="experience">
                 <h2>Research Experience</h2>
 
-                <div class="entry">
+                <div class="entry fade-in">
                     <div class="entry-head">
                         <h3>
                             IIT Kharagpur
-                            <span class="tag">Upcoming · Summer 2026</span>
+                            <span class="tag">Upcoming</span>
                         </h3>
                         <span class="entry-meta">May 2026 – · On-site</span>
                     </div>
@@ -292,7 +447,7 @@
                     </ul>
                 </div>
 
-                <div class="entry">
+                <div class="entry fade-in">
                     <div class="entry-head">
                         <h3>Jadavpur University</h3>
                         <span class="entry-meta">Nov 2025 – present · Remote</span>
@@ -321,11 +476,9 @@
                     </ul>
                 </div>
 
-                <div class="entry">
+                <div class="entry fade-in">
                     <div class="entry-head">
-                        <h3>
-                            New Jersey Institute of Technology
-                        </h3>
+                        <h3>New Jersey Institute of Technology</h3>
                         <span class="entry-meta">Jun – Nov 2025 · On-site / Virtual</span>
                     </div>
                     <div class="entry-sub">
@@ -350,7 +503,7 @@
                     </ul>
                 </div>
 
-                <div class="entry">
+                <div class="entry fade-in">
                     <div class="entry-head">
                         <h3>Heritage Institute of Technology</h3>
                         <span class="entry-meta">Oct 2024 – Mar 2025 · On-site</span>
@@ -382,7 +535,7 @@
 
             <section id="publications">
                 <h2>Publications</h2>
-                <div class="pub">
+                <div class="pub fade-in">
                     <div class="pub-title">
                         Recursive and Wrapper-Based Feature Selection for
                         Breast Cancer Diagnosis and Prognosis
@@ -400,10 +553,11 @@
 
             <section id="preprints">
                 <h2>Preprints</h2>
-                <div class="pub">
+                <div class="pub fade-in">
                     <div class="pub-title">
                         Certifiable Safe RLHF: Fixed-Penalty Constraint
                         Optimization for Safer Language Models
+                        <span class="tag tag-soft">Preprint</span>
                     </div>
                     <div class="pub-authors">
                         Kartik Pandit, Sourav Ganguly,
@@ -415,23 +569,21 @@
                     </div>
                 </div>
 
-                <div class="pub">
+                <div class="pub fade-in">
                     <div class="pub-title">
                         Multiscale Transformer-Enhanced U-Net with Level-Set
                         Regularization for Breast Thermography Segmentation
+                        <span class="tag tag-soft">In prep</span>
                     </div>
                     <div class="pub-authors">
                         <strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee.
-                    </div>
-                    <div class="pub-venue">
-                        Manuscript in preparation.
                     </div>
                 </div>
             </section>
 
             <section id="ongoing">
                 <h2>Ongoing Research</h2>
-                <div class="pub">
+                <div class="pub fade-in">
                     <div class="pub-title">
                         Co-evolutionary Multi-Agent RL for Autonomous Drones
                     </div>
@@ -443,7 +595,7 @@
                     </div>
                 </div>
 
-                <div class="pub">
+                <div class="pub fade-in">
                     <div class="pub-title">
                         Understanding the Limitations of LLMs in Mathematical
                         Reasoning
@@ -457,7 +609,7 @@
                     </div>
                 </div>
 
-                <div class="pub">
+                <div class="pub fade-in">
                     <div class="pub-title">
                         Analyzing Historical Revisionism in LLMs in the
                         Context of Indian History
@@ -476,7 +628,7 @@
             <section id="achievements">
                 <h2>Achievements</h2>
                 <ul class="achievement-list">
-                    <li>
+                    <li class="fade-in">
                         Selected for IIT Kharagpur, 3× IIT Patna, and IIT
                         Dhanbad summer research internships, and IIM Ahmedabad
                         AI Venture Summer Internship 2026.
@@ -488,16 +640,16 @@
                             <a href="Summer-Intern-2026/IIMA.png">IIM Ahmedabad</a>
                         </div>
                     </li>
-                    <li>
+                    <li class="fade-in">
                         Department Third, 4th Semester · SGPA 9.46 ·
                         B.Tech CSE(DS), Heritage Institute of Technology.
                     </li>
-                    <li>
+                    <li class="fade-in">
                         Selected as one of 10 Institutional Innovation Council
                         (IIC) members representing the CSE(DS) department, HIT
                         Kolkata.
                     </li>
-                    <li>
+                    <li class="fade-in">
                         WBJEE 2023 — top 5.3% in West Bengal.
                     </li>
                 </ul>
@@ -508,5 +660,18 @@
                 <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
             </footer>
         </div>
+
+        <script>
+            const io = new IntersectionObserver(
+                (entries) => entries.forEach((e) => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add("visible");
+                        io.unobserve(e.target);
+                    }
+                }),
+                { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+            );
+            document.querySelectorAll(".fade-in").forEach((el) => io.observe(el));
+        </script>
     </body>
 </html>
