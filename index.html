@@ -7,1811 +7,506 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap"
             rel="stylesheet"
         />
         <style>
-            *,
-            *::before,
-            *::after {
+            *, *::before, *::after {
                 box-sizing: border-box;
                 margin: 0;
                 padding: 0;
             }
-            html {
-                scroll-behavior: smooth;
-            }
+            html { scroll-behavior: smooth; }
 
             :root {
-                --bg: #0c0a09;
-                --bg-elev: #16110d;
-                --surface: #1c1612;
-                --surface-2: #221a14;
-                --text: #d8c9a8;
-                --text-soft: #b8a485;
-                --text-mute: #8a7558;
-                --gold: #c9a14a;
-                --gold-bright: #e6c067;
-                --gold-dim: #6b5424;
-                --blood: #7a1818;
-                --blood-bright: #a82828;
-                --rule: #3a2c1c;
-            }
-            [data-theme="light"] {
-                --bg: #e8dcbe;
-                --bg-elev: #ddcfa8;
-                --surface: #f1e7c9;
-                --surface-2: #e6d8b3;
-                --text: #2a1a0d;
-                --text-soft: #4a3520;
-                --text-mute: #7a5d3f;
-                --gold: #8a6a28;
-                --gold-bright: #b89234;
-                --gold-dim: #b89968;
-                --blood: #6b1818;
-                --blood-bright: #8a2828;
-                --rule: #b89968;
-            }
-            html, body, nav, .timeline-card, .pub-card, .ongoing-card,
-            .timeline-date, .timeline-tag, .badge, .btn, .proof-row a {
-                transition:
-                    background-color 500ms ease,
-                    color 500ms ease,
-                    border-color 500ms ease,
-                    box-shadow 500ms ease;
+                --bg: #ffffff;
+                --text: #1a1a1a;
+                --text-soft: #2c2c2c;
+                --text-mute: #6b6b6b;
+                --link: #8b1a1a;
+                --link-hover: #b22222;
+                --rule: #e5e5e5;
+                --accent-bg: #f7f5f0;
             }
 
             body {
-                font-family: "EB Garamond", Georgia, serif;
+                font-family: "Source Serif 4", Georgia, serif;
                 font-size: 17px;
                 color: var(--text);
                 background: var(--bg);
-                line-height: 1.7;
-                position: relative;
-                overflow-x: hidden;
-            }
-            /* candlelight + moonlight glows (Hogwarts night) */
-            body::before {
-                content: "";
-                position: fixed;
-                inset: 0;
-                background:
-                    radial-gradient(ellipse 60% 40% at 18% 12%, rgba(201, 161, 74, 0.12), transparent 60%),
-                    radial-gradient(ellipse 50% 40% at 90% 30%, rgba(40, 60, 130, 0.18), transparent 65%),
-                    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(122, 24, 24, 0.10), transparent 65%),
-                    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(70, 100, 180, 0.10), transparent 70%);
-                pointer-events: none;
-                z-index: -2;
-                animation: drift 28s ease-in-out infinite alternate;
-            }
-            @keyframes drift {
-                0%   { transform: translate3d(0, 0, 0) scale(1); }
-                100% { transform: translate3d(-2%, 1%, 0) scale(1.05); }
-            }
-            /* film grain */
-            body::after {
-                content: "";
-                position: fixed;
-                inset: 0;
-                background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-                opacity: 1;
-                mix-blend-mode: overlay;
-                pointer-events: none;
-                z-index: -1;
-            }
-
-            ::selection { background: rgba(201, 161, 74, 0.35); color: #fff; }
-
-            /* magical canvas — sits between background glows and content */
-            #magic-canvas {
-                position: fixed;
-                inset: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: -1;
-            }
-            /* wand-tip glow that follows the cursor */
-            #wand-glow {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 360px;
-                height: 360px;
-                margin-left: -180px;
-                margin-top: -180px;
-                background: radial-gradient(circle, rgba(230, 192, 103, 0.18), rgba(230, 192, 103, 0.06) 30%, transparent 65%);
-                pointer-events: none;
-                z-index: 0;
-                mix-blend-mode: screen;
-                opacity: 0;
-                transition: opacity 0.4s ease;
-            }
-            body:hover #wand-glow { opacity: 1; }
-            @media (hover: none) { #wand-glow { display: none; } }
-
-            /* canvas/wand glow re-tinted for light theme so they stay visible */
-            [data-theme="light"] #magic-canvas {
-                mix-blend-mode: multiply;
-                opacity: 0.85;
-            }
-            [data-theme="light"] #wand-glow {
-                mix-blend-mode: multiply;
-                background: radial-gradient(circle, rgba(138, 106, 40, 0.32), rgba(138, 106, 40, 0.08) 35%, transparent 65%);
-            }
-            [data-theme="light"] body::after {
-                opacity: 0.6;
-                mix-blend-mode: multiply;
-            }
-            [data-theme="light"] .hero-name {
-                background: linear-gradient(
-                    100deg,
-                    #3a200c 0%,
-                    #6b4a1c 25%,
-                    #a87b32 45%,
-                    #8a6a28 55%,
-                    #6b4a1c 75%,
-                    #3a200c 100%
-                );
-                background-size: 250% 100%;
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-                filter: drop-shadow(0 0 12px rgba(138, 106, 40, 0.25))
-                        drop-shadow(0 1px 2px rgba(42, 26, 13, 0.2));
-            }
-            [data-theme="light"] .hero-bio:first-of-type::first-letter {
-                background: linear-gradient(180deg, #3a200c, #8a6a28 60%, #b89234);
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
-            /* ── theme toggle button (wand) ── */
-            .theme-toggle {
-                width: 38px;
-                height: 38px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                background: transparent;
-                border: 1px solid var(--gold-dim);
-                color: var(--gold);
-                cursor: pointer;
-                padding: 0;
-                margin-left: 18px;
-                position: relative;
-                transition:
-                    color 0.25s,
-                    border-color 0.25s,
-                    box-shadow 0.25s,
-                    background-color 0.25s;
-            }
-            .theme-toggle:hover {
-                color: var(--gold-bright);
-                border-color: var(--gold);
-                background: rgba(201, 161, 74, 0.08);
-                box-shadow: 0 0 18px -4px rgba(201, 161, 74, 0.6);
-            }
-            .theme-toggle svg {
-                width: 18px;
-                height: 18px;
-                display: block;
-                transform-origin: 70% 70%;
-                transition: transform 0.4s ease;
-            }
-            .theme-toggle:hover svg {
-                transform: rotate(-15deg);
-            }
-            .theme-toggle.casting svg {
-                animation: wand-cast 900ms cubic-bezier(0.5, 0, 0.3, 1);
-            }
-            @keyframes wand-cast {
-                0%   { transform: rotate(0); }
-                15%  { transform: rotate(-30deg) scale(1.1); }
-                40%  { transform: rotate(35deg) scale(1.15); }
-                70%  { transform: rotate(-12deg) scale(1.05); }
-                100% { transform: rotate(0) scale(1); }
-            }
-
-            /* magical sweep across the screen during theme change */
-            #theme-sweep {
-                position: fixed;
-                inset: 0;
-                pointer-events: none;
-                z-index: 9999;
-                opacity: 0;
-                background: linear-gradient(
-                    115deg,
-                    transparent 36%,
-                    rgba(230, 192, 103, 0.35) 47%,
-                    rgba(255, 250, 220, 0.85) 50%,
-                    rgba(230, 192, 103, 0.35) 53%,
-                    transparent 64%
-                );
-                background-size: 250% 100%;
-                background-position: -120% 50%;
-                mix-blend-mode: screen;
-            }
-            [data-theme="light"] #theme-sweep {
-                background: linear-gradient(
-                    115deg,
-                    transparent 36%,
-                    rgba(138, 106, 40, 0.35) 47%,
-                    rgba(74, 52, 18, 0.5) 50%,
-                    rgba(138, 106, 40, 0.35) 53%,
-                    transparent 64%
-                );
-                mix-blend-mode: multiply;
-            }
-            #theme-sweep.active {
-                animation: sweep 950ms cubic-bezier(0.4, 0, 0.6, 1) forwards;
-            }
-            @keyframes sweep {
-                0%   { background-position: -120% 50%; opacity: 0; }
-                15%  { opacity: 1; }
-                85%  { opacity: 1; }
-                100% { background-position: 220% 50%; opacity: 0; }
-            }
-
-            @media (prefers-reduced-motion: reduce) {
-                .hero-name { animation: none; }
-                body::before { animation: none; }
-                #magic-canvas { display: none; }
-                #theme-sweep.active { animation: none; }
-                .theme-toggle.casting svg { animation: none; }
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
             }
 
             a {
-                color: var(--gold);
+                color: var(--link);
                 text-decoration: none;
-                transition: color 0.2s;
-                border: none;
             }
             a:hover {
-                color: var(--gold-bright);
-                text-decoration: none;
+                color: var(--link-hover);
+                text-decoration: underline;
             }
 
-            /* ── NAV ── */
-            nav {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                z-index: 100;
-                padding: 0 32px;
-                background: rgba(12, 10, 9, 0.78);
-                backdrop-filter: blur(14px);
-                -webkit-backdrop-filter: blur(14px);
-                border-bottom: 1px solid var(--rule);
-                box-shadow: 0 1px 0 rgba(201, 161, 74, 0.12);
-            }
-            .nav-inner {
-                max-width: 960px;
+            .container {
+                max-width: 760px;
                 margin: 0 auto;
-                height: 56px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-            .nav-logo {
-                font-family: "Cinzel", serif;
-                font-weight: 500;
-                font-size: 0.82em;
-                color: var(--text);
-                letter-spacing: 0.22em;
-                text-transform: uppercase;
-                border: none;
-            }
-            .nav-logo::before {
-                content: "✦ ";
-                color: var(--gold);
-            }
-            .nav-links {
-                display: flex;
-                gap: 28px;
-            }
-            .nav-links a {
-                font-family: "Cinzel", serif;
-                color: var(--text-mute);
-                font-size: 0.72em;
-                font-weight: 500;
-                letter-spacing: 0.22em;
-                text-transform: uppercase;
-                transition: color 0.2s;
-            }
-            .nav-links a:hover {
-                color: var(--gold);
+                padding: 56px 28px 80px;
             }
 
-            /* ── HERO ── */
-            .hero {
-                max-width: 960px;
-                margin: 0 auto;
-                padding: 124px 32px 72px;
+            /* ── HEADER ── */
+            header {
                 display: grid;
-                grid-template-columns: 1fr auto;
-                gap: 56px;
+                grid-template-columns: 1fr 160px;
+                gap: 36px;
                 align-items: start;
-                position: relative;
+                margin-bottom: 36px;
             }
-            .hero::before {
-                content: "";
-                position: absolute;
-                top: 100px;
-                left: -40px;
-                width: 360px;
-                height: 360px;
-                background: radial-gradient(circle, rgba(201, 161, 74, 0.18), transparent 70%);
-                pointer-events: none;
-            }
-            .hero-name {
-                font-family: "Cinzel Decorative", "Cinzel", serif;
-                font-size: clamp(2.8em, 6.5vw, 4.6em);
+            h1 {
+                font-family: "Source Serif 4", Georgia, serif;
+                font-size: 2em;
                 font-weight: 700;
-                line-height: 1.05;
-                letter-spacing: 0.04em;
-                text-transform: uppercase;
-                color: var(--text);
-                margin-bottom: 24px;
-                background: linear-gradient(
-                    100deg,
-                    #8a6a28 0%,
-                    #c9a14a 25%,
-                    #fff2c8 45%,
-                    #e6c067 55%,
-                    #c9a14a 75%,
-                    #8a6a28 100%
-                );
-                background-size: 250% 100%;
-                background-position: 0% 50%;
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-                filter: drop-shadow(0 0 18px rgba(230, 192, 103, 0.35))
-                        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
-                position: relative;
-                animation: shimmer 6s ease-in-out infinite;
+                letter-spacing: -0.01em;
+                margin-bottom: 6px;
             }
-            @keyframes shimmer {
-                0%, 100% { background-position: 0% 50%; }
-                50%      { background-position: 100% 50%; }
-            }
-            .hero-label {
-                display: inline-flex;
-                align-items: center;
-                gap: 14px;
-                font-family: "Cinzel", serif;
-                font-size: 0.72em;
-                font-weight: 600;
-                letter-spacing: 0.32em;
-                text-transform: uppercase;
-                color: var(--gold);
-                margin-bottom: 18px;
-            }
-            .hero-label::before {
-                content: "";
-                width: 36px;
-                height: 1px;
-                background: linear-gradient(90deg, transparent, var(--gold));
-            }
-            .hero-affil {
-                font-family: "Cinzel", serif;
-                font-size: 0.78em;
-                letter-spacing: 0.1em;
-                color: var(--text-soft);
-                margin-bottom: 30px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                flex-wrap: wrap;
-            }
-            .dot {
-                color: var(--gold);
-            }
-            .hero-bio {
-                font-size: 1.08em;
-                color: var(--text-soft);
-                line-height: 1.75;
-                max-width: 560px;
-                margin-bottom: 22px;
-            }
-            .hero-bio:first-of-type::first-letter {
-                font-family: "Cinzel Decorative", "Cinzel", serif;
-                font-weight: 900;
-                font-size: 3.4em;
-                line-height: 0.9;
-                float: left;
-                padding: 8px 14px 0 0;
-                background: linear-gradient(180deg, #f0dfb6, #c9a14a 60%, #8a6a28);
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-                filter: drop-shadow(0 1px 4px rgba(201, 161, 74, 0.4));
-            }
-            .hero-bio strong {
-                color: var(--gold-bright);
-                font-weight: 600;
-            }
-            .hero-email {
-                font-family: "EB Garamond", serif;
-                font-size: 1em;
-                font-style: italic;
-                letter-spacing: 0;
+            .affiliation {
                 color: var(--text-mute);
-                margin-bottom: 28px;
+                font-size: 1em;
+                margin-bottom: 14px;
             }
-            .hero-email a {
-                color: var(--gold);
-                font-style: normal;
+            .contact-row {
+                font-size: 0.95em;
+                color: var(--text-mute);
             }
-            .hero-links {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
+            .contact-row a {
+                margin-right: 14px;
             }
-
-            .btn {
-                display: inline-block;
-                font-family: "Cinzel", serif;
-                font-size: 0.7em;
-                font-weight: 600;
-                letter-spacing: 0.22em;
-                text-transform: uppercase;
-                padding: 11px 22px;
-                border-radius: 0;
-                text-decoration: none;
-                transition: all 0.25s;
-                cursor: pointer;
-                border: 1px solid;
-                position: relative;
-            }
-            .btn-primary {
-                background: linear-gradient(180deg, #2a1f12, #14100b);
-                color: var(--gold-bright);
-                border-color: var(--gold);
-                box-shadow:
-                    inset 0 1px 0 rgba(201, 161, 74, 0.25),
-                    0 4px 14px -6px rgba(0, 0, 0, 0.7);
-            }
-            .btn-primary:hover {
-                background: linear-gradient(180deg, var(--blood), var(--blood-deep, #4a0f0f));
-                color: #f0dfb6;
-                border-color: var(--gold-bright);
-                box-shadow:
-                    inset 0 1px 0 rgba(230, 192, 103, 0.4),
-                    0 0 24px -4px rgba(168, 40, 40, 0.6);
-                transform: translateY(-1px);
-            }
-            .btn-ghost {
-                border-color: var(--rule);
-                color: var(--text-soft);
-                background: transparent;
-            }
-            .btn-ghost:hover {
-                border-color: var(--gold);
-                color: var(--gold-bright);
-                background: rgba(201, 161, 74, 0.06);
-                box-shadow: 0 0 20px -6px rgba(201, 161, 74, 0.4);
-            }
-
-            /* Photo — simple framed portrait with gold edge + glow */
-            .hero-photo-wrap {
-                padding-top: 8px;
-                position: relative;
-            }
-            .hero-photo-wrap::before {
-                content: "";
-                position: absolute;
-                inset: -2px;
-                border: 1px solid var(--gold);
-                pointer-events: none;
-                z-index: 2;
-                box-shadow:
-                    0 0 0 4px var(--bg),
-                    0 0 0 5px rgba(201, 161, 74, 0.35),
-                    0 0 40px -6px rgba(201, 161, 74, 0.5);
-                transition: box-shadow 0.4s ease;
-            }
-            .hero-photo {
-                width: 200px;
-                height: 200px;
-                border-radius: 0;
+            .photo {
+                width: 160px;
+                height: 160px;
                 object-fit: cover;
-                display: block;
-                filter: brightness(0.95) contrast(1.02);
-                transition: filter 0.4s ease;
-                position: relative;
-                z-index: 1;
+                border-radius: 4px;
             }
-            .hero-photo-wrap:hover::before {
-                box-shadow:
-                    0 0 0 4px var(--bg),
-                    0 0 0 5px var(--gold-bright),
-                    0 0 60px -4px rgba(230, 192, 103, 0.7);
+
+            /* ── BIO ── */
+            .bio p {
+                margin-bottom: 14px;
+                color: var(--text-soft);
             }
-            .hero-photo-wrap:hover .hero-photo {
-                filter: brightness(1.02) contrast(1.02);
-            }
+            .bio p:last-child { margin-bottom: 0; }
 
             /* ── SECTIONS ── */
-            .section {
-                max-width: 960px;
-                margin: 0 auto;
-                padding: 72px 32px;
-                position: relative;
+            section {
+                margin-top: 44px;
             }
-            .section::before {
-                content: "✦";
-                display: block;
-                text-align: center;
-                font-size: 1.1em;
-                color: var(--gold);
-                margin-bottom: 28px;
-                opacity: 0.7;
+            h2 {
+                font-family: "Source Serif 4", Georgia, serif;
+                font-size: 1.25em;
+                font-weight: 700;
+                letter-spacing: -0.005em;
+                margin-bottom: 18px;
+                padding-bottom: 6px;
+                border-bottom: 1px solid var(--rule);
             }
-            .section::after {
-                content: "";
-                position: absolute;
-                top: 84px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 220px;
-                height: 1px;
-                background: linear-gradient(90deg, transparent, var(--gold), transparent);
-                opacity: 0.5;
-            }
-            .section-label {
-                display: inline-flex;
-                align-items: center;
-                gap: 14px;
-                font-family: "Cinzel", serif;
-                font-size: 0.7em;
+            h3 {
+                font-family: "Source Serif 4", Georgia, serif;
+                font-size: 1.02em;
                 font-weight: 600;
-                letter-spacing: 0.32em;
-                text-transform: uppercase;
-                color: var(--gold);
-                margin-bottom: 14px;
-            }
-            .section-label::after {
-                content: "";
-                width: 56px;
-                height: 1px;
-                background: var(--gold);
-                opacity: 0.4;
-            }
-            .section-title {
-                font-family: "Cinzel", serif;
-                font-size: 2em;
-                font-weight: 600;
-                letter-spacing: 0.06em;
-                color: var(--text);
-                margin-bottom: 40px;
-                text-shadow: 0 0 24px rgba(201, 161, 74, 0.15);
+                margin-bottom: 2px;
             }
 
-            /* ── TAGS ── */
-            .tags {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-            .tag {
-                font-size: 0.82em;
-                font-weight: 500;
-                padding: 5px 14px;
-                border-radius: 5px;
-                background: #eceae5;
-                color: #4a4843;
-                border: 1px solid #d6d2cc;
-                transition:
-                    background 0.15s,
-                    color 0.15s,
-                    border-color 0.15s;
-            }
-            .tag:hover {
-                background: #1c1b18;
-                color: #f5f4f0;
-                border-color: #1c1b18;
-            }
-
-            /* ── TIMELINE ── */
-            .timeline {
-                position: relative;
-                padding-left: 36px;
-            }
-            .timeline::before {
-                content: "";
-                position: absolute;
-                left: 0;
-                top: 14px;
-                bottom: 14px;
-                width: 1px;
-                background: linear-gradient(180deg, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
-                opacity: 0.4;
-            }
-            .timeline-item {
-                position: relative;
+            /* ── ENTRY (experience / publication) ── */
+            .entry {
                 margin-bottom: 22px;
             }
-            .timeline-item:last-child {
-                margin-bottom: 0;
-            }
-            .timeline-item::before {
-                content: "";
-                position: absolute;
-                left: -40px;
-                top: 22px;
-                width: 9px;
-                height: 9px;
-                background: var(--gold);
-                transform: rotate(45deg);
-                box-shadow: 0 0 10px rgba(201, 161, 74, 0.6);
-            }
-            .timeline-card {
-                background: linear-gradient(180deg, var(--surface), var(--bg-elev));
-                border: 1px solid var(--rule);
-                border-radius: 0;
-                padding: 24px 28px;
-                transition: all 0.3s ease;
-                box-shadow:
-                    inset 0 1px 0 rgba(201, 161, 74, 0.08),
-                    0 4px 16px -8px rgba(0, 0, 0, 0.6);
-                position: relative;
-            }
-            .timeline-card:hover {
-                border-color: var(--gold);
-                box-shadow:
-                    inset 0 1px 0 rgba(201, 161, 74, 0.15),
-                    0 8px 32px -10px rgba(201, 161, 74, 0.25);
-                transform: translateY(-2px);
-            }
-            .timeline-header {
+            .entry:last-child { margin-bottom: 0; }
+            .entry-head {
                 display: flex;
                 justify-content: space-between;
-                align-items: flex-start;
-                gap: 12px;
-                margin-bottom: 6px;
+                align-items: baseline;
+                gap: 16px;
                 flex-wrap: wrap;
             }
-            .timeline-inst {
-                font-family: "Cinzel", serif;
-                font-weight: 600;
-                font-size: 1.02em;
-                color: var(--text);
-                letter-spacing: 0.05em;
-            }
-            .timeline-inst a {
-                font-family: "EB Garamond", serif;
-                font-size: 0.78em;
-                font-weight: 500;
-                font-style: italic;
-                color: var(--gold);
-                margin-left: 8px;
-                letter-spacing: 0;
-            }
-            .timeline-inst a:hover {
-                color: var(--gold-bright);
-            }
-            .timeline-tag {
-                display: inline-block;
-                font-family: "Cinzel", serif;
-                font-size: 0.58em;
-                font-weight: 600;
-                letter-spacing: 0.22em;
-                text-transform: uppercase;
-                color: var(--blood-bright);
-                background: rgba(168, 40, 40, 0.1);
-                border: 1px solid var(--blood);
-                padding: 4px 10px;
-                margin-left: 10px;
-                vertical-align: middle;
-            }
-            .timeline-date {
-                font-family: "Cinzel", serif;
-                font-size: 0.68em;
-                font-weight: 500;
-                letter-spacing: 0.14em;
-                color: var(--gold);
-                background: rgba(201, 161, 74, 0.06);
-                border: 1px solid var(--gold-dim);
-                padding: 5px 12px;
-                white-space: nowrap;
-                flex-shrink: 0;
-            }
-            .timeline-advisor {
-                font-style: italic;
-                font-size: 0.98em;
+            .entry-meta {
                 color: var(--text-mute);
-                margin-bottom: 14px;
+                font-size: 0.9em;
+                white-space: nowrap;
             }
-            .timeline-card ul {
-                padding-left: 22px;
-                margin: 0;
-                list-style: none;
+            .entry-sub {
+                color: var(--text-mute);
+                font-size: 0.95em;
+                font-style: italic;
+                margin-bottom: 6px;
             }
-            .timeline-card ul li {
-                font-size: 1em;
+            .entry ul {
+                margin-top: 6px;
+                padding-left: 20px;
                 color: var(--text-soft);
-                margin-bottom: 8px;
-                line-height: 1.65;
-                position: relative;
+                font-size: 0.97em;
             }
-            .timeline-card ul li::before {
-                content: "✦";
-                position: absolute;
-                left: -22px;
-                top: 0;
-                color: var(--gold);
-                font-size: 0.7em;
-                line-height: 1.7;
-            }
-            .timeline-card ul li strong {
-                color: var(--gold-bright);
-                font-weight: 600;
+            .entry ul li {
+                margin-bottom: 4px;
             }
 
-            /* ── PUB CARDS ── */
-            .pub-list {
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
-            }
-            .pub-card {
-                background: linear-gradient(180deg, var(--surface), var(--bg-elev));
-                border: 1px solid var(--rule);
-                border-radius: 0;
-                padding: 22px 26px 22px 30px;
-                transition: all 0.3s ease;
-                box-shadow:
-                    inset 0 1px 0 rgba(201, 161, 74, 0.06),
-                    0 4px 16px -8px rgba(0, 0, 0, 0.5);
-                position: relative;
-                overflow: hidden;
-            }
-            .pub-card::before {
-                content: "";
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                width: 2px;
-                background: linear-gradient(180deg, var(--gold-bright), var(--gold-dim));
-                opacity: 0.7;
-                transition: opacity 0.3s, width 0.3s;
-            }
-            .pub-card:hover {
-                border-color: var(--gold);
-                box-shadow:
-                    inset 0 1px 0 rgba(201, 161, 74, 0.15),
-                    0 10px 28px -12px rgba(201, 161, 74, 0.25);
-                transform: translateY(-2px);
-            }
-            .pub-card:hover::before {
-                opacity: 1;
-                width: 3px;
-            }
-            .pub-title-row {
-                display: flex;
-                align-items: flex-start;
-                gap: 12px;
-                margin-bottom: 8px;
-                flex-wrap: wrap;
+            /* ── PUBLICATIONS ── */
+            .pub {
+                margin-bottom: 18px;
             }
             .pub-title {
-                font-family: "EB Garamond", serif;
                 font-weight: 600;
-                font-size: 1.18em;
                 color: var(--text);
-                line-height: 1.4;
-                flex: 1;
-                min-width: 200px;
-            }
-            .badge {
-                display: inline-flex;
-                align-items: center;
-                font-family: "Cinzel", serif;
-                font-size: 0.58em;
-                font-weight: 600;
-                letter-spacing: 0.22em;
-                text-transform: uppercase;
-                padding: 4px 10px;
-                white-space: nowrap;
-                flex-shrink: 0;
-                border: 1px solid;
-            }
-            .badge-preprint {
-                background: rgba(201, 161, 74, 0.08);
-                color: var(--gold);
-                border-color: var(--gold-dim);
-            }
-            .badge-oral {
-                background: rgba(168, 40, 40, 0.1);
-                color: var(--blood-bright);
-                border-color: var(--blood);
-            }
-            .badge-ongoing {
-                background: rgba(58, 44, 28, 0.4);
-                color: var(--text-mute);
-                border-color: var(--rule);
             }
             .pub-authors {
-                font-size: 1em;
-                color: var(--text-mute);
-                margin-bottom: 6px;
-                font-style: italic;
+                color: var(--text-soft);
+                font-size: 0.97em;
             }
             .pub-authors strong {
-                color: var(--gold-bright);
+                color: var(--text);
                 font-weight: 600;
-                font-style: normal;
             }
             .pub-venue {
-                font-family: "Cinzel", serif;
-                font-size: 0.68em;
-                letter-spacing: 0.16em;
                 color: var(--text-mute);
-                text-transform: uppercase;
-            }
-            .pub-venue a {
-                color: var(--gold);
-                letter-spacing: 0;
-                text-transform: none;
-                font-family: "EB Garamond", serif;
-                font-size: 1.3em;
+                font-size: 0.92em;
                 font-style: italic;
             }
-
-            /* ── ONGOING ── */
-            .ongoing-list {
-                display: flex;
-                flex-direction: column;
-                gap: 14px;
-            }
-            .ongoing-card {
-                background: rgba(28, 22, 18, 0.5);
-                border: 1px dashed var(--rule);
-                border-radius: 0;
-                padding: 18px 22px;
-                transition: all 0.3s ease;
-            }
-            .ongoing-card:hover {
-                border-style: solid;
-                border-color: var(--gold);
-                background: var(--surface);
-                box-shadow: 0 8px 24px -12px rgba(201, 161, 74, 0.3);
-                transform: translateY(-1px);
-            }
-            .ongoing-card .pub-title {
-                font-size: 1.08em;
-            }
-
-            /* ── PROOFS (achievement attachments) ── */
-            .proof-row {
-                margin-top: 12px;
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                gap: 8px;
-            }
-            .proof-label {
-                font-family: "Cinzel", serif;
-                font-size: 0.62em;
-                font-weight: 600;
-                letter-spacing: 0.24em;
-                text-transform: uppercase;
-                color: var(--gold);
-                margin-right: 4px;
-            }
-            .proof-label::after {
-                content: "✦";
-                margin-left: 8px;
-                opacity: 0.7;
-            }
-            .proof-row a {
-                font-family: "Cinzel", serif;
-                font-size: 0.62em;
+            .tag {
+                display: inline-block;
+                font-family: "Inter", -apple-system, sans-serif;
+                font-size: 0.7em;
                 font-weight: 500;
-                letter-spacing: 0.18em;
-                text-transform: uppercase;
-                color: var(--text-soft);
-                background: rgba(201, 161, 74, 0.06);
-                border: 1px solid var(--gold-dim);
-                padding: 5px 11px;
-                transition: all 0.25s ease;
+                letter-spacing: 0.04em;
+                color: var(--text-mute);
+                background: var(--accent-bg);
+                padding: 1px 7px;
+                border-radius: 3px;
+                margin-left: 6px;
+                vertical-align: 2px;
             }
-            .proof-row a:hover {
-                color: var(--gold-bright);
-                border-color: var(--gold);
-                background: rgba(201, 161, 74, 0.14);
-                box-shadow: 0 0 14px -4px rgba(201, 161, 74, 0.5);
+
+            /* ── ACHIEVEMENTS ── */
+            .achievement-list {
+                padding-left: 20px;
+                color: var(--text-soft);
+            }
+            .achievement-list li {
+                margin-bottom: 8px;
+            }
+
+            /* ── PROOFS ── */
+            .proofs {
+                font-size: 0.88em;
+                color: var(--text-mute);
+                margin-top: 4px;
+            }
+            .proofs a {
+                margin-right: 10px;
             }
 
             /* ── FOOTER ── */
             footer {
-                padding: 72px 32px 56px;
-                position: relative;
+                margin-top: 56px;
+                padding-top: 20px;
                 border-top: 1px solid var(--rule);
-                margin-top: 40px;
-                background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4));
-            }
-            footer::before {
-                content: "✦";
-                display: block;
-                text-align: center;
-                color: var(--gold);
-                font-size: 1.2em;
-                margin-bottom: 32px;
-                text-shadow: 0 0 16px rgba(201, 161, 74, 0.5);
-            }
-            .footer-inner {
-                max-width: 960px;
-                margin: 0 auto;
-                text-align: center;
-            }
-            .footer-cta {
-                font-family: "Cinzel", serif;
-                font-size: 1.7em;
-                font-weight: 600;
-                letter-spacing: 0.08em;
-                color: var(--text);
-                margin-bottom: 12px;
-                text-shadow: 0 0 24px rgba(201, 161, 74, 0.2);
-            }
-            .footer-sub {
-                font-style: italic;
-                font-size: 1.05em;
                 color: var(--text-mute);
-                margin-bottom: 30px;
-            }
-            .footer-links {
-                display: flex;
-                gap: 10px;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            .footer-meta {
-                font-family: "Cinzel", serif;
-                font-size: 0.62em;
-                letter-spacing: 0.28em;
-                text-transform: uppercase;
-                color: var(--text-mute);
-                margin-top: 48px;
-            }
-
-            /* ── SCROLL ANIMATIONS ── */
-            .fade-up {
-                opacity: 0;
-                transform: translateY(14px);
-                transition:
-                    opacity 0.5s ease,
-                    transform 0.5s ease;
-            }
-            .fade-up.visible {
-                opacity: 1;
-                transform: none;
+                font-size: 0.88em;
+                text-align: center;
             }
 
             /* ── RESPONSIVE ── */
-            @media (max-width: 680px) {
-                .hero {
+            @media (max-width: 600px) {
+                header {
                     grid-template-columns: 1fr;
-                    padding-top: 84px;
-                    gap: 24px;
+                    gap: 20px;
                 }
-                .hero-photo-wrap {
+                .photo {
+                    width: 130px;
+                    height: 130px;
                     order: -1;
                 }
-                .hero-photo {
-                    width: 120px;
-                    height: 120px;
-                }
-                .hero-label::before {
-                    display: none;
-                }
-                .nav-links a {
-                    display: none;
-                }
-                .nav-links {
-                    gap: 0;
-                }
-                .timeline {
-                    padding-left: 20px;
-                }
-                .timeline-item::before {
-                    left: -24px;
-                }
-                .section {
-                    padding: 48px 20px;
-                }
-                .hero {
-                    padding-left: 20px;
-                    padding-right: 20px;
-                }
+                .container { padding: 36px 20px 60px; }
+                h1 { font-size: 1.6em; }
+                .entry-head { gap: 4px; }
             }
         </style>
     </head>
     <body>
-        <canvas id="magic-canvas" aria-hidden="true"></canvas>
-        <div id="wand-glow" aria-hidden="true"></div>
-        <div id="theme-sweep" aria-hidden="true"></div>
-        <!-- NAV -->
-        <nav>
-            <div class="nav-inner">
-                <span class="nav-logo">Arnesh Banerjee</span>
-                <div class="nav-links">
-                    <a href="#interests">Interests</a>
-                    <a href="#experience">Experience</a>
-                    <a href="#publications">Publications</a>
-                    <a href="#achievements">Achievements</a>
-                    <button
-                        id="theme-toggle"
-                        class="theme-toggle"
-                        type="button"
-                        aria-label="Toggle light / dark theme"
-                        title="Cast Lumos / Nox"
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.6"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            aria-hidden="true"
-                        >
-                            <!-- wand handle -->
-                            <line x1="4" y1="20" x2="15.5" y2="8.5" />
-                            <!-- handle grip -->
-                            <line x1="5" y1="19" x2="6.5" y2="20.5" />
-                            <line x1="6" y1="18" x2="7.5" y2="19.5" />
-                            <!-- star tip -->
-                            <path d="M17 7l0.8 2 2 0.6-2 0.8L17 12.4l-0.8-2-2-0.8 2-0.6z" fill="currentColor" stroke="none" />
-                            <!-- sparkles -->
-                            <circle cx="20" cy="5" r="0.6" fill="currentColor" stroke="none" />
-                            <circle cx="14" cy="4" r="0.5" fill="currentColor" stroke="none" />
-                            <circle cx="21" cy="11" r="0.5" fill="currentColor" stroke="none" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </nav>
-
-        <!-- HERO -->
-        <section class="hero" id="top">
-            <div class="hero-text">
-                <div class="hero-label">Undergraduate Researcher</div>
-                <h1 class="hero-name">Arnesh<br />Banerjee</h1>
-                <p class="hero-affil">
-                    B.Tech CSE (Data Science)
-                    <span class="dot">·</span>
-                    Heritage Institute of Technology, Kolkata
-                </p>
-                <p class="hero-bio">
-                    I am an undergraduate researcher broadly interested in
-                    multi-agent reinforcement learning, Computer Vision, and AI
-                    safety. My current work spans autonomous systems governance,
-                    RL environments and simulation, and applied ML — including
-                    medical image segmentation using hybrid CNN-Transformer
-                    architectures and safety benchmarking of large language
-                    models.
-                </p>
-                <p class="hero-bio" style="margin-top: 0">
-                    Upon completing my BTech I am
-                    <strong>looking to join a PhD program.</strong>
-                </p>
-                <p class="hero-email">
-                    <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in"
-                        >arnesh.banerjee.ds27@heritageit.edu.in</a
-                    >
-                </p>
-                <div class="hero-links">
-                    <a class="btn btn-primary" href="Arnesh_Banerjee_CV_Final.pdf"
-                        >CV [PDF]</a
-                    >
-                    <a class="btn btn-ghost" href="LOR Combined.pdf"
-                        >Rec. Letters</a
-                    >
-                    <a
-                        class="btn btn-ghost"
-                        href="https://github.com/ArneshBanerjee"
-                        >GitHub</a
-                    >
-                    <a
-                        class="btn btn-ghost"
-                        href="https://www.linkedin.com/in/arnesh24/"
-                        >LinkedIn</a
-                    >
-                </div>
-            </div>
-            <div class="hero-photo-wrap">
-                <img class="hero-photo" src="me.jpeg" alt="Arnesh Banerjee" />
-            </div>
-        </section>
-
-        <!-- EXPERIENCE -->
-        <section class="section" id="experience">
-            <div class="section-label">Background</div>
-            <h2 class="section-title">Research Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item fade-up">
-                    <div class="timeline-card">
-                        <div class="timeline-header">
-                            <span class="timeline-inst"
-                                >IIT Kharagpur
-                                <span class="timeline-tag">Summer Internship 2026, Upcoming</span>
-                                <a
-                                    href="KRITI-GRISHMA-Offer-Letter-GRISHMA-STU-2026-21410.pdf"
-                                    >[Offer Letter]</a
-                                >
-                                <a
-                                    href="https://kriti.iitkgp.ac.in/"
-                                    target="_blank"
-                                    rel="noopener"
-                                    >[KRITI Portal]</a
-                                ></span
-                            >
-                            <span class="timeline-date"
-                                >Starting 23rd May 2026 · On-site</span
-                            >
-                        </div>
-                        <div class="timeline-advisor">
-                            Advisor: Dr. Sourangshu Bhattacharya
-                        </div>
-                        <ul>
-                            <li>
-                                Selected for the
-                                <strong>GRISHMA Summer Internship Program</strong>
-                                at IIT Kharagpur via the official KRITI portal;
-                                will work with Dr. Sourangshu Bhattacharya on
-                                <strong>building India's first genomic foundational model (IgLM)</strong>
-                                — a population-specific genomic language model
-                                pretrained on GenomeIndia, IndiGen, and
-                                GenomeAsia datasets using the StripedHyena2
-                                architecture.
-                            </li>
-                        </ul>
+        <div class="container">
+            <header>
+                <div>
+                    <h1>Arnesh Banerjee</h1>
+                    <div class="affiliation">
+                        Undergraduate Researcher · B.Tech CSE (Data Science)<br />
+                        Heritage Institute of Technology, Kolkata
+                    </div>
+                    <div class="contact-row">
+                        <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">Email</a>
+                        <a href="Arnesh_Banerjee_CV_Final.pdf">CV</a>
+                        <a href="https://github.com/ArneshBanerjee">GitHub</a>
+                        <a href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
+                        <a href="LOR Combined.pdf">Letters</a>
                     </div>
                 </div>
+                <img class="photo" src="me.jpeg" alt="Arnesh Banerjee" />
+            </header>
 
-                <div class="timeline-item fade-up">
-                    <div class="timeline-card">
-                        <div class="timeline-header">
-                            <span class="timeline-inst"
-                                >Jadavpur University</span
-                            >
-                            <span class="timeline-date"
-                                >Nov 2025 – Present · Remote</span
-                            >
-                        </div>
-                        <div class="timeline-advisor">
-                            Advisor: Prof. Debotosh Bhattacharjee
-                        </div>
-                        <ul>
-                            <li>
-                                Achieved 98.10% Dice and 96.39% IoU on breast
-                                thermography tumor segmentation using a ResNet34
-                                + ASPP + ViT decoder with SE attention,
-                                evaluated via 5-fold cross-validation.
-                            </li>
-                            <li>
-                                Conducted a rigorous ablation study (20 training
-                                runs) across U-Net, ResNet-only, and hybrid
-                                architectures, demonstrating generalization
-                                trade-offs in medical imaging.
-                            </li>
-                            <li>
-                                Built a fully automated cross-validation
-                                pipeline with checkpointing, experiment logging,
-                                and reproducible training.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item fade-up">
-                    <div class="timeline-card">
-                        <div class="timeline-header">
-                            <span class="timeline-inst"
-                                >New Jersey Institute of Technology
-                                <a href="NJIT-certificate.pdf"
-                                    >[Certificate]</a
-                                ></span
-                            >
-                            <span class="timeline-date"
-                                >Jun – Jul 2025, Aug – Nov 2025 · On-site /
-                                Virtual</span
-                            >
-                        </div>
-                        <div class="timeline-advisor">
-                            Advisor: Prof. Arnob Ghosh
-                        </div>
-                        <ul>
-                            <li>
-                                Constructed a cost-model training dataset for a
-                                modified Safe RLHF pipeline with improved
-                                cost-model results.
-                            </li>
-                            <li>
-                                Designed and tested a comparative 800-datapoint
-                                safety benchmark against state-of-the-art LLMs
-                                (GPT, DeepSeek, Gemini, Qwen, Mistral).
-                            </li>
-                            <li>
-                                Demonstrated 50% higher safety compliance than
-                                ChatGPT 5 across benchmark scenarios.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item fade-up">
-                    <div class="timeline-card">
-                        <div class="timeline-header">
-                            <span class="timeline-inst"
-                                >Heritage Institute of Technology</span
-                            >
-                            <span class="timeline-date"
-                                >Oct 2024 – Mar 2025 · On-site</span
-                            >
-                        </div>
-                        <div class="timeline-advisor">
-                            Advisor: Prof. Arpita Talukdar
-                        </div>
-                        <ul>
-                            <li>
-                                Developed a dual-stage ML framework for breast
-                                cancer diagnosis and recurrence prediction using
-                                WDBC and WPBC datasets, evaluating RF, SVM,
-                                Logistic Regression, MLP, and XGBoost with
-                                stratified 10-fold cross-validation.
-                            </li>
-                            <li>
-                                Implemented RFE and SFS feature selection with
-                                SMOTE and GridSearchCV tuning, improving WPBC
-                                accuracy to 93.67% and WDBC to 97.77%.
-                            </li>
-                            <li>
-                                Conducted comparative performance analysis and
-                                interpreted clinically relevant nuclear features
-                                with confidence intervals.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="bio">
+                <p>
+                    I am an undergraduate researcher interested in
+                    multi-agent reinforcement learning, computer vision, and
+                    AI safety. My current work spans autonomous systems
+                    governance, RL environments and simulation, and applied
+                    ML — including medical image segmentation with hybrid
+                    CNN-Transformer architectures and safety benchmarking of
+                    large language models.
+                </p>
+                <p>
+                    I am applying to PhD programs starting Fall 2027.
+                </p>
             </div>
-        </section>
 
-        <!-- PUBLICATIONS -->
-        <section class="section" id="publications">
-            <div class="section-label">Work</div>
-            <h2 class="section-title">Publications</h2>
-            <div class="pub-list">
-                <div class="pub-card fade-up">
-                    <div class="pub-title-row">
-                        <span class="pub-title"
-                            >Recursive and Wrapper-Based Feature Selection for
-                            Breast Cancer Diagnosis and Prognosis</span
-                        >
-                        <span class="badge badge-oral">Oral</span>
+            <section id="experience">
+                <h2>Research Experience</h2>
+
+                <div class="entry">
+                    <div class="entry-head">
+                        <h3>
+                            IIT Kharagpur
+                            <span class="tag">Upcoming · Summer 2026</span>
+                        </h3>
+                        <span class="entry-meta">May 2026 – · On-site</span>
+                    </div>
+                    <div class="entry-sub">
+                        Advisor: Dr. Sourangshu Bhattacharya
+                    </div>
+                    <ul>
+                        <li>
+                            Selected for the GRISHMA Summer Internship
+                            Program; will work on building India's first
+                            genomic foundational model (IgLM) — a
+                            population-specific genomic language model
+                            pretrained on GenomeIndia, IndiGen, and
+                            GenomeAsia datasets using the StripedHyena2
+                            architecture.
+                            [<a href="KRITI-GRISHMA-Offer-Letter-GRISHMA-STU-2026-21410.pdf">offer</a>,
+                            <a href="https://kriti.iitkgp.ac.in/">KRITI portal</a>]
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-head">
+                        <h3>Jadavpur University</h3>
+                        <span class="entry-meta">Nov 2025 – present · Remote</span>
+                    </div>
+                    <div class="entry-sub">
+                        Advisor: Prof. Debotosh Bhattacharjee
+                    </div>
+                    <ul>
+                        <li>
+                            Achieved 98.10% Dice and 96.39% IoU on breast
+                            thermography tumor segmentation using a ResNet34
+                            + ASPP + ViT decoder with SE attention,
+                            evaluated via 5-fold cross-validation.
+                        </li>
+                        <li>
+                            Conducted a 20-run ablation across U-Net,
+                            ResNet-only, and hybrid architectures,
+                            characterizing generalization trade-offs in
+                            medical imaging.
+                        </li>
+                        <li>
+                            Built an automated cross-validation pipeline
+                            with checkpointing, experiment logging, and
+                            reproducible training.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-head">
+                        <h3>
+                            New Jersey Institute of Technology
+                        </h3>
+                        <span class="entry-meta">Jun – Nov 2025 · On-site / Virtual</span>
+                    </div>
+                    <div class="entry-sub">
+                        Advisor: Prof. Arnob Ghosh
+                        [<a href="NJIT-certificate.pdf">certificate</a>]
+                    </div>
+                    <ul>
+                        <li>
+                            Constructed a cost-model training dataset for a
+                            modified Safe RLHF pipeline with improved
+                            cost-model results.
+                        </li>
+                        <li>
+                            Designed and tested a comparative 800-datapoint
+                            safety benchmark against state-of-the-art LLMs
+                            (GPT, DeepSeek, Gemini, Qwen, Mistral).
+                        </li>
+                        <li>
+                            Demonstrated 50% higher safety compliance than
+                            ChatGPT 5 across benchmark scenarios.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="entry">
+                    <div class="entry-head">
+                        <h3>Heritage Institute of Technology</h3>
+                        <span class="entry-meta">Oct 2024 – Mar 2025 · On-site</span>
+                    </div>
+                    <div class="entry-sub">
+                        Advisor: Prof. Arpita Talukdar
+                    </div>
+                    <ul>
+                        <li>
+                            Developed a dual-stage ML framework for breast
+                            cancer diagnosis and recurrence prediction using
+                            WDBC and WPBC datasets, evaluating RF, SVM,
+                            Logistic Regression, MLP, and XGBoost with
+                            stratified 10-fold cross-validation.
+                        </li>
+                        <li>
+                            Implemented RFE and SFS feature selection with
+                            SMOTE and GridSearchCV tuning, improving WPBC
+                            accuracy to 93.67% and WDBC to 97.77%.
+                        </li>
+                        <li>
+                            Conducted comparative performance analysis and
+                            interpreted clinically relevant nuclear features
+                            with confidence intervals.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="publications">
+                <h2>Publications</h2>
+                <div class="pub">
+                    <div class="pub-title">
+                        Recursive and Wrapper-Based Feature Selection for
+                        Breast Cancer Diagnosis and Prognosis
+                        <span class="tag">Oral</span>
                     </div>
                     <div class="pub-authors">
                         Ayushi Bhattacharjee, <strong>Arnesh Banerjee</strong>,
-                        Arpita Talukdar. 2026.
+                        Arpita Talukdar.
                     </div>
                     <div class="pub-venue">
-                        In the proceedings of the 4th Analytics Global
-                        Conference (AGC 2026), March 2026
+                        4th Analytics Global Conference (AGC 2026), March 2026.
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- PRE-PRINTS -->
-            <div style="margin-top: 48px">
-                <div class="section-label">Pre-prints</div>
-                <h2 class="section-title" style="margin-top: 8px">
-                    Pre-prints
-                </h2>
-                <div class="pub-list">
-                    <div class="pub-card fade-up">
-                        <div class="pub-title-row">
-                            <span class="pub-title"
-                                >Certifiable Safe RLHF: Fixed-Penalty Constraint
-                                Optimization for Safer Language Models</span
-                            >
-                            <span class="badge badge-preprint">Pre-print</span>
-                        </div>
-                        <div class="pub-authors">
-                            Kartik Pandit, Sourav Ganguly,
-                            <strong>Arnesh Banerjee</strong>, Shaahin Angizi,
-                            Arnob Ghosh. 2025.
-                        </div>
-                        <div class="pub-venue">
-                            arXiv preprint
-                            <a href="https://arxiv.org/abs/2510.03520"
-                                >arXiv:2510.03520</a
-                            >
-                        </div>
-                    </div>
-
-                    <div class="pub-card fade-up">
-                        <div class="pub-title-row">
-                            <span class="pub-title"
-                                >Multiscale Transformer-Enhanced U-Net with
-                                Level-Set Regularization for Breast Thermography
-                                Segmentation</span
-                            >
-                            <span class="badge badge-preprint">Pre-print</span>
-                        </div>
-                        <div class="pub-authors">
-                            <strong>Arnesh Banerjee</strong>, Debotosh
-                            Bhattacharjee
-                        </div>
-                        <div class="pub-venue">
-                            Advisor: Prof. Debotosh Bhattacharjee
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ONGOING -->
-            <div style="margin-top: 48px">
-                <div class="section-label">In Progress</div>
-                <h2 class="section-title" style="margin-top: 8px">
-                    Independent &amp; Ongoing Research
-                </h2>
-                <div class="ongoing-list">
-                    <div class="ongoing-card fade-up">
-                        <div class="pub-title-row">
-                            <span class="pub-title"
-                                >Co-evolutionary Multi Agent RL for Autonomous
-                                Drones</span
-                            >
-                            <span class="badge badge-ongoing">Ongoing</span>
-                        </div>
-                        <div class="pub-authors">
-                            <strong>Arnesh Banerjee</strong>
-                        </div>
-                        <div class="pub-venue">
-                            In collaboration with the AI for Defence Lab,
-                            ULiège, Belgium
-                        </div>
-                    </div>
-
-                    <div class="ongoing-card fade-up">
-                        <div class="pub-title-row">
-                            <span class="pub-title"
-                                >Understanding the Limitations of LLMs in
-                                Mathematical Reasoning</span
-                            >
-                            <span class="badge badge-ongoing">Ongoing</span>
-                        </div>
-                        <div class="pub-authors">
-                            <strong>Arnesh Banerjee</strong>, Ayushi
-                            Bhattacharjee, Subhajit Datta
-                        </div>
-                        <div class="pub-venue">
-                            Advisor: Prof. Subhajit Datta &nbsp;·&nbsp; Part of
-                            B.Tech degree coursework
-                        </div>
-                    </div>
-
-                    <div class="ongoing-card fade-up">
-                        <div class="pub-title-row">
-                            <span class="pub-title"
-                                >Analyzing Historical Revisionism in LLMs in the
-                                Context of Indian History</span
-                            >
-                            <span class="badge badge-ongoing">Ongoing</span>
-                        </div>
-                        <div class="pub-authors">
-                            Kartik Pandit, Sourav Ganguly,
-                            <strong>Arnesh Banerjee</strong>, Avirup
-                            Chakraborty, Arnob Ghosh
-                        </div>
-                        <div class="pub-venue">Advisor: Dr. Arnob Ghosh</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ACHIEVEMENTS -->
-        <section class="section" id="achievements">
-            <div class="section-label">Recognition</div>
-            <h2 class="section-title">Achievements</h2>
-            <div class="ongoing-list">
-                <div class="ongoing-card fade-up">
-                    <div class="pub-title-row">
-                        <span class="pub-title"
-                            >Selected Summer Research Programs 2026</span
-                        >
-                        <span class="badge badge-oral">Selected</span>
+            <section id="preprints">
+                <h2>Preprints</h2>
+                <div class="pub">
+                    <div class="pub-title">
+                        Certifiable Safe RLHF: Fixed-Penalty Constraint
+                        Optimization for Safer Language Models
                     </div>
                     <div class="pub-authors">
-                        Selected for IIT Kharagpur, 3x IIT Patna, and IIT
-                        Dhanbad for Summer Research Internship 2026, and IIM
-                        Ahmedabad AI Venture Summer Internship 2026.
+                        Kartik Pandit, Sourav Ganguly,
+                        <strong>Arnesh Banerjee</strong>, Shaahin Angizi,
+                        Arnob Ghosh. 2025.
                     </div>
-                    <div class="proof-row">
-                        <span class="proof-label">Proofs</span>
-                        <a
-                            href="Summer-Intern-2026/IIT%20KGP.png"
-                            target="_blank"
-                            rel="noopener"
-                            >IIT Kharagpur</a
-                        >
-                        <a
-                            href="Summer-Intern-2026/IIT%20Patna%201.png"
-                            target="_blank"
-                            rel="noopener"
-                            >IIT Patna · 1</a
-                        >
-                        <a
-                            href="Summer-Intern-2026/IIT%20Patna%202.png"
-                            target="_blank"
-                            rel="noopener"
-                            >IIT Patna · 2</a
-                        >
-                        <a
-                            href="Summer-Intern-2026/IIT%20Patna%203.png"
-                            target="_blank"
-                            rel="noopener"
-                            >IIT Patna · 3</a
-                        >
-                        <a
-                            href="Summer-Intern-2026/IIMA.png"
-                            target="_blank"
-                            rel="noopener"
-                            >IIM Ahmedabad</a
-                        >
+                    <div class="pub-venue">
+                        arXiv:<a href="https://arxiv.org/abs/2510.03520">2510.03520</a>
                     </div>
                 </div>
-                <div class="ongoing-card fade-up">
-                    <div class="pub-title-row">
-                        <span class="pub-title">Department Third</span>
-                        <span class="badge badge-oral">Academic</span>
+
+                <div class="pub">
+                    <div class="pub-title">
+                        Multiscale Transformer-Enhanced U-Net with Level-Set
+                        Regularization for Breast Thermography Segmentation
                     </div>
                     <div class="pub-authors">
-                        4th Semester · SGPA: 9.46 · B.Tech CSE(DS), Heritage
-                        Institute of Technology, Kolkata
+                        <strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee.
+                    </div>
+                    <div class="pub-venue">
+                        Manuscript in preparation.
                     </div>
                 </div>
-                <div class="ongoing-card fade-up">
-                    <div class="pub-title-row">
-                        <span class="pub-title"
-                            >Institutional Innovation Council (IIC)</span
-                        >
-                        <span class="badge badge-oral">Selected</span>
-                    </div>
-                    <div class="pub-authors">
-                        Selected as one of 10 IIC members across all years to
-                        represent the Department of CSE(DS), HIT, Kolkata
-                    </div>
-                </div>
-                <div class="ongoing-card fade-up">
-                    <div class="pub-title-row">
-                        <span class="pub-title">WBJEE Qualified</span>
-                        <span class="badge badge-oral">Exam</span>
+            </section>
+
+            <section id="ongoing">
+                <h2>Ongoing Research</h2>
+                <div class="pub">
+                    <div class="pub-title">
+                        Co-evolutionary Multi-Agent RL for Autonomous Drones
                     </div>
                     <div class="pub-authors">
-                        Top 5.3% in the state on WBJEE, 2023
+                        <strong>Arnesh Banerjee</strong>.
+                    </div>
+                    <div class="pub-venue">
+                        With the AI for Defence Lab, ULiège, Belgium.
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- FOOTER -->
-        <footer>
-            <div class="footer-inner">
-                <div class="footer-cta">Open to collaborations.</div>
-                <div class="footer-sub">
-                    Research collaborations, internships, and interesting
-                    problems.
+                <div class="pub">
+                    <div class="pub-title">
+                        Understanding the Limitations of LLMs in Mathematical
+                        Reasoning
+                    </div>
+                    <div class="pub-authors">
+                        <strong>Arnesh Banerjee</strong>, Ayushi Bhattacharjee,
+                        Subhajit Datta.
+                    </div>
+                    <div class="pub-venue">
+                        Advisor: Prof. Subhajit Datta. B.Tech coursework.
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <a
-                        class="btn btn-primary"
-                        href="mailto:arnesh.banerjee.ds27@heritageit.edu.in"
-                        >Get in touch</a
-                    >
-                    <a
-                        class="btn btn-ghost"
-                        href="https://www.linkedin.com/in/arnesh24/"
-                        >LinkedIn</a
-                    >
-                    <a
-                        class="btn btn-ghost"
-                        href="https://github.com/ArneshBanerjee"
-                        >GitHub</a
-                    >
+
+                <div class="pub">
+                    <div class="pub-title">
+                        Analyzing Historical Revisionism in LLMs in the
+                        Context of Indian History
+                    </div>
+                    <div class="pub-authors">
+                        Kartik Pandit, Sourav Ganguly,
+                        <strong>Arnesh Banerjee</strong>, Avirup Chakraborty,
+                        Arnob Ghosh.
+                    </div>
+                    <div class="pub-venue">
+                        Advisor: Dr. Arnob Ghosh.
+                    </div>
                 </div>
-                <div class="footer-meta">Last updated March 2026.</div>
-            </div>
-        </footer>
+            </section>
 
-        <script>
-            const observer = new IntersectionObserver(
-                (entries) =>
-                    entries.forEach((e) => {
-                        if (e.isIntersecting) e.target.classList.add("visible");
-                    }),
-                { threshold: 0.08 },
-            );
-            document
-                .querySelectorAll(".fade-up")
-                .forEach((el) => observer.observe(el));
-        </script>
-        <script>
-            // ── magical canvas: twinkling stars, drifting embers, shooting stars, cursor sparkles ──
-            (() => {
-                const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-                if (reduce) return;
+            <section id="achievements">
+                <h2>Achievements</h2>
+                <ul class="achievement-list">
+                    <li>
+                        Selected for IIT Kharagpur, 3× IIT Patna, and IIT
+                        Dhanbad summer research internships, and IIM Ahmedabad
+                        AI Venture Summer Internship 2026.
+                        <div class="proofs">
+                            <a href="Summer-Intern-2026/IIT%20KGP.png">IIT KGP</a>
+                            <a href="Summer-Intern-2026/IIT%20Patna%201.png">IIT Patna 1</a>
+                            <a href="Summer-Intern-2026/IIT%20Patna%202.png">IIT Patna 2</a>
+                            <a href="Summer-Intern-2026/IIT%20Patna%203.png">IIT Patna 3</a>
+                            <a href="Summer-Intern-2026/IIMA.png">IIM Ahmedabad</a>
+                        </div>
+                    </li>
+                    <li>
+                        Department Third, 4th Semester · SGPA 9.46 ·
+                        B.Tech CSE(DS), Heritage Institute of Technology.
+                    </li>
+                    <li>
+                        Selected as one of 10 Institutional Innovation Council
+                        (IIC) members representing the CSE(DS) department, HIT
+                        Kolkata.
+                    </li>
+                    <li>
+                        WBJEE 2023 — top 5.3% in West Bengal.
+                    </li>
+                </ul>
+            </section>
 
-                const canvas = document.getElementById("magic-canvas");
-                const ctx = canvas.getContext("2d");
-                const dpr = Math.min(window.devicePixelRatio || 1, 2);
-                let W = 0, H = 0;
-
-                function resize() {
-                    W = window.innerWidth;
-                    H = window.innerHeight;
-                    canvas.width = W * dpr;
-                    canvas.height = H * dpr;
-                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                }
-                resize();
-                window.addEventListener("resize", resize);
-
-                // twinkling stars
-                const starCount = Math.min(110, Math.floor((W * H) / 14000));
-                const stars = Array.from({ length: starCount }, () => ({
-                    x: Math.random() * W,
-                    y: Math.random() * H,
-                    r: Math.random() * 1.2 + 0.3,
-                    phase: Math.random() * Math.PI * 2,
-                    speed: 0.4 + Math.random() * 1.4,
-                    hue: Math.random() < 0.15 ? "blue" : "gold",
-                }));
-
-                // drifting golden embers (rising from the bottom like Hogwarts hall candles)
-                const embers = [];
-                function spawnEmber() {
-                    embers.push({
-                        x: Math.random() * W,
-                        y: H + 8,
-                        vy: -(0.15 + Math.random() * 0.55),
-                        vx: (Math.random() - 0.5) * 0.35,
-                        life: 0,
-                        max: 220 + Math.random() * 320,
-                        r: 0.6 + Math.random() * 1.5,
-                    });
-                }
-
-                // shooting stars (occasional)
-                const shooters = [];
-                function spawnShooter() {
-                    const fromTop = Math.random() < 0.7;
-                    shooters.push({
-                        x: Math.random() * W,
-                        y: fromTop ? -20 : Math.random() * H * 0.4,
-                        vx: 6 + Math.random() * 4,
-                        vy: 2 + Math.random() * 2.5,
-                        life: 0,
-                        max: 70,
-                    });
-                }
-
-                // cursor sparkles (also used for theme-cast bursts)
-                const sparkles = [];
-                window.magicBurst = (x, y, count = 60, spread = 30) => {
-                    for (let i = 0; i < count; i++) {
-                        const ang = Math.random() * Math.PI * 2;
-                        const v = 1 + Math.random() * 4;
-                        sparkles.push({
-                            x: x + (Math.random() - 0.5) * spread,
-                            y: y + (Math.random() - 0.5) * spread,
-                            vx: Math.cos(ang) * v,
-                            vy: Math.sin(ang) * v - 0.5,
-                            life: 0,
-                            max: 50 + Math.random() * 60,
-                            r: 0.8 + Math.random() * 1.8,
-                        });
-                    }
-                };
-                let mouseX = -999, mouseY = -999, lastSpawn = 0;
-                const wand = document.getElementById("wand-glow");
-                window.addEventListener("mousemove", (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                    if (wand) {
-                        wand.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-                    }
-                    const now = performance.now();
-                    if (now - lastSpawn > 28) {
-                        lastSpawn = now;
-                        const count = 1 + (Math.random() < 0.4 ? 1 : 0);
-                        for (let i = 0; i < count; i++) {
-                            sparkles.push({
-                                x: mouseX + (Math.random() - 0.5) * 14,
-                                y: mouseY + (Math.random() - 0.5) * 14,
-                                vx: (Math.random() - 0.5) * 0.6,
-                                vy: -0.3 - Math.random() * 0.6,
-                                life: 0,
-                                max: 40 + Math.random() * 30,
-                                r: 0.6 + Math.random() * 1.4,
-                            });
-                        }
-                    }
-                });
-
-                let last = performance.now();
-                let nextShooter = performance.now() + 4000 + Math.random() * 6000;
-
-                function frame(now) {
-                    const dt = Math.min((now - last) / 16.67, 3);
-                    last = now;
-                    ctx.clearRect(0, 0, W, H);
-
-                    // stars
-                    for (const s of stars) {
-                        s.phase += 0.022 * s.speed * dt;
-                        const a = 0.25 + 0.75 * (Math.sin(s.phase) * 0.5 + 0.5);
-                        const color = s.hue === "blue" ? "180, 200, 255" : "230, 200, 120";
-                        ctx.fillStyle = `rgba(${color}, ${a * 0.9})`;
-                        ctx.beginPath();
-                        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.fillStyle = `rgba(${color}, ${a * 0.12})`;
-                        ctx.beginPath();
-                        ctx.arc(s.x, s.y, s.r * 5, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-
-                    // embers
-                    if (Math.random() < 0.05 * dt && embers.length < 60) spawnEmber();
-                    for (let i = embers.length - 1; i >= 0; i--) {
-                        const e = embers[i];
-                        e.x += e.vx * dt;
-                        e.y += e.vy * dt;
-                        e.life += dt;
-                        if (e.life > e.max || e.y < -30) {
-                            embers.splice(i, 1);
-                            continue;
-                        }
-                        const a = Math.sin((e.life / e.max) * Math.PI) * 0.7;
-                        ctx.fillStyle = `rgba(255, 200, 110, ${a})`;
-                        ctx.beginPath();
-                        ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.fillStyle = `rgba(255, 160, 60, ${a * 0.18})`;
-                        ctx.beginPath();
-                        ctx.arc(e.x, e.y, e.r * 5, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-
-                    // shooting stars
-                    if (now > nextShooter) {
-                        spawnShooter();
-                        nextShooter = now + 5000 + Math.random() * 9000;
-                    }
-                    for (let i = shooters.length - 1; i >= 0; i--) {
-                        const s = shooters[i];
-                        s.x += s.vx * dt;
-                        s.y += s.vy * dt;
-                        s.life += dt;
-                        if (s.life > s.max || s.x > W + 60 || s.y > H + 60) {
-                            shooters.splice(i, 1);
-                            continue;
-                        }
-                        const fade = 1 - s.life / s.max;
-                        const tailLen = 70;
-                        const grad = ctx.createLinearGradient(
-                            s.x, s.y,
-                            s.x - s.vx * tailLen / 8, s.y - s.vy * tailLen / 8
-                        );
-                        grad.addColorStop(0, `rgba(255, 240, 200, ${fade})`);
-                        grad.addColorStop(1, "rgba(255, 240, 200, 0)");
-                        ctx.strokeStyle = grad;
-                        ctx.lineWidth = 1.5;
-                        ctx.beginPath();
-                        ctx.moveTo(s.x, s.y);
-                        ctx.lineTo(s.x - s.vx * tailLen / 8, s.y - s.vy * tailLen / 8);
-                        ctx.stroke();
-                        ctx.fillStyle = `rgba(255, 250, 220, ${fade})`;
-                        ctx.beginPath();
-                        ctx.arc(s.x, s.y, 1.6, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-
-                    // cursor sparkles
-                    for (let i = sparkles.length - 1; i >= 0; i--) {
-                        const sp = sparkles[i];
-                        sp.x += sp.vx * dt;
-                        sp.y += sp.vy * dt;
-                        sp.vy += 0.005 * dt;
-                        sp.life += dt;
-                        if (sp.life > sp.max) {
-                            sparkles.splice(i, 1);
-                            continue;
-                        }
-                        const a = (1 - sp.life / sp.max) * 0.95;
-                        ctx.fillStyle = `rgba(255, 230, 160, ${a})`;
-                        ctx.beginPath();
-                        ctx.arc(sp.x, sp.y, sp.r, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.fillStyle = `rgba(255, 200, 100, ${a * 0.3})`;
-                        ctx.beginPath();
-                        ctx.arc(sp.x, sp.y, sp.r * 4, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-
-                    requestAnimationFrame(frame);
-                }
-                requestAnimationFrame(frame);
-            })();
-        </script>
-        <script>
-            // ── theme toggle: wand-cast animation + sweep + sparkle burst ──
-            (() => {
-                const root = document.documentElement;
-                const btn = document.getElementById("theme-toggle");
-                const sweep = document.getElementById("theme-sweep");
-                if (!btn || !sweep) return;
-
-                const stored = localStorage.getItem("theme");
-                if (stored === "light") root.dataset.theme = "light";
-                // dark is the default — no attribute needed
-
-                let casting = false;
-                btn.addEventListener("click", () => {
-                    if (casting) return;
-                    casting = true;
-
-                    btn.classList.add("casting");
-                    sweep.classList.remove("active");
-                    // force reflow so the animation restarts cleanly
-                    void sweep.offsetWidth;
-                    sweep.classList.add("active");
-
-                    // burst sparkles from the wand tip
-                    const r = btn.getBoundingClientRect();
-                    const cx = r.left + r.width * 0.7;
-                    const cy = r.top + r.height * 0.3;
-                    if (window.magicBurst) {
-                        window.magicBurst(cx, cy, 50, 14);
-                        // a second burst from the centre as the sweep crosses
-                        setTimeout(() => {
-                            if (window.magicBurst) {
-                                window.magicBurst(
-                                    window.innerWidth / 2,
-                                    window.innerHeight / 2,
-                                    80,
-                                    180
-                                );
-                            }
-                        }, 380);
-                    }
-
-                    // swap the theme mid-sweep so the wash hides the change
-                    setTimeout(() => {
-                        const isLight = root.dataset.theme === "light";
-                        if (isLight) {
-                            delete root.dataset.theme;
-                            localStorage.setItem("theme", "dark");
-                        } else {
-                            root.dataset.theme = "light";
-                            localStorage.setItem("theme", "light");
-                        }
-                    }, 430);
-
-                    setTimeout(() => {
-                        btn.classList.remove("casting");
-                        sweep.classList.remove("active");
-                        casting = false;
-                    }, 1000);
-                });
-            })();
-        </script>
+            <footer>
+                Last updated March 2026 ·
+                <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
+            </footer>
+        </div>
     </body>
 </html>
