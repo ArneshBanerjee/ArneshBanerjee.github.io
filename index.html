@@ -277,6 +277,45 @@
                 background: var(--bg-soft);
                 border-color: var(--rule);
             }
+            a.tag-link {
+                display: inline-block;
+                font-family: "Inter", -apple-system, sans-serif;
+                font-size: 0.68em;
+                font-weight: 500;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: var(--text-mute);
+                background: var(--bg-soft);
+                border: 1px solid var(--rule);
+                padding: 1px 7px;
+                border-radius: 3px;
+                margin-left: 4px;
+                vertical-align: 2px;
+                text-decoration: none;
+                transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            }
+            a.tag-link:hover {
+                color: var(--accent);
+                border-color: var(--accent);
+                background: rgba(139, 26, 26, 0.05);
+                text-decoration: none;
+            }
+            .bio-email {
+                font-family: "Inter", -apple-system, sans-serif;
+                font-size: 0.95em;
+                color: var(--text-mute);
+                margin-top: 4px;
+            }
+            .bio-email a {
+                color: var(--accent);
+            }
+            .proofs-label {
+                font-family: "Inter", -apple-system, sans-serif;
+                font-size: 0.78em;
+                color: var(--text-mute);
+                margin-right: 4px;
+                align-self: center;
+            }
 
             /* ── ACHIEVEMENTS ── */
             .achievement-list {
@@ -395,7 +434,6 @@
                         Heritage Institute of Technology, Kolkata
                     </div>
                     <div class="contact-row">
-                        <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">Email</a>
                         <a href="Arnesh_Banerjee_CV_Final.pdf">CV</a>
                         <a href="https://github.com/ArneshBanerjee">GitHub</a>
                         <a href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
@@ -416,8 +454,11 @@
                     large language models.
                 </p>
                 <p>
-                    I am applying to PhD programs starting Fall 2027.
+                    Interested in joining a PhD following my Bachelors Degree.
                 </p>
+                <div class="bio-email">
+                    <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
+                </div>
             </div>
 
             <section id="experience">
@@ -428,6 +469,8 @@
                         <h3>
                             IIT Kharagpur
                             <span class="tag">Upcoming</span>
+                            <a class="tag-link" href="KRITI-GRISHMA-Offer-Letter-GRISHMA-STU-2026-21410.pdf">Offer</a>
+                            <a class="tag-link" href="https://kriti.iitkgp.ac.in/">KRITI Portal</a>
                         </h3>
                         <span class="entry-meta">May 2026 – · On-site</span>
                     </div>
@@ -443,8 +486,6 @@
                             pretrained on GenomeIndia, IndiGen, and
                             GenomeAsia datasets using the StripedHyena2
                             architecture.
-                            [<a href="KRITI-GRISHMA-Offer-Letter-GRISHMA-STU-2026-21410.pdf">offer</a>,
-                            <a href="https://kriti.iitkgp.ac.in/">KRITI portal</a>]
                         </li>
                     </ul>
                 </div>
@@ -480,12 +521,14 @@
 
                 <div class="entry fade-in">
                     <div class="entry-head">
-                        <h3>New Jersey Institute of Technology</h3>
+                        <h3>
+                            New Jersey Institute of Technology
+                            <a class="tag-link" href="NJIT-certificate.pdf">Certificate</a>
+                        </h3>
                         <span class="entry-meta">Jun – Nov 2025 · On-site / Virtual</span>
                     </div>
                     <div class="entry-sub">
                         Advisor: Prof. Arnob Ghosh
-                        [<a href="NJIT-certificate.pdf">certificate</a>]
                     </div>
                     <ul>
                         <li>
@@ -635,6 +678,7 @@
                         Dhanbad summer research internships, and IIM Ahmedabad
                         AI Venture Summer Internship 2026.
                         <div class="proofs">
+                            <span class="proofs-label">Offer emails:</span>
                             <a href="Summer-Intern-2026/IIT%20KGP.png">IIT KGP</a>
                             <a href="Summer-Intern-2026/IIT%20Patna%201.png">IIT Patna 1</a>
                             <a href="Summer-Intern-2026/IIT%20Patna%202.png">IIT Patna 2</a>
@@ -658,7 +702,7 @@
             </section>
 
             <footer>
-                Last updated March 2026 ·
+                Last updated May 2026 ·
                 <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
             </footer>
         </div>
