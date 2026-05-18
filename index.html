@@ -11,12 +11,16 @@
             rel="stylesheet"
         />
         <style>
-            *, *::before, *::after {
+            *,
+            *::before,
+            *::after {
                 box-sizing: border-box;
                 margin: 0;
                 padding: 0;
             }
-            html { scroll-behavior: smooth; }
+            html {
+                scroll-behavior: smooth;
+            }
 
             :root {
                 --bg: #fdfcfa;
@@ -68,7 +72,10 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                font-family: "Inter", -apple-system, sans-serif;
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    sans-serif;
                 font-size: 0.82em;
             }
             .nav-name {
@@ -127,7 +134,9 @@
                 object-fit: cover;
                 border-radius: 4px;
                 box-shadow: 0 2px 14px -4px rgba(0, 0, 0, 0.15);
-                transition: transform 0.4s ease, box-shadow 0.4s ease;
+                transition:
+                    transform 0.4s ease,
+                    box-shadow 0.4s ease;
             }
             .photo:hover {
                 transform: translateY(-2px);
@@ -139,7 +148,9 @@
                 margin-bottom: 18px;
                 color: var(--text-soft);
             }
-            .bio p:last-child { margin-bottom: 0; }
+            .bio p:last-child {
+                margin-bottom: 0;
+            }
 
             /* ── SECTIONS ── */
             section {
@@ -189,7 +200,9 @@
                 background: var(--bg-soft);
                 transform: translateX(2px);
             }
-            .entry:last-child { margin-bottom: 0; }
+            .entry:last-child {
+                margin-bottom: 0;
+            }
             .entry-head {
                 display: flex;
                 justify-content: space-between;
@@ -199,7 +212,10 @@
             }
             .entry-meta {
                 color: var(--text-mute);
-                font-family: "Inter", -apple-system, sans-serif;
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    sans-serif;
                 font-size: 0.82em;
                 white-space: nowrap;
             }
@@ -219,7 +235,9 @@
             .entry ul li {
                 margin-bottom: 8px;
             }
-            .entry ul li:last-child { margin-bottom: 0; }
+            .entry ul li:last-child {
+                margin-bottom: 0;
+            }
 
             /* ── PUBLICATIONS ── */
             .pub {
@@ -259,7 +277,10 @@
             }
             .tag {
                 display: inline-block;
-                font-family: "Inter", -apple-system, sans-serif;
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    sans-serif;
                 font-size: 0.68em;
                 font-weight: 500;
                 letter-spacing: 0.06em;
@@ -279,7 +300,10 @@
             }
             a.tag-link {
                 display: inline-block;
-                font-family: "Inter", -apple-system, sans-serif;
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    sans-serif;
                 font-size: 0.68em;
                 font-weight: 500;
                 letter-spacing: 0.06em;
@@ -292,7 +316,10 @@
                 margin-left: 4px;
                 vertical-align: 2px;
                 text-decoration: none;
-                transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+                transition:
+                    color 0.2s ease,
+                    border-color 0.2s ease,
+                    background 0.2s ease;
             }
             a.tag-link:hover {
                 color: var(--accent);
@@ -301,7 +328,10 @@
                 text-decoration: none;
             }
             .bio-email {
-                font-family: "Inter", -apple-system, sans-serif;
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    sans-serif;
                 font-size: 0.95em;
                 color: var(--text-mute);
                 margin-top: 4px;
@@ -310,7 +340,10 @@
                 color: var(--accent);
             }
             .proofs-label {
-                font-family: "Inter", -apple-system, sans-serif;
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    sans-serif;
                 font-size: 0.78em;
                 color: var(--text-mute);
                 margin-right: 4px;
@@ -341,7 +374,10 @@
 
             /* ── PROOFS ── */
             .proofs {
-                font-family: "Inter", -apple-system, sans-serif;
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    sans-serif;
                 font-size: 0.78em;
                 color: var(--text-mute);
                 margin-top: 6px;
@@ -387,8 +423,14 @@
                 transform: none;
             }
             @media (prefers-reduced-motion: reduce) {
-                .fade-in { opacity: 1; transform: none; }
-                .entry, .pub, .achievement-list li, .photo {
+                .fade-in {
+                    opacity: 1;
+                    transform: none;
+                }
+                .entry,
+                .pub,
+                .achievement-list li,
+                .photo {
                     transition: none;
                 }
             }
@@ -404,11 +446,21 @@
                     height: 130px;
                     order: -1;
                 }
-                .container { padding: 36px 20px 60px; }
-                h1 { font-size: 1.6em; }
-                .entry-head { gap: 4px; }
-                .nav-links { gap: 14px; }
-                .nav-links a:nth-child(n+4) { display: none; }
+                .container {
+                    padding: 36px 20px 60px;
+                }
+                h1 {
+                    font-size: 1.6em;
+                }
+                .entry-head {
+                    gap: 4px;
+                }
+                .nav-links {
+                    gap: 14px;
+                }
+                .nav-links a:nth-child(n + 4) {
+                    display: none;
+                }
             }
         </style>
     </head>
@@ -436,7 +488,9 @@
                     <div class="contact-row">
                         <a href="Arnesh_Banerjee_CV_Final.pdf">CV</a>
                         <a href="https://github.com/ArneshBanerjee">GitHub</a>
-                        <a href="https://www.linkedin.com/in/arnesh24/">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/arnesh24/"
+                            >LinkedIn</a
+                        >
                         <a href="LOR Combined.pdf">Letters</a>
                     </div>
                 </div>
@@ -445,27 +499,28 @@
 
             <div class="bio fade-in">
                 <p>
-                    I am an undergraduate researcher interested in
-                    multi-agent reinforcement learning, computer vision, and
-                    AI safety. Past projects include applied ML for cancer
-                    prognosis, thermographic image segmentation for cancer
-                    detection using hybrid CNN-Transformer architectures,
-                    and a modified Safe RLHF pipeline for safety
-                    benchmarking and safer alignment of large language
-                    models. I also have ongoing, paused work probing
-                    mathematical failure modes in LLMs.
+                    I am an undergraduate researcher interested in multi-agent
+                    reinforcement learning, computer vision, and AI safety. Past
+                    projects include applied ML for cancer prognosis,
+                    thermographic image segmentation for cancer detection using
+                    hybrid CNN-Transformer architectures, and a modified Safe
+                    RLHF pipeline for safety benchmarking and safer alignment of
+                    large language models. I also worked on identifying faliure
+                    models in LLMs in context to mathematical reasoning.
                 </p>
                 <p>
-                    My current work centers on RL environments and
-                    simulation for autonomous systems — building a MARL
-                    drone simulator for defence applications, with a
-                    summer research project at IIT Kharagpur starting soon.
+                    My ongoing work is based on RL environments and simulation
+                    for autonomous systems MARL drone simulator for defence
+                    applications, and I am interning at IIT Kharagpur on
+                    developing the first IgLM.
                 </p>
                 <p>
                     Interested in joining a PhD following my Bachelors Degree.
                 </p>
                 <div class="bio-email">
-                    <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
+                    <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in"
+                        >arnesh.banerjee.ds27@heritageit.edu.in</a
+                    >
                 </div>
             </div>
 
@@ -477,8 +532,16 @@
                         <h3>
                             IIT Kharagpur
                             <span class="tag">Upcoming</span>
-                            <a class="tag-link" href="KRITI-GRISHMA-Offer-Letter-GRISHMA-STU-2026-21410.pdf">Offer</a>
-                            <a class="tag-link" href="https://kriti.iitkgp.ac.in/">KRITI Portal</a>
+                            <a
+                                class="tag-link"
+                                href="KRITI-GRISHMA-Offer-Letter-GRISHMA-STU-2026-21410.pdf"
+                                >Offer</a
+                            >
+                            <a
+                                class="tag-link"
+                                href="https://kriti.iitkgp.ac.in/"
+                                >KRITI Portal</a
+                            >
                         </h3>
                         <span class="entry-meta">May 2026 – · On-site</span>
                     </div>
@@ -487,9 +550,9 @@
                     </div>
                     <ul>
                         <li>
-                            Selected for the GRISHMA Summer Internship
-                            Program. Project details will be shared once the
-                            internship ends.
+                            Selected for the GRISHMA Summer Internship Program.
+                            Project details will be shared once the internship
+                            ends.
                         </li>
                     </ul>
                 </div>
@@ -497,7 +560,9 @@
                 <div class="entry fade-in">
                     <div class="entry-head">
                         <h3>Jadavpur University</h3>
-                        <span class="entry-meta">Nov 2025 – present · Remote</span>
+                        <span class="entry-meta"
+                            >Nov 2025 – present · Remote</span
+                        >
                     </div>
                     <div class="entry-sub">
                         Advisor: Prof. Debotosh Bhattacharjee
@@ -505,20 +570,20 @@
                     <ul>
                         <li>
                             Achieved 98.10% Dice and 96.39% IoU on breast
-                            thermography tumor segmentation using a ResNet34
-                            + ASPP + ViT decoder with SE attention,
-                            evaluated via 5-fold cross-validation.
+                            thermography tumor segmentation using a ResNet34 +
+                            ASPP + ViT decoder with SE attention, evaluated via
+                            5-fold cross-validation.
                         </li>
                         <li>
                             Conducted a 20-run ablation across U-Net,
                             ResNet-only, and hybrid architectures,
-                            characterizing generalization trade-offs in
-                            medical imaging.
+                            characterizing generalization trade-offs in medical
+                            imaging.
                         </li>
                         <li>
-                            Built an automated cross-validation pipeline
-                            with checkpointing, experiment logging, and
-                            reproducible training.
+                            Built an automated cross-validation pipeline with
+                            checkpointing, experiment logging, and reproducible
+                            training.
                         </li>
                     </ul>
                 </div>
@@ -527,23 +592,25 @@
                     <div class="entry-head">
                         <h3>
                             New Jersey Institute of Technology
-                            <a class="tag-link" href="NJIT-certificate.pdf">Certificate</a>
+                            <a class="tag-link" href="NJIT-certificate.pdf"
+                                >Certificate</a
+                            >
                         </h3>
-                        <span class="entry-meta">Jun – Nov 2025 · On-site / Virtual</span>
+                        <span class="entry-meta"
+                            >Jun – Nov 2025 · On-site / Virtual</span
+                        >
                     </div>
-                    <div class="entry-sub">
-                        Advisor: Prof. Arnob Ghosh
-                    </div>
+                    <div class="entry-sub">Advisor: Prof. Arnob Ghosh</div>
                     <ul>
                         <li>
                             Constructed a cost-model training dataset for a
-                            modified Safe RLHF pipeline with improved
-                            cost-model results.
+                            modified Safe RLHF pipeline with improved cost-model
+                            results.
                         </li>
                         <li>
                             Designed and tested a comparative 800-datapoint
-                            safety benchmark against state-of-the-art LLMs
-                            (GPT, DeepSeek, Gemini, Qwen, Mistral).
+                            safety benchmark against state-of-the-art LLMs (GPT,
+                            DeepSeek, Gemini, Qwen, Mistral).
                         </li>
                         <li>
                             Demonstrated 50% higher safety compliance than
@@ -555,23 +622,23 @@
                 <div class="entry fade-in">
                     <div class="entry-head">
                         <h3>Heritage Institute of Technology</h3>
-                        <span class="entry-meta">Oct 2024 – Mar 2025 · On-site</span>
+                        <span class="entry-meta"
+                            >Oct 2024 – Mar 2025 · On-site</span
+                        >
                     </div>
-                    <div class="entry-sub">
-                        Advisor: Prof. Arpita Talukdar
-                    </div>
+                    <div class="entry-sub">Advisor: Prof. Arpita Talukdar</div>
                     <ul>
                         <li>
                             Developed a dual-stage ML framework for breast
                             cancer diagnosis and recurrence prediction using
-                            WDBC and WPBC datasets, evaluating RF, SVM,
-                            Logistic Regression, MLP, and XGBoost with
-                            stratified 10-fold cross-validation.
+                            WDBC and WPBC datasets, evaluating RF, SVM, Logistic
+                            Regression, MLP, and XGBoost with stratified 10-fold
+                            cross-validation.
                         </li>
                         <li>
-                            Implemented RFE and SFS feature selection with
-                            SMOTE and GridSearchCV tuning, improving WPBC
-                            accuracy to 93.67% and WDBC to 97.77%.
+                            Implemented RFE and SFS feature selection with SMOTE
+                            and GridSearchCV tuning, improving WPBC accuracy to
+                            93.67% and WDBC to 97.77%.
                         </li>
                         <li>
                             Conducted comparative performance analysis and
@@ -586,8 +653,8 @@
                 <h2>Publications</h2>
                 <div class="pub fade-in">
                     <div class="pub-title">
-                        Recursive and Wrapper-Based Feature Selection for
-                        Breast Cancer Diagnosis and Prognosis
+                        Recursive and Wrapper-Based Feature Selection for Breast
+                        Cancer Diagnosis and Prognosis
                         <span class="tag">Oral</span>
                     </div>
                     <div class="pub-authors">
@@ -610,11 +677,13 @@
                     </div>
                     <div class="pub-authors">
                         Kartik Pandit, Sourav Ganguly,
-                        <strong>Arnesh Banerjee</strong>, Shaahin Angizi,
-                        Arnob Ghosh. 2025.
+                        <strong>Arnesh Banerjee</strong>, Shaahin Angizi, Arnob
+                        Ghosh. 2025.
                     </div>
                     <div class="pub-venue">
-                        arXiv:<a href="https://arxiv.org/abs/2510.03520">2510.03520</a>
+                        arXiv:<a href="https://arxiv.org/abs/2510.03520"
+                            >2510.03520</a
+                        >
                     </div>
                 </div>
 
@@ -625,7 +694,8 @@
                         <span class="tag tag-soft">In prep</span>
                     </div>
                     <div class="pub-authors">
-                        <strong>Arnesh Banerjee</strong>, Debotosh Bhattacharjee.
+                        <strong>Arnesh Banerjee</strong>, Debotosh
+                        Bhattacharjee.
                     </div>
                 </div>
             </section>
@@ -660,17 +730,15 @@
 
                 <div class="pub fade-in">
                     <div class="pub-title">
-                        Analyzing Historical Revisionism in LLMs in the
-                        Context of Indian History
+                        Analyzing Historical Revisionism in LLMs in the Context
+                        of Indian History
                     </div>
                     <div class="pub-authors">
                         Kartik Pandit, Sourav Ganguly,
                         <strong>Arnesh Banerjee</strong>, Avirup Chakraborty,
                         Arnob Ghosh.
                     </div>
-                    <div class="pub-venue">
-                        Advisor: Dr. Arnob Ghosh.
-                    </div>
+                    <div class="pub-venue">Advisor: Dr. Arnob Ghosh.</div>
                 </div>
             </section>
 
@@ -683,16 +751,26 @@
                         AI Venture Summer Internship 2026.
                         <div class="proofs">
                             <span class="proofs-label">Offer emails:</span>
-                            <a href="Summer-Intern-2026/IIT%20KGP.png">IIT KGP</a>
-                            <a href="Summer-Intern-2026/IIT%20Patna%201.png">IIT Patna 1</a>
-                            <a href="Summer-Intern-2026/IIT%20Patna%202.png">IIT Patna 2</a>
-                            <a href="Summer-Intern-2026/IIT%20Patna%203.png">IIT Patna 3</a>
-                            <a href="Summer-Intern-2026/IIMA.png">IIM Ahmedabad</a>
+                            <a href="Summer-Intern-2026/IIT%20KGP.png"
+                                >IIT KGP</a
+                            >
+                            <a href="Summer-Intern-2026/IIT%20Patna%201.png"
+                                >IIT Patna 1</a
+                            >
+                            <a href="Summer-Intern-2026/IIT%20Patna%202.png"
+                                >IIT Patna 2</a
+                            >
+                            <a href="Summer-Intern-2026/IIT%20Patna%203.png"
+                                >IIT Patna 3</a
+                            >
+                            <a href="Summer-Intern-2026/IIMA.png"
+                                >IIM Ahmedabad</a
+                            >
                         </div>
                     </li>
                     <li class="fade-in">
-                        Department Third, 4th Semester · SGPA 9.46 ·
-                        B.Tech CSE(DS), Heritage Institute of Technology.
+                        Department Third, 4th Semester · SGPA 9.46 · B.Tech
+                        CSE(DS), Heritage Institute of Technology.
                     </li>
                     <li class="fade-in">
                         Selected as one of 10 Institutional Innovation Council
@@ -707,21 +785,26 @@
 
             <footer>
                 Last updated May 2026 ·
-                <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in">arnesh.banerjee.ds27@heritageit.edu.in</a>
+                <a href="mailto:arnesh.banerjee.ds27@heritageit.edu.in"
+                    >arnesh.banerjee.ds27@heritageit.edu.in</a
+                >
             </footer>
         </div>
 
         <script>
             const io = new IntersectionObserver(
-                (entries) => entries.forEach((e) => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add("visible");
-                        io.unobserve(e.target);
-                    }
-                }),
-                { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+                (entries) =>
+                    entries.forEach((e) => {
+                        if (e.isIntersecting) {
+                            e.target.classList.add("visible");
+                            io.unobserve(e.target);
+                        }
+                    }),
+                { threshold: 0.08, rootMargin: "0px 0px -40px 0px" },
             );
-            document.querySelectorAll(".fade-in").forEach((el) => io.observe(el));
+            document
+                .querySelectorAll(".fade-in")
+                .forEach((el) => io.observe(el));
         </script>
     </body>
 </html>
